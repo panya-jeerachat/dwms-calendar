@@ -45,6 +45,77 @@
     padding:28px 24px 64px;
   }
  
+  /* Top nav */
+  .topnav{
+    display:flex;
+    gap:10px;
+    margin-bottom:18px;
+    flex-wrap:wrap;
+  }
+  .nav-item{
+    font-family:inherit;
+    font-size:13px;
+    font-weight:600;
+    color:var(--accent-strong);
+    background:var(--accent-soft);
+    border:1px solid transparent;
+    padding:10px 16px;
+    border-radius:9px;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    transition:background .15s, border-color .15s;
+  }
+  .nav-item:hover{background:#DBEBEA; border-color:var(--accent);}
+  .nav-icon{font-size:15px; line-height:1;}
+ 
+  /* Request-support modal */
+  .request-body{
+    padding:18px 22px 24px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:20px;
+    text-align:center;
+  }
+  .primary-link-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    padding:13px 18px;
+    background:var(--accent);
+    color:#fff;
+    font-weight:600;
+    font-size:14px;
+    border-radius:9px;
+    text-decoration:none;
+    transition:background .15s;
+  }
+  .primary-link-btn:hover{background:var(--accent-strong);}
+  .qr-block{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    padding-top:6px;
+    border-top:1px dashed var(--border);
+    width:100%;
+  }
+  .qr-img{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:10px;
+    background:#fff;
+  }
+  .qr-caption{
+    font-size:12px;
+    color:var(--text-soft);
+    margin:0;
+  }
+ 
   /* Header */
   header.top{
     display:flex;
@@ -505,6 +576,15 @@
  
 <div class="wrap">
  
+  <nav class="topnav">
+    <a class="nav-item" href="https://datastudio.google.com/reporting/68984584-16fa-45f3-ab66-9b88b8f92168/page/p_xokg7r8b0d" target="_blank" rel="noopener">
+      <span class="nav-icon">⌂</span>หน้าหลัก
+    </a>
+    <button class="nav-item" id="openRequestBtn" type="button">
+      <span class="nav-icon">＋</span>ขอรับการสนับสนุนกิจกรรม / ขอใช้ห้องล่วงหน้า
+    </button>
+  </nav>
+ 
   <header class="top">
     <div>
       <div class="brand-eyebrow">คณะวิศวกรรมศาสตร์ · มหาวิทยาลัยมหาสารคาม</div>
@@ -559,6 +639,27 @@
   </div>
 </div>
  
+<div class="overlay" id="requestOverlay">
+  <div class="modal request-modal">
+    <div class="modal-head">
+      <div>
+        <div class="modal-date">ขอรับการสนับสนุนกิจกรรม / ขอใช้ห้องล่วงหน้า</div>
+        <div class="modal-sub">เลือกวิธีกรอกแบบฟอร์มที่สะดวก — ผ่านคอมพิวเตอร์ หรือสแกนด้วยมือถือ</div>
+      </div>
+      <button class="close-btn" id="closeRequestBtn">✕</button>
+    </div>
+    <div class="modal-body request-body">
+      <a class="primary-link-btn" id="formLinkBtn" href="#" target="_blank" rel="noopener">
+        เปิดกรอกแบบฟอร์ม (Google Form) ↗
+      </a>
+      <div class="qr-block">
+        <img id="formQrImg" class="qr-img" alt="QR code สำหรับสแกนกรอกแบบฟอร์มผ่านสมาร์ทโฟน" width="200" height="200">
+        <p class="qr-caption">สแกนด้วยกล้องมือถือ เพื่อกรอกแบบฟอร์มทันที</p>
+      </div>
+    </div>
+  </div>
+</div>
+ 
 <script id="eventData" type="application/json">[{"date": "2026-05-01", "time": "08:30-12:00", "room": "EN1-213", "detail": "ประชุมฝ่ายงานวิชาการการศึกษา", "equipment": "ระบบห้องประชุม / สื่อทางไกล", "requestDate": "2026-04-29", "leadDays": "2", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-01", "time": "13:00-16:30", "room": "EN1-204", "detail": "ประชุม", "equipment": "ระบบห้องประชุม / สื่อทางไกล", "requestDate": "2026-04-29", "leadDays": "2", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-05", "time": "08:30-16:30", "room": "EN1-213", "detail": "เพื่อใช้ในการประชุมแผนและงบประมาณ2570", "equipment": "ระบบห้องประชุม / สื่อทางไกล", "requestDate": "2026-05-01", "leadDays": "4", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-06", "time": "08:30-16:30", "room": "EN1-213", "detail": "ประชุมภายในคณะฯ", "equipment": "ระบบห้องประชุม / สื่อทางไกล", "requestDate": "2026-05-05", "leadDays": "1", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-12", "time": "13:00-16:30", "room": "EN1-204", "detail": "ประชุมผู้บริหารและบุคลากรสายสนับสนุนครั้งที่3", "equipment": "ระบบห้องประชุม / สื่อทางไกล", "requestDate": "2026-05-08", "leadDays": "4", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-18", "time": "13:00-16:30", "room": "EN1-310", "detail": "อบรมวิธีการกรอกข้อมูลแบบประเมิรภาระงาน ป.01", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-05-14", "leadDays": "4", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-18", "time": "13:00-16:30", "room": "EN1-204", "detail": "ช่วยเตรียมความพร้อมสถานที่ห้องประชุม", "equipment": "ระบบห้องประชุม / สื่อทางไกล", "requestDate": "2026-05-18", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-19", "time": "08:30-16:30", "room": "EN1-313-314", "detail": "การจัดการฐานข้อมูลอัจฉริยะและการประยุกต์ใช้ AI ในการจัดการฐานข้อมูล", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-05-18", "leadDays": "1", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-20", "time": "08:30-16:30", "room": "EN1-312", "detail": "ขอย้ายห้อง การจัดการฐานข้อมูลอัจฉริยะและการประยุกต์ใช้ AI ในการจัดการฐานข้อมูล", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-05-18", "leadDays": "2", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-19", "time": "08:30-16:30", "room": "EN1-312", "detail": "ขอย้ายห้อง การจัดการฐานข้อมูลอัจฉริยะและการประยุกต์ใช้ AI ในการจัดการฐานข้อมูล", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-05-19", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-20", "time": "13:00-16:30", "room": "EN1-213", "detail": "ต้อนรับผู้อำนวยการสำนักตรวจสอบภายในพร้อมคณะผู้ตรวจสอบภายใน", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-05-19", "leadDays": "1", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-25", "time": "08:30-16:30", "room": "EN1-213", "detail": "สอนสหกิจ", "equipment": "ระบบห้องประชุม / สื่อทางไกล", "requestDate": "2026-05-25", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-27", "time": "08:30-16:30", "room": "EN1-312", "detail": "ใช้ทำงานรายวิชาวิศวกรรมกระบวนการ Program Ansys", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-05-27", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-28", "time": "08:30-16:30", "room": "EN-312", "detail": "ทำงานรายวิชาวิศวกรรมกระบวนการ 65010310084", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-05-28", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-29", "time": "08:30-16:30", "room": "EN1-312", "detail": "ทำงานวิชาProcess Engineer(65010310672)", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-05-29", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-02", "time": "08:30-16:30", "room": "EN1-312", "detail": "ขอให้ในรายวิชาวิศวกรรมกระบวนการ 65010310084", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-06-02", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-04", "time": "08:30-12:00", "room": "EN1-312", "detail": "ทำงานวิชาprocess 65010310084", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-06-04", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-05", "time": "08:30-12:00", "room": "EN1-312", "detail": "ใช้ทำรายวิชากระบวนการ(65010310672)", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-06-05", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-10", "time": "13:00-16:30", "room": "EN1-217", "detail": "ใช้ในการประชุมประจำเดือนสโมสรนิสิตคณะวิศวกรรมมศาสตร์", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-06-10", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-12", "time": "08:30-16:30", "room": "EN1-213", "detail": "รับรองคณะกรรมการตรวจประเมินหลักสูตร AUN QA", "equipment": "ระบบห้องประชุม / สื่อทางไกล", "requestDate": "2026-06-11", "leadDays": "1", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-23", "time": "08:30-12:00", "room": "EN1-209", "detail": "จัดโครงการ MSU INDIE Camp", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-06-12", "leadDays": "11", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-15", "time": "08:30-16:30", "room": "EN1-217", "detail": "โครงการพี่สอนน้องลงทะเบียน", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-06-15", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-15", "time": "08:30-16:30", "room": "EN1-312", "detail": "ทำรายวิชาวิศวกระบวนการ(65010310672)", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-06-15", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-18", "time": "08:30-16:30", "room": "EN1-217", "detail": "ถ่ายทอดปฐมนิเทศนิสิตใหม่ ปีการศึกษา 2569", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-06-18", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-25", "time": "08:30-12:00", "room": "ห้องสมุดคณะ", "detail": "จัดกิจกรรมนำเสนอผลงาน", "equipment": "โทรทัศน์สมาร์ททีวี", "requestDate": "2026-06-24", "leadDays": "1", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-29", "time": "13:00-16:30", "room": "EN312", "detail": "มาขอใช้คอมลงโปรเเกรม GXworks3 66010310069", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-06-29", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-30", "time": "08:30-12:00", "room": "EN1-204", "detail": "ใช้สถานที่จัดงานดำเนินกาารขายวิธีทอดตลาดพัสดุเสื่อมสภาพและไม่จำเป็นต้องใช้ในราชการ จำนวน ๑๔๙ รายการ ของคณะวิศวกรรมศาสตร์", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-06-30", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-07-03", "time": "13:00-16:30", "room": "EN1-204", "detail": "ใช้รับรองกรรมการตรวจประเมินผล EdPEx ผลการดำเนินงานปีการศึกษา 2568", "equipment": "ระบบห้องประชุม / สื่อทางไกล", "requestDate": "2026-07-03", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-07-11", "time": "08:30-16:30", "room": "EN1-217", "detail": "ใช้ในโครงการรับน้องใหม่สาขาโยธา", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-07-10", "leadDays": "1", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-07-12", "time": "08:30-16:30", "room": "EN1-217", "detail": "ใช้ในโครงการรับน้องสาขาแมคคาทรอนิค 67010310222", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-07-11", "leadDays": "1", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-07-15", "time": "08:30-16:30", "room": "EN4-อบรม2", "detail": "ต้อนรับและประชุมจากประเทศจีน", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-07-11", "leadDays": "4", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-07-16", "time": "08:30-16:30", "room": "EN4-อบรม2", "detail": "นำเสนออุปกรณ์สื่อการเรียนการสอนยานยนต์ไฟฟ้า", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-07-11", "leadDays": "5", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-07-15", "time": "13:00-16:30", "room": "EN1-204", "detail": "ประชุมวิชาการ ป.ตรี", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-07-14", "leadDays": "1", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-07-16", "time": "13:00-16:30", "room": "EN1-217", "detail": "โครงการตอนรับแขกผู้มีเกียรติชาวจีน", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-07-16", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-01-07", "time": "13:00-16:30", "room": "EN1-217", "detail": "โครงการปัจฉิมนิเทศ", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ / Smart TV", "requestDate": "2025-12-21", "leadDays": "17", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-02-10", "time": "13:00–15:00", "room": "EN1-106", "detail": "บริษัทไทออยมารับสมัครพร้อมนำเสนอ", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์", "requestDate": "2026-01-26", "leadDays": "15", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-02-13", "time": "09:00–12:00", "room": "EN1-217", "detail": "บรรยายบริษัท Sony", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ / Smart TV", "requestDate": "2026-01-26", "leadDays": "18", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-02-13", "time": "13:00–15:00", "room": "EN1-204", "detail": "บริษัท Sony นำเสนอ", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์", "requestDate": "2026-01-26", "leadDays": "18", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-01-26", "time": "13:00-16:30", "room": "EN1-204", "detail": "ประชุมภายในคณะฯ", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์", "requestDate": "2026-01-26", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-01-29", "time": "13:00-16:30", "room": "ศูนย์หม่อนไหม", "detail": "ติดตั้งจอโทรทัศน์สมาร์ททีวีที่ศูนย์หม่อนไหมเพื่อนำเสนอผลงานในการต้อนรับ", "equipment": "โทรทัศน์สมาร์ททีวี", "requestDate": "2026-01-29", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-02-02", "time": "13:00-16:30", "room": "EN1-312", "detail": "อบรมการใช้งานโปรแกรม SPSS", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์", "requestDate": "2026-01-30", "leadDays": "3", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-02-25", "time": "08:30-16:30", "room": "EN1-209", "detail": "โครงการแลกเปลี่ยนเรียนรู้เพื่อเสริมสร้างศักยภาพบุคลากร (ครั้งที่ 2)", "equipment": "โทรทัศน์สมาร์ททีวี / ระบบเครื่องขยายเสียง", "requestDate": "2026-02-16", "leadDays": "9", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-02-27", "time": "13:00-16:30", "room": "EN1-217", "detail": "บริษัท SCG บรรยาย", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ / Smart TV", "requestDate": "2026-02-27", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-03-02", "time": "16:30-20:30", "room": "EN1-217", "detail": "รุ่นพี่สอนน้องจัดโดยงานฝ่ายกิจการนิสิต", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ / Smart TV", "requestDate": "2026-03-02", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-03-03", "time": "16:30-20:30", "room": "EN1-217", "detail": "รุ่นพี่สอนน้องจัดโดยงานฝ่ายกิจการนิสิต", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ / Smart TV", "requestDate": "2026-03-02", "leadDays": "1", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-03-04", "time": "16:30-20:30", "room": "EN1-217", "detail": "รุ่นพี่สอนน้องจัดโดยงานฝ่ายกิจการนิสิต", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ / Smart TV", "requestDate": "2026-03-02", "leadDays": "2", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-03-05", "time": "16:30-20:30", "room": "EN1-217", "detail": "รุ่นพี่สอนน้องจัดโดยงานฝ่ายกิจการนิสิต", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ / Smart TV", "requestDate": "2026-03-02", "leadDays": "3", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-03-06", "time": "16:30-20:30", "room": "EN1-217", "detail": "รุ่นพี่สอนน้องจัดโดยงานฝ่ายกิจการนิสิต", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ / Smart TV", "requestDate": "2026-03-02", "leadDays": "4", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-03-18", "time": "06:30-12:00", "room": "EN1-209", "detail": "ทำบุญครบรอบวันสถาปนาคณะวิศวกรรมศาสตร์", "equipment": "ระบบเครื่องขยายเสียงพร้อมไมค์ไร้สาย", "requestDate": "2026-03-04", "leadDays": "14", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-03-11", "time": "08:30-16:30", "room": "EN1-209", "detail": "โครงการแลกเปลี่ยนเรียนรู้เพื่อเสริมสร้างศักยภาพบุคลากร (ครั้งที่ 3)", "equipment": "โทรทัศน์สมาร์ททีวี / ระบบเครื่องขยายเสียง", "requestDate": "2026-03-04", "leadDays": "7", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-03-11", "time": "13:00-16:30", "room": "EN1-217 , 201 , 206", "detail": "โครงการเลือกสาขา", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ / Smart TV", "requestDate": "2026-03-06", "leadDays": "5", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-03-26", "time": "08:30-16:30", "room": "EN1-202", "detail": "สอบโปรเจคต์ที่ En1-202", "equipment": "Smart Class Room", "requestDate": "2026-03-24", "leadDays": "2", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-04-02", "time": "09:30-12:00", "room": "EN1-204", "detail": "ลงนามเซ็นต์ MOU ยานยนต์ไฟฟ้า ประเทศจีน", "equipment": "โต๊ะลงนาม อุปกรณ์สนับสนับในการจัดงานระบบโสตทัศนูปกรณ์", "requestDate": "2026-04-02", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-04-10", "time": "08:30-16:30", "room": "ลานข้างพระพุทธรูปประจำคณะฯ", "detail": "งานประเพณีสงกรานต์รดน้ำดำหัวผู้ใหญ่ประจำปี 2569", "equipment": "เครื่องขยายเสียง 2ชุด / ไมค์ไร้สาย / เครื่องคอมพิวเตอร์", "requestDate": "2026-04-08", "leadDays": "2", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-04-23", "time": "08:30-16:30", "room": "EN1-217", "detail": "งานฝึกซ้อมบัณฑิตรับปริญญาบัตร", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ / Smart TV", "requestDate": "2026-04-17", "leadDays": "6", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-04-30", "time": "09:00–12:00", "room": "EN1-204", "detail": "ประชุมภายในคณะฯ", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์", "requestDate": "2026-04-24", "leadDays": "6", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}]
 </script>
 <script>
@@ -566,6 +667,7 @@
   // ==== CONFIG: แก้ตรงนี้ถ้าเปลี่ยน Google Sheet หรือย้ายไปคนละแท็บ (gid) ====
   const SHEET_ID = "1T4pXX-5GRC5_etLa4D82b4NSi5LsI18zyDecoXFjhOA";
   const SHEET_GID = ""; // ถ้าข้อมูลอยู่คนละแท็บ ใส่เลข gid ที่เห็นท้าย URL ตอนเปิดแท็บนั้น เช่น "482913"
+  const REQUEST_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScQeSXOI3LibfO7qI1elrwC7Lq2WfQJ-xP8_FwTTifdqNBIug/viewform";
   // ==========================================================================
  
   let events = JSON.parse(document.getElementById('eventData').textContent);
@@ -779,7 +881,24 @@
  
   document.getElementById('closeBtn').addEventListener('click', ()=> overlay.classList.remove('open'));
   overlay.addEventListener('click', (e)=>{ if(e.target === overlay) overlay.classList.remove('open'); });
-  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') overlay.classList.remove('open'); });
+ 
+  // ---- เมนู "ขอรับการสนับสนุนกิจกรรม / ขอใช้ห้องล่วงหน้า": ลิงก์ฟอร์ม + QR code ----
+  const requestOverlay = document.getElementById('requestOverlay');
+  const formLinkBtn = document.getElementById('formLinkBtn');
+  const formQrImg = document.getElementById('formQrImg');
+ 
+  formLinkBtn.href = REQUEST_FORM_URL;
+  formQrImg.src = "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" + encodeURIComponent(REQUEST_FORM_URL);
+ 
+  document.getElementById('openRequestBtn').addEventListener('click', ()=> requestOverlay.classList.add('open'));
+  document.getElementById('closeRequestBtn').addEventListener('click', ()=> requestOverlay.classList.remove('open'));
+  requestOverlay.addEventListener('click', (e)=>{ if(e.target === requestOverlay) requestOverlay.classList.remove('open'); });
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape'){
+      overlay.classList.remove('open');
+      document.getElementById('requestOverlay').classList.remove('open');
+    }
+  });
  
   document.getElementById('prevBtn').addEventListener('click', ()=>{
     viewMonth--; if(viewMonth < 0){ viewMonth = 11; viewYear--; }
@@ -947,5 +1066,3 @@
 </script>
 </body>
 </html>
- 
-
