@@ -624,12 +624,28 @@
   // - เตรียมพร้อมสำเร็จ และไม่มีปัญหาระหว่างใช้งาน -> สำเร็จ
   // - นอกนั้น (มีปัญหา หรือเตรียมพร้อมไม่สำเร็จ) -> ไม่สำเร็จ
   function computeStatus(ev){
-    const prep = (ev.readiness || "").trim();
-    const issue = (ev.issue || "").trim();
-    if(!prep && !issue) return "received";
-    if(prep === "สำเร็จ" && (issue === "ไม่มีปัญหา" || !issue)) return "success";
-    return "failed";
+  const prep = (ev.readiness || "").trim();
+  const issue = (ev.issue || "").trim();
+
+  // รับเรื่องเรียบร้อย
+  if (
+      prep === "รับเรื่องเรียบร้อย" ||
+      (!prep && !issue)
+  ) {
+      return "received";
   }
+
+  // สำเร็จ
+  if (
+      prep === "สำเร็จ" &&
+      (issue === "ไม่มีปัญหา" || !issue)
+  ) {
+      return "success";
+  }
+
+  // ไม่สำเร็จ
+  return "failed";
+}
 
   function regroup(){
     byDate = {};
