@@ -1,3 +1,6 @@
+
+
+Calendar · HTML
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -38,13 +41,13 @@
     line-height:1.5;
   }
   .mono{font-family:'IBM Plex Mono', ui-monospace, monospace;}
-
+ 
   .wrap{
     max-width:1180px;
     margin:0 auto;
     padding:28px 24px 64px;
   }
-
+ 
   /* Header */
   header.top{
     display:flex;
@@ -74,7 +77,7 @@
     color:var(--text-soft);
     margin:0;
   }
-
+ 
   /* Sync bar */
   .sync-box{
     text-align:right;
@@ -111,7 +114,7 @@
   }
   .sync-btn:hover{background:var(--accent-soft); border-color:var(--accent);}
   .sync-btn:disabled{opacity:.55; cursor:default;}
-
+ 
   /* Dashboard metric row */
   .metric-row{
     display:grid;
@@ -138,7 +141,7 @@
     color:var(--text-soft);
     margin-top:5px;
   }
-
+ 
   /* Status breakdown row */
   .status-row{
     display:grid;
@@ -194,7 +197,7 @@
   .status-card.success .status-bar-fill{background:var(--success);}
   .status-card.received .status-bar-fill{background:var(--warn);}
   .status-card.failed .status-bar-fill{background:var(--danger);}
-
+ 
   .sync-note{
     font-size:11px;
     color:var(--text-faint);
@@ -202,7 +205,7 @@
     text-align:right;
   }
   .sync-note.err-note{color:var(--danger);}
-
+ 
   /* Controls */
   .controls{
     display:flex;
@@ -248,7 +251,7 @@
     cursor:pointer;
   }
   .today-btn:hover{background:var(--accent-soft); border-color:var(--accent);}
-
+ 
   .legend{
     display:flex;
     align-items:center;
@@ -263,7 +266,7 @@
     margin-right:5px;
     vertical-align:middle;
   }
-
+ 
   /* Calendar grid */
   .cal-card{
     background:var(--surface);
@@ -288,7 +291,7 @@
     text-transform:uppercase;
   }
   .weekday-row div.wknd{color:#B5766A;}
-
+ 
   .grid{
     display:grid;
     grid-template-columns:repeat(7,1fr);
@@ -324,7 +327,7 @@
   }
   .cell.outside .date-num{color:var(--text-faint);}
   .cell.outside{background:#FDFDFC;}
-
+ 
   .chips{
     margin-top:6px;
     display:flex;
@@ -356,7 +359,7 @@
     padding:1px 5px;
     font-weight:500;
   }
-
+ 
   /* Footer note */
   .foot-note{
     margin-top:18px;
@@ -364,7 +367,7 @@
     color:var(--text-faint);
     text-align:center;
   }
-
+ 
   /* Modal */
   .overlay{
     position:fixed; inset:0;
@@ -483,7 +486,7 @@
   .status-pill.received::before{background:var(--warn);}
   .status-pill.failed{color:#7E332E; background:var(--danger-soft);}
   .status-pill.failed::before{background:var(--danger);}
-
+ 
   @media (max-width:760px){
     .metric-row{grid-template-columns:repeat(2,1fr);}
     .status-row{grid-template-columns:1fr;}
@@ -502,9 +505,9 @@
 </style>
 </head>
 <body>
-
+ 
 <div class="wrap">
-
+ 
   <header class="top">
     <div>
       <div class="brand-eyebrow">คณะวิศวกรรมศาสตร์ · มหาวิทยาลัยมหาสารคาม</div>
@@ -516,11 +519,11 @@
       <button class="sync-btn" id="syncBtn">ซิงก์ข้อมูลล่าสุด</button>
     </div>
   </header>
-
+ 
   <div class="metric-row" id="metricRow"></div>
   <div class="status-row" id="statusRow"></div>
   <div class="sync-note" id="syncNote"></div>
-
+ 
   <div class="controls">
     <div class="month-nav">
       <button class="nav-btn" id="prevBtn" aria-label="เดือนก่อนหน้า">‹</button>
@@ -534,18 +537,18 @@
       <span><span class="legend-dot" style="background:var(--danger)"></span>ไม่สำเร็จ</span>
     </div>
   </div>
-
+ 
   <div class="cal-card">
     <div class="weekday-row">
       <div class="wknd">อา</div><div>จ</div><div>อ</div><div>พ</div><div>พฤ</div><div>ศ</div><div class="wknd">ส</div>
     </div>
     <div class="grid" id="calGrid"></div>
   </div>
-
+ 
   <p class="foot-note">คลิกวันที่ที่มีกิจกรรมเพื่อดูรายละเอียด · เชื่อมข้อมูลสดจาก Google Sheet ของฝ่ายโสตทัศนูปกรณ์</p>
-
+ 
 </div>
-
+ 
 <div class="overlay" id="overlay">
   <div class="modal">
     <div class="modal-head">
@@ -558,7 +561,7 @@
     <div class="modal-body" id="modalBody"></div>
   </div>
 </div>
-
+ 
 <script id="eventData" type="application/json">[{"date": "2026-05-01", "time": "08:30-12:00", "room": "EN1-213", "detail": "ประชุมฝ่ายงานวิชาการการศึกษา", "equipment": "ระบบห้องประชุม / สื่อทางไกล", "requestDate": "2026-04-29", "leadDays": "2", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-01", "time": "13:00-16:30", "room": "EN1-204", "detail": "ประชุม", "equipment": "ระบบห้องประชุม / สื่อทางไกล", "requestDate": "2026-04-29", "leadDays": "2", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-05", "time": "08:30-16:30", "room": "EN1-213", "detail": "เพื่อใช้ในการประชุมแผนและงบประมาณ2570", "equipment": "ระบบห้องประชุม / สื่อทางไกล", "requestDate": "2026-05-01", "leadDays": "4", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-06", "time": "08:30-16:30", "room": "EN1-213", "detail": "ประชุมภายในคณะฯ", "equipment": "ระบบห้องประชุม / สื่อทางไกล", "requestDate": "2026-05-05", "leadDays": "1", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-12", "time": "13:00-16:30", "room": "EN1-204", "detail": "ประชุมผู้บริหารและบุคลากรสายสนับสนุนครั้งที่3", "equipment": "ระบบห้องประชุม / สื่อทางไกล", "requestDate": "2026-05-08", "leadDays": "4", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-18", "time": "13:00-16:30", "room": "EN1-310", "detail": "อบรมวิธีการกรอกข้อมูลแบบประเมิรภาระงาน ป.01", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-05-14", "leadDays": "4", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-18", "time": "13:00-16:30", "room": "EN1-204", "detail": "ช่วยเตรียมความพร้อมสถานที่ห้องประชุม", "equipment": "ระบบห้องประชุม / สื่อทางไกล", "requestDate": "2026-05-18", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-19", "time": "08:30-16:30", "room": "EN1-313-314", "detail": "การจัดการฐานข้อมูลอัจฉริยะและการประยุกต์ใช้ AI ในการจัดการฐานข้อมูล", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-05-18", "leadDays": "1", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-20", "time": "08:30-16:30", "room": "EN1-312", "detail": "ขอย้ายห้อง การจัดการฐานข้อมูลอัจฉริยะและการประยุกต์ใช้ AI ในการจัดการฐานข้อมูล", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-05-18", "leadDays": "2", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-19", "time": "08:30-16:30", "room": "EN1-312", "detail": "ขอย้ายห้อง การจัดการฐานข้อมูลอัจฉริยะและการประยุกต์ใช้ AI ในการจัดการฐานข้อมูล", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-05-19", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-20", "time": "13:00-16:30", "room": "EN1-213", "detail": "ต้อนรับผู้อำนวยการสำนักตรวจสอบภายในพร้อมคณะผู้ตรวจสอบภายใน", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-05-19", "leadDays": "1", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-25", "time": "08:30-16:30", "room": "EN1-213", "detail": "สอนสหกิจ", "equipment": "ระบบห้องประชุม / สื่อทางไกล", "requestDate": "2026-05-25", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-27", "time": "08:30-16:30", "room": "EN1-312", "detail": "ใช้ทำงานรายวิชาวิศวกรรมกระบวนการ Program Ansys", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-05-27", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-28", "time": "08:30-16:30", "room": "EN-312", "detail": "ทำงานรายวิชาวิศวกรรมกระบวนการ 65010310084", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-05-28", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-05-29", "time": "08:30-16:30", "room": "EN1-312", "detail": "ทำงานวิชาProcess Engineer(65010310672)", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-05-29", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-02", "time": "08:30-16:30", "room": "EN1-312", "detail": "ขอให้ในรายวิชาวิศวกรรมกระบวนการ 65010310084", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-06-02", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-04", "time": "08:30-12:00", "room": "EN1-312", "detail": "ทำงานวิชาprocess 65010310084", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-06-04", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-05", "time": "08:30-12:00", "room": "EN1-312", "detail": "ใช้ทำรายวิชากระบวนการ(65010310672)", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-06-05", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-10", "time": "13:00-16:30", "room": "EN1-217", "detail": "ใช้ในการประชุมประจำเดือนสโมสรนิสิตคณะวิศวกรรมมศาสตร์", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-06-10", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-12", "time": "08:30-16:30", "room": "EN1-213", "detail": "รับรองคณะกรรมการตรวจประเมินหลักสูตร AUN QA", "equipment": "ระบบห้องประชุม / สื่อทางไกล", "requestDate": "2026-06-11", "leadDays": "1", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-23", "time": "08:30-12:00", "room": "EN1-209", "detail": "จัดโครงการ MSU INDIE Camp", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-06-12", "leadDays": "11", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-15", "time": "08:30-16:30", "room": "EN1-217", "detail": "โครงการพี่สอนน้องลงทะเบียน", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-06-15", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-15", "time": "08:30-16:30", "room": "EN1-312", "detail": "ทำรายวิชาวิศวกระบวนการ(65010310672)", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-06-15", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-18", "time": "08:30-16:30", "room": "EN1-217", "detail": "ถ่ายทอดปฐมนิเทศนิสิตใหม่ ปีการศึกษา 2569", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-06-18", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-25", "time": "08:30-12:00", "room": "ห้องสมุดคณะ", "detail": "จัดกิจกรรมนำเสนอผลงาน", "equipment": "โทรทัศน์สมาร์ททีวี", "requestDate": "2026-06-24", "leadDays": "1", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-29", "time": "13:00-16:30", "room": "EN312", "detail": "มาขอใช้คอมลงโปรเเกรม GXworks3 66010310069", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-06-29", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-06-30", "time": "08:30-12:00", "room": "EN1-204", "detail": "ใช้สถานที่จัดงานดำเนินกาารขายวิธีทอดตลาดพัสดุเสื่อมสภาพและไม่จำเป็นต้องใช้ในราชการ จำนวน ๑๔๙ รายการ ของคณะวิศวกรรมศาสตร์", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-06-30", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-07-03", "time": "13:00-16:30", "room": "EN1-204", "detail": "ใช้รับรองกรรมการตรวจประเมินผล EdPEx ผลการดำเนินงานปีการศึกษา 2568", "equipment": "ระบบห้องประชุม / สื่อทางไกล", "requestDate": "2026-07-03", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-07-11", "time": "08:30-16:30", "room": "EN1-217", "detail": "ใช้ในโครงการรับน้องใหม่สาขาโยธา", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-07-10", "leadDays": "1", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-07-12", "time": "08:30-16:30", "room": "EN1-217", "detail": "ใช้ในโครงการรับน้องสาขาแมคคาทรอนิค 67010310222", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-07-11", "leadDays": "1", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-07-15", "time": "08:30-16:30", "room": "EN4-อบรม2", "detail": "ต้อนรับและประชุมจากประเทศจีน", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-07-11", "leadDays": "4", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-07-16", "time": "08:30-16:30", "room": "EN4-อบรม2", "detail": "นำเสนออุปกรณ์สื่อการเรียนการสอนยานยนต์ไฟฟ้า", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-07-11", "leadDays": "5", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-07-15", "time": "13:00-16:30", "room": "EN1-204", "detail": "ประชุมวิชาการ ป.ตรี", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-07-14", "leadDays": "1", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-07-16", "time": "13:00-16:30", "room": "EN1-217", "detail": "โครงการตอนรับแขกผู้มีเกียรติชาวจีน", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ /ระบบเครื่องขยายเสียง", "requestDate": "2026-07-16", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-01-07", "time": "13:00-16:30", "room": "EN1-217", "detail": "โครงการปัจฉิมนิเทศ", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ / Smart TV", "requestDate": "2025-12-21", "leadDays": "17", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-02-10", "time": "13:00–15:00", "room": "EN1-106", "detail": "บริษัทไทออยมารับสมัครพร้อมนำเสนอ", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์", "requestDate": "2026-01-26", "leadDays": "15", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-02-13", "time": "09:00–12:00", "room": "EN1-217", "detail": "บรรยายบริษัท Sony", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ / Smart TV", "requestDate": "2026-01-26", "leadDays": "18", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-02-13", "time": "13:00–15:00", "room": "EN1-204", "detail": "บริษัท Sony นำเสนอ", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์", "requestDate": "2026-01-26", "leadDays": "18", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-01-26", "time": "13:00-16:30", "room": "EN1-204", "detail": "ประชุมภายในคณะฯ", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์", "requestDate": "2026-01-26", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-01-29", "time": "13:00-16:30", "room": "ศูนย์หม่อนไหม", "detail": "ติดตั้งจอโทรทัศน์สมาร์ททีวีที่ศูนย์หม่อนไหมเพื่อนำเสนอผลงานในการต้อนรับ", "equipment": "โทรทัศน์สมาร์ททีวี", "requestDate": "2026-01-29", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-02-02", "time": "13:00-16:30", "room": "EN1-312", "detail": "อบรมการใช้งานโปรแกรม SPSS", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์", "requestDate": "2026-01-30", "leadDays": "3", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-02-25", "time": "08:30-16:30", "room": "EN1-209", "detail": "โครงการแลกเปลี่ยนเรียนรู้เพื่อเสริมสร้างศักยภาพบุคลากร (ครั้งที่ 2)", "equipment": "โทรทัศน์สมาร์ททีวี / ระบบเครื่องขยายเสียง", "requestDate": "2026-02-16", "leadDays": "9", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-02-27", "time": "13:00-16:30", "room": "EN1-217", "detail": "บริษัท SCG บรรยาย", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ / Smart TV", "requestDate": "2026-02-27", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-03-02", "time": "16:30-20:30", "room": "EN1-217", "detail": "รุ่นพี่สอนน้องจัดโดยงานฝ่ายกิจการนิสิต", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ / Smart TV", "requestDate": "2026-03-02", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-03-03", "time": "16:30-20:30", "room": "EN1-217", "detail": "รุ่นพี่สอนน้องจัดโดยงานฝ่ายกิจการนิสิต", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ / Smart TV", "requestDate": "2026-03-02", "leadDays": "1", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-03-04", "time": "16:30-20:30", "room": "EN1-217", "detail": "รุ่นพี่สอนน้องจัดโดยงานฝ่ายกิจการนิสิต", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ / Smart TV", "requestDate": "2026-03-02", "leadDays": "2", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-03-05", "time": "16:30-20:30", "room": "EN1-217", "detail": "รุ่นพี่สอนน้องจัดโดยงานฝ่ายกิจการนิสิต", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ / Smart TV", "requestDate": "2026-03-02", "leadDays": "3", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-03-06", "time": "16:30-20:30", "room": "EN1-217", "detail": "รุ่นพี่สอนน้องจัดโดยงานฝ่ายกิจการนิสิต", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ / Smart TV", "requestDate": "2026-03-02", "leadDays": "4", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-03-18", "time": "06:30-12:00", "room": "EN1-209", "detail": "ทำบุญครบรอบวันสถาปนาคณะวิศวกรรมศาสตร์", "equipment": "ระบบเครื่องขยายเสียงพร้อมไมค์ไร้สาย", "requestDate": "2026-03-04", "leadDays": "14", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-03-11", "time": "08:30-16:30", "room": "EN1-209", "detail": "โครงการแลกเปลี่ยนเรียนรู้เพื่อเสริมสร้างศักยภาพบุคลากร (ครั้งที่ 3)", "equipment": "โทรทัศน์สมาร์ททีวี / ระบบเครื่องขยายเสียง", "requestDate": "2026-03-04", "leadDays": "7", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-03-11", "time": "13:00-16:30", "room": "EN1-217 , 201 , 206", "detail": "โครงการเลือกสาขา", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ / Smart TV", "requestDate": "2026-03-06", "leadDays": "5", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-03-26", "time": "08:30-16:30", "room": "EN1-202", "detail": "สอบโปรเจคต์ที่ En1-202", "equipment": "Smart Class Room", "requestDate": "2026-03-24", "leadDays": "2", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-04-02", "time": "09:30-12:00", "room": "EN1-204", "detail": "ลงนามเซ็นต์ MOU ยานยนต์ไฟฟ้า ประเทศจีน", "equipment": "โต๊ะลงนาม อุปกรณ์สนับสนับในการจัดงานระบบโสตทัศนูปกรณ์", "requestDate": "2026-04-02", "leadDays": "0", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-04-10", "time": "08:30-16:30", "room": "ลานข้างพระพุทธรูปประจำคณะฯ", "detail": "งานประเพณีสงกรานต์รดน้ำดำหัวผู้ใหญ่ประจำปี 2569", "equipment": "เครื่องขยายเสียง 2ชุด / ไมค์ไร้สาย / เครื่องคอมพิวเตอร์", "requestDate": "2026-04-08", "leadDays": "2", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-04-23", "time": "08:30-16:30", "room": "EN1-217", "detail": "งานฝึกซ้อมบัณฑิตรับปริญญาบัตร", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์ / Smart TV", "requestDate": "2026-04-17", "leadDays": "6", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}, {"date": "2026-04-30", "time": "09:00–12:00", "room": "EN1-204", "detail": "ประชุมภายในคณะฯ", "equipment": "ไมค์ / คอมพิวเตอร์ / โปรเจคเตอร์", "requestDate": "2026-04-24", "leadDays": "6", "successRate": "100", "readiness": "สำเร็จ", "issue": "ไม่มีปัญหา", "paperSaved": "2"}]
 </script>
 <script>
@@ -567,9 +570,9 @@
   const SHEET_ID = "1T4pXX-5GRC5_etLa4D82b4NSi5LsI18zyDecoXFjhOA";
   const SHEET_GID = ""; // ถ้าข้อมูลอยู่คนละแท็บ ใส่เลข gid ที่เห็นท้าย URL ตอนเปิดแท็บนั้น เช่น "482913"
   // ==========================================================================
-
+ 
   let events = JSON.parse(document.getElementById('eventData').textContent);
-
+ 
   const monthNamesTh = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน",
     "กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
   const weekdayFullTh = ["อาทิตย์","จันทร์","อังคาร","พุธ","พฤหัสบดี","ศุกร์","เสาร์"];
@@ -578,14 +581,14 @@
     received: { label: "รับเรื่องเรียบร้อย", cls: "received" },
     failed:   { label: "ไม่สำเร็จ",         cls: "failed"   }
   };
-
+ 
   const todayObj = new Date();
   const todayISO = toISO(todayObj);
   // แสดงเดือน/ปีปัจจุบันเสมอเมื่อเข้าชม ไม่ย้อนไปเดือนแรกที่มีข้อมูล
   let viewYear = todayObj.getFullYear();
   let viewMonth = todayObj.getMonth();
   let byDate = {};
-
+ 
   const monthLabel = document.getElementById('monthLabel');
   const calGrid = document.getElementById('calGrid');
   const metricRow = document.getElementById('metricRow');
@@ -598,7 +601,7 @@
   const modalDate = document.getElementById('modalDate');
   const modalSub = document.getElementById('modalSub');
   const modalBody = document.getElementById('modalBody');
-
+ 
   function toISO(d){
     return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
   }
@@ -618,35 +621,25 @@
   function escapeHtml(s){
     return (s||"").toString().replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   }
-
-  // รวมสถานะจากคอลัมน์ "เตรียมความพร้อม" + "ปัญหาระหว่างใช้งาน" เป็นสถานะเดียว
-  // - ยังไม่มีการกรอกผลใดๆ  -> รับเรื่องเรียบร้อย (แจ้งขอรับบริการแล้ว รอดำเนินการ/รอสรุปผล)
-  // - เตรียมพร้อมสำเร็จ และไม่มีปัญหาระหว่างใช้งาน -> สำเร็จ
-  // - นอกนั้น (มีปัญหา หรือเตรียมพร้อมไม่สำเร็จ) -> ไม่สำเร็จ
+ 
+  // อ่านสถานะจากคอลัมน์ "เตรียมความพร้อม" + "ปัญหาระหว่างใช้งาน" โดยจับคำตรงตัวทั้ง 3 สถานะ
+  // แทนการเดาแบบ "ไม่ใช่สำเร็จ = ไม่สำเร็จ" ซึ่งจะกลืนคำว่า "รับเรื่องเรียบร้อย" ไปเป็นไม่สำเร็จผิดๆ
+  // - เตรียมพร้อมสำเร็จ + ไม่มีปัญหา (หรือไม่ระบุปัญหา) -> สำเร็จ
+  // - พิมพ์ "ไม่สำเร็จ" ตรงๆ หรือมีข้อความปัญหาที่ไม่ใช่ "ไม่มีปัญหา" -> ไม่สำเร็จ
+  // - พิมพ์ "รับเรื่องเรียบร้อย" ตรงๆ หรือยังไม่กรอกอะไรเลย -> รับเรื่องเรียบร้อย
   function computeStatus(ev){
-  const prep = (ev.readiness || "").trim();
-  const issue = (ev.issue || "").trim();
-
-  // รับเรื่องเรียบร้อย
-  if (
-      prep === "รับเรื่องเรียบร้อย" ||
-      (!prep && !issue)
-  ) {
-      return "received";
+    const prep = (ev.readiness || "").trim();
+    const issue = (ev.issue || "").trim();
+ 
+    if(prep === "สำเร็จ" && (issue === "" || issue === "ไม่มีปัญหา")) return "success";
+    if(prep === "ไม่สำเร็จ") return "failed";
+    if(issue !== "" && issue !== "ไม่มีปัญหา") return "failed";
+    if(prep === "รับเรื่องเรียบร้อย" || prep === "") return "received";
+ 
+    // ค่าอื่นที่ไม่ตรงกับคำมาตรฐานทั้ง 3 -> ถือเป็นรับเรื่องเรียบร้อย (รอสรุปผล) เพื่อไม่ให้เหมาเป็นไม่สำเร็จผิดๆ
+    return "received";
   }
-
-  // สำเร็จ
-  if (
-      prep === "สำเร็จ" &&
-      (issue === "ไม่มีปัญหา" || !issue)
-  ) {
-      return "success";
-  }
-
-  // ไม่สำเร็จ
-  return "failed";
-}
-
+ 
   function regroup(){
     byDate = {};
     events.forEach(e => {
@@ -656,21 +649,21 @@
     });
     Object.values(byDate).forEach(list => list.sort((a,b) => (a.time||"").localeCompare(b.time||"")));
   }
-
+ 
   function renderMetrics(){
     const totalEvents = events.length;
     const rooms = new Set(events.map(e=>e.room)).size;
     const paperTotal = events.reduce((s,e)=> s + (parseFloat(e.paperSaved)||0), 0);
     const leadVals = events.map(e=>parseFloat(e.leadDays)).filter(v=>!isNaN(v));
     const avgLead = leadVals.length ? (leadVals.reduce((a,b)=>a+b,0)/leadVals.length) : 0;
-
+ 
     metricRow.innerHTML = `
       <div class="metric-card"><div class="metric-num">${totalEvents}</div><div class="metric-label">กิจกรรมทั้งหมด</div></div>
       <div class="metric-card"><div class="metric-num">${rooms}</div><div class="metric-label">ห้อง/สถานที่ที่ใช้งาน</div></div>
       <div class="metric-card"><div class="metric-num">${paperTotal.toLocaleString('th-TH')}</div><div class="metric-label">ลดการใช้กระดาษ (แผ่น)</div></div>
       <div class="metric-card"><div class="metric-num">${avgLead.toFixed(1)}</div><div class="metric-label">แจ้งล่วงหน้าเฉลี่ย (วัน)</div></div>
     `;
-
+ 
     const counts = { success:0, received:0, failed:0 };
     events.forEach(e => counts[e._status]++);
     const total = events.length || 1;
@@ -690,21 +683,21 @@
       `;
     }).join("");
   }
-
+ 
   function renderCalendar(){
     monthLabel.textContent = monthNamesTh[viewMonth] + " " + (viewYear + 543);
     calGrid.innerHTML = "";
-
+ 
     const firstOfMonth = new Date(viewYear, viewMonth, 1);
     const startWeekday = firstOfMonth.getDay();
     const daysInMonth = new Date(viewYear, viewMonth+1, 0).getDate();
     const daysInPrevMonth = new Date(viewYear, viewMonth, 0).getDate();
     const totalCells = Math.ceil((startWeekday + daysInMonth) / 7) * 7;
-
+ 
     for(let i=0; i<totalCells; i++){
       const dayOffset = i - startWeekday + 1;
       let cellDate, outside = false;
-
+ 
       if(dayOffset < 1){
         cellDate = new Date(viewYear, viewMonth-1, daysInPrevMonth + dayOffset);
         outside = true;
@@ -714,19 +707,19 @@
       } else {
         cellDate = new Date(viewYear, viewMonth, dayOffset);
       }
-
+ 
       const iso = toISO(cellDate);
       const dayEvents = byDate[iso] || [];
       const isToday = iso === todayISO;
-
+ 
       const cell = document.createElement('div');
       cell.className = 'cell' + (outside ? ' outside' : '') + (isToday ? ' today' : '') + (dayEvents.length ? ' has-events' : '');
-
+ 
       const dateNum = document.createElement('div');
       dateNum.className = 'date-num';
       dateNum.textContent = cellDate.getDate();
       cell.appendChild(dateNum);
-
+ 
       if(dayEvents.length){
         const chips = document.createElement('div');
         chips.className = 'chips';
@@ -747,16 +740,16 @@
         cell.appendChild(chips);
         cell.addEventListener('click', ()=> openModal(iso, cellDate, dayEvents));
       }
-
+ 
       calGrid.appendChild(cell);
     }
   }
-
+ 
   function openModal(iso, dateObj, dayEvents){
     modalDate.textContent = `วันที่ ${dateObj.getDate()} ${monthNamesTh[dateObj.getMonth()]} ${dateObj.getFullYear()+543}`;
     modalSub.textContent = `วัน${weekdayFullTh[dateObj.getDay()]} · ${dayEvents.length} กิจกรรม`;
     modalBody.innerHTML = "";
-
+ 
     dayEvents.forEach(ev=>{
       const meta = statusMeta[ev._status];
       const item = document.createElement('div');
@@ -777,20 +770,20 @@
       `;
       modalBody.appendChild(item);
     });
-
+ 
     overlay.classList.add('open');
   }
-
+ 
   function renderAll(){
     regroup();
     renderMetrics();
     renderCalendar();
   }
-
+ 
   document.getElementById('closeBtn').addEventListener('click', ()=> overlay.classList.remove('open'));
   overlay.addEventListener('click', (e)=>{ if(e.target === overlay) overlay.classList.remove('open'); });
   document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') overlay.classList.remove('open'); });
-
+ 
   document.getElementById('prevBtn').addEventListener('click', ()=>{
     viewMonth--; if(viewMonth < 0){ viewMonth = 11; viewYear--; }
     renderCalendar();
@@ -803,7 +796,7 @@
     viewYear = todayObj.getFullYear(); viewMonth = todayObj.getMonth();
     renderCalendar();
   });
-
+ 
   // ---- จับคู่หัวคอลัมน์ (label จาก gviz) ให้ยืดหยุ่นแม้เว้นวรรค/ลำดับต่างกัน ----
   const HEADER_MAP = {
     date:        ["วันที่ใช้งาน"],
@@ -818,21 +811,30 @@
     successRate: ["กิจกรรมดำเนินได้ตามแผน"],
     paperSaved:  ["ลดการใช้กระดาษ"]
   };
-
+ 
   function buildHeaderIndex(cols){
+    const labels = cols.map(c => ((c && (c.label || c.id)) || "").trim());
     const idx = {};
     Object.keys(HEADER_MAP).forEach(key=>{
       const candidates = HEADER_MAP[key];
       let found = -1;
-      for(let i=0;i<cols.length;i++){
-        const h = ((cols[i] && (cols[i].label || cols[i].id)) || "").trim();
-        if(candidates.some(c => h.indexOf(c) !== -1)){ found = i; break; }
+ 
+      // รอบที่ 1: จับคู่แบบตรงเป๊ะ (ป้องกันคอลัมน์ "ประทับเวลา" ถูกจับผิดเป็น "เวลา"
+      // เพราะสตริง "ประทับเวลา" มีคำว่า "เวลา" ซ้อนอยู่ข้างในและมักอยู่ก่อนคอลัมน์จริง)
+      for(let i=0;i<labels.length;i++){
+        if(candidates.indexOf(labels[i]) !== -1){ found = i; break; }
+      }
+      // รอบที่ 2: ถ้าไม่เจอแบบตรงเป๊ะ ค่อย fallback เป็นแบบ substring (เผื่อหัวคอลัมน์มีข้อความต่อท้าย เช่น "(%)")
+      if(found === -1){
+        for(let i=0;i<labels.length;i++){
+          if(candidates.some(c => labels[i].indexOf(c) !== -1)){ found = i; break; }
+        }
       }
       idx[key] = found;
     });
     return idx;
   }
-
+ 
   function cellText(row, i){
     if(i < 0 || !row.c || !row.c[i]) return "";
     const cell = row.c[i];
@@ -845,7 +847,7 @@
     // ลองจากค่าดิบก่อน (รูปแบบ Date(y,m,d) ของ gviz) แล้วค่อย fallback ไปข้อความที่จัดรูปแบบแล้ว
     return toISOFromThai(cell.v) || toISOFromThai(cell.f);
   }
-
+ 
   function gvizToEvents(table){
     const cols = table.cols || [];
     const idx = buildHeaderIndex(cols);
@@ -870,7 +872,7 @@
     });
     return out;
   }
-
+ 
   function setSyncState(state, text){
     syncDot.className = 'sync-dot' + (state ? ' ' + state : '');
     syncText.textContent = text;
@@ -878,19 +880,19 @@
   function fmtTime(d){
     return d.toLocaleTimeString('th-TH', {hour:'2-digit', minute:'2-digit'});
   }
-
+ 
   const CALLBACK_NAME = "__gvizCalendarCallback";
   let syncTimeoutId = null;
-
+ 
   function syncFromSheet(){
     setSyncState('loading', 'กำลังซิงก์ข้อมูล…');
     syncBtn.disabled = true;
     syncNote.textContent = "";
     syncNote.classList.remove('err-note');
-
+ 
     const prevScript = document.getElementById('gviz-jsonp-script');
     if(prevScript) prevScript.remove();
-
+ 
     function finish(){
       syncBtn.disabled = false;
       if(syncTimeoutId){ clearTimeout(syncTimeoutId); syncTimeoutId = null; }
@@ -901,7 +903,7 @@
       syncNote.textContent = 'ไม่สามารถเชื่อมต่อ Google Sheet ได้ (' + reasonText + ') กำลังแสดงข้อมูลชุดล่าสุดที่บันทึกไว้ในไฟล์นี้แทน';
       finish();
     }
-
+ 
     window[CALLBACK_NAME] = function(response){
       try{
         if(!response || response.status === 'error'){
@@ -921,30 +923,32 @@
         fail('อ่านข้อมูลที่ได้รับไม่สำเร็จ: ' + e.message);
       }
     };
-
+ 
     const gidParam = SHEET_GID ? ("&gid=" + encodeURIComponent(SHEET_GID)) : "";
     const url = "https://docs.google.com/spreadsheets/d/" + SHEET_ID +
       "/gviz/tq?tqx=out:json;responseHandler:" + CALLBACK_NAME + gidParam;
-
+ 
     const script = document.createElement('script');
     script.id = 'gviz-jsonp-script';
     script.src = url;
     script.onerror = function(){ fail('โหลดสคริปต์จาก Google Sheets ไม่สำเร็จ (เครือข่าย/สิทธิ์การเข้าถึง)'); };
     document.body.appendChild(script);
-
+ 
     syncTimeoutId = setTimeout(()=>{ fail('หมดเวลารอการตอบกลับจากชีท'); }, 10000);
   }
-
+ 
   syncBtn.addEventListener('click', syncFromSheet);
-
+ 
   // เริ่มต้น: วาดข้อมูลสำรองที่ฝังไว้ในไฟล์ก่อนทันที แล้วค่อยลองซิงก์ข้อมูลสด
   regroup();
   renderAll();
   setSyncState('', 'แสดงข้อมูลสำรองที่บันทึกไว้ในไฟล์');
   syncFromSheet();
-
+ 
 })();
-
+ 
 </script>
 </body>
 </html>
+ 
+
