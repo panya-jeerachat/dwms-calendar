@@ -282,6 +282,140 @@
   .status-pill.failed{color:var(--danger-ink); background:var(--danger-soft);}
   .status-pill.failed::before{background:var(--danger);}
 
+
+  /* ===== Tooltip (hover) ===== */
+  .tip{
+    position:fixed; z-index:80; pointer-events:none; max-width:300px;
+    background:#161A2E; color:#fff; border-radius:12px; padding:10px 12px;
+    font-size:12px; line-height:1.5; box-shadow:0 14px 34px -10px rgba(16,18,38,.55);
+    opacity:0; transform:translateY(4px); transition:opacity .12s, transform .12s;
+  }
+  .tip.show{opacity:1; transform:none;}
+  .tip-title{font-weight:700; font-size:13px; margin-bottom:5px; display:flex; align-items:center; gap:6px;}
+  .tip-title::before{content:""; width:8px; height:8px; border-radius:50%; background:linear-gradient(120deg,var(--a),var(--b));}
+  .tip-row{display:flex; gap:6px; align-items:baseline; justify-content:space-between;}
+  .tip-row span:last-child{font-weight:700; text-align:right;}
+  .tip-ev{display:flex; gap:6px; align-items:flex-start; padding:2px 0;}
+  .tip-ev i{width:7px; height:7px; border-radius:50%; flex-shrink:0; margin-top:6px; background:var(--success);}
+  .tip-ev i.received{background:var(--warn);} .tip-ev i.failed{background:var(--danger);}
+  .tip-ev b{font-family:'IBM Plex Mono',monospace; font-weight:600; margin-right:3px;}
+  .tip-ev em{font-style:normal; color:rgba(255,255,255,.7);}
+  .tip-hint{margin-top:6px; padding-top:6px; border-top:1px solid rgba(255,255,255,.15); color:#C7CCFF; font-size:11px;}
+  .tip .up{color:#6EE7B7;} .tip .down{color:#FDA4AF;}
+
+  /* การ์ดที่คลิกได้ */
+  .metric-card, .status-card{cursor:pointer; transition:transform .15s, box-shadow .15s, border-color .15s;}
+  .metric-card:hover, .status-card:hover, .metric-card:focus-visible, .status-card:focus-visible{
+    transform:translateY(-3px); box-shadow:0 16px 30px -16px color-mix(in srgb, var(--a) 70%, transparent);
+  }
+  .card-hint{
+    display:block; font-size:10.5px; font-weight:600; color:var(--accent-strong); margin-top:6px;
+    opacity:0; transition:opacity .15s;
+  }
+  .status-card .card-hint{color:var(--ink);}
+  .metric-card:hover .card-hint, .status-card:hover .card-hint,
+  .metric-card:focus-visible .card-hint, .status-card:focus-visible .card-hint{opacity:1;}
+  @media (hover:none){ .card-hint{opacity:.8;} }
+
+  .month-label{cursor:pointer; border-radius:10px; padding:2px 8px; transition:background .15s;}
+  .month-label:hover{background:var(--accent-soft);}
+  .summary-btn{
+    font-family:inherit; font-size:13px; font-weight:700; padding:8px 16px; border-radius:999px; border:none;
+    background:var(--grad); color:#fff; cursor:pointer; box-shadow:0 6px 14px -8px var(--a);
+  }
+  .summary-btn:hover{filter:brightness(1.08);}
+
+  /* ===== Monthly trend section ===== */
+  .trend-card{
+    margin-top:20px; background:var(--surface); border:1px solid var(--border); border-radius:18px;
+    box-shadow:var(--shadow); padding:20px 22px 18px;
+  }
+  .trend-head{display:flex; justify-content:space-between; align-items:flex-start; gap:14px; flex-wrap:wrap;}
+  .trend-head h2{font-family:'Prompt',sans-serif; font-size:20px; font-weight:700; margin:0; color:var(--accent-strong);}
+  .trend-sub{margin:2px 0 0; font-size:12.5px; color:var(--text-soft);}
+  .fy-select{
+    font-family:inherit; font-size:13px; font-weight:600; color:var(--accent-strong);
+    border:1.5px solid var(--a); border-radius:999px; padding:7px 14px; background:var(--surface); cursor:pointer;
+  }
+  .trend-tabs{display:flex; gap:6px; flex-wrap:wrap; margin:14px 0 6px;}
+  .trend-tab{
+    font-family:inherit; font-size:12.5px; font-weight:600; padding:6px 13px; border-radius:999px; cursor:pointer;
+    border:1.5px solid var(--border-strong); background:var(--surface); color:var(--text-soft);
+  }
+  .trend-tab:hover{border-color:var(--a); color:var(--accent-strong);}
+  .trend-tab[aria-selected="true"]{background:var(--grad); color:#fff; border-color:transparent;}
+  .chart-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch;}
+  .chart-wrap svg{display:block; width:100%; min-width:560px; height:auto;}
+  .chart-wrap text{font-family:'IBM Plex Sans Thai',sans-serif;}
+  .chart-bar{transform-box:fill-box; transform-origin:bottom; animation:grow .5s ease-out both;}
+  @keyframes grow{from{transform:scaleY(0);} to{transform:scaleY(1);}}
+  .hit{cursor:pointer; fill:transparent;}
+  .hit:hover{fill:color-mix(in srgb, var(--a) 7%, transparent);}
+  .chart-legend{display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--text-soft); margin-top:4px;}
+  .chart-legend i{display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:5px; vertical-align:-1px;}
+  .trend-summary{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:14px;}
+  .hl{
+    font-family:inherit; text-align:left; cursor:pointer; border:1.5px solid var(--border); background:#FAFBFE;
+    border-radius:12px; padding:10px 12px; transition:border-color .15s, background .15s;
+  }
+  .hl:hover{border-color:var(--a); background:var(--accent-soft);}
+  .hl-label{font-size:11.5px; color:var(--text-soft); display:block;}
+  .hl-value{font-family:'Prompt',sans-serif; font-size:17px; font-weight:700; color:var(--accent-strong); display:block; margin-top:1px;}
+  .hl-month{font-size:12px; color:var(--text); font-weight:500;}
+
+  /* ===== KPI modal ===== */
+  .kpi-modal{max-width:820px;}
+  .head-actions{display:flex; gap:6px; flex-shrink:0;}
+  .head-actions .close-btn[hidden]{display:none;}
+  .kpi-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:14px;}
+  .kpi-tile{background:#fff; border:1px solid var(--border); border-radius:12px; padding:11px 12px;}
+  .kpi-tile .v{font-family:'Prompt',sans-serif; font-size:22px; font-weight:700; color:var(--accent-strong); line-height:1.15;}
+  .kpi-tile .l{font-size:11.5px; color:var(--text-soft); margin-top:2px;}
+  .delta{display:inline-flex; align-items:center; gap:3px; font-size:11px; font-weight:700; margin-top:6px; padding:1px 7px; border-radius:99px; background:#EEF0F6; color:var(--text-soft);}
+  .delta.up{background:var(--success-soft); color:var(--success-ink);}
+  .delta.down{background:var(--danger-soft); color:var(--danger-ink);}
+  .panel{background:#fff; border:1px solid var(--border); border-radius:12px; padding:13px 14px; margin-bottom:12px;}
+  .panel h3{font-size:13.5px; font-weight:700; margin:0 0 10px; color:var(--text);}
+  .panel-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .panel-grid .panel{margin-bottom:0;}
+  .panel-grid + .panel, .panel-grid + .panel-grid{margin-top:12px;}
+  .stack-bar{display:flex; height:14px; border-radius:99px; overflow:hidden; background:#EEF0F6;}
+  .stack-bar span{height:100%;}
+  .hbar{display:grid; grid-template-columns:minmax(0,1fr) auto; gap:2px 10px; align-items:center; font-size:12.5px; margin-bottom:8px;}
+  .hbar-name{white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .hbar-n{font-weight:700; color:var(--accent-strong); font-size:12px;}
+  .hbar-track{grid-column:1 / -1; height:7px; border-radius:99px; background:var(--accent-soft); overflow:hidden;}
+  .hbar-track span{display:block; height:100%; border-radius:99px; background:var(--grad);}
+  .cols{display:flex; align-items:flex-end; gap:6px; height:96px;}
+  .col{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; gap:3px;}
+  .col-bar{width:100%; max-width:30px; border-radius:6px 6px 3px 3px; background:var(--grad); min-height:2px;}
+  .col-n{font-size:11px; font-weight:700; color:var(--accent-strong);}
+  .col-l{font-size:11px; color:var(--text-soft);}
+  .stat-list{display:grid; grid-template-columns:repeat(4,1fr); gap:10px;}
+  .stat-list button{font-family:inherit; text-align:left; border:1px solid var(--border); background:#fff; border-radius:12px; padding:10px 12px; cursor:pointer;}
+  .stat-list button:hover{border-color:var(--a);}
+  .big-row{display:flex; gap:24px; flex-wrap:wrap; align-items:baseline; margin-bottom:10px;}
+  .big-row .v{font-family:'Prompt',sans-serif; font-size:32px; font-weight:700; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .big-row .l{font-size:12px; color:var(--text-soft);}
+  .ev-line{display:flex; gap:10px; align-items:baseline; padding:7px 0; border-bottom:1px dashed var(--border); font-size:12.5px; cursor:pointer;}
+  .ev-line:last-child{border-bottom:none;}
+  .ev-line:hover .ev-d{color:var(--accent-strong);}
+  .ev-line b{font-family:'IBM Plex Mono',monospace; font-size:12px; white-space:nowrap;}
+  .ev-d{flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .kpi-actions{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; margin-top:4px;}
+  .link-btn{font-family:inherit; font-size:12.5px; font-weight:600; background:none; border:none; color:var(--accent-strong); cursor:pointer; padding:0; text-decoration:underline;}
+  .empty-state{text-align:center; padding:26px 10px; color:var(--text-soft); font-size:13.5px;}
+
+  @media (max-width:760px){
+    .trend-summary{grid-template-columns:repeat(2,1fr);}
+    .kpi-grid{grid-template-columns:repeat(2,1fr);}
+    .kpi-grid .kpi-tile:first-child{grid-column:1 / -1;}
+    .panel-grid{grid-template-columns:1fr;}
+    .stat-list{grid-template-columns:repeat(2,1fr);}
+    .trend-card{padding:16px 14px;}
+  }
+  @media (prefers-reduced-motion:reduce){ .chart-bar{animation:none;} .tip{transition:none;} }
+
   @media (prefers-reduced-motion:reduce){
     header.top{animation:none;}
     .modal{animation:none;}
@@ -350,6 +484,7 @@
       <div class="month-label" id="monthLabel"></div>
       <button class="nav-btn" id="nextBtn" aria-label="เดือนถัดไป">›</button>
       <button class="today-btn" id="todayBtn">วันนี้</button>
+      <button class="summary-btn" id="monthSummaryBtn" type="button">📊 สรุป KPI เดือนนี้</button>
     </div>
     <div class="legend">
       <span><span class="legend-dot" style="background:var(--success)"></span>สำเร็จ</span>
@@ -365,7 +500,20 @@
     <div class="grid" id="calGrid"></div>
   </div>
 
-  <p class="foot-note">คลิกวันที่ที่มีกิจกรรมเพื่อดูรายละเอียด · เชื่อมข้อมูลสดจาก Google Sheet ของฝ่ายโสตทัศนูปกรณ์</p>
+  <section class="trend-card" id="trendCard" aria-labelledby="trendTitle">
+    <div class="trend-head">
+      <div>
+        <h2 id="trendTitle">แนวโน้มตัวชี้วัดผลการดำเนินงานรายเดือน</h2>
+        <p class="trend-sub" id="trendSub"></p>
+      </div>
+      <select class="fy-select" id="fySelect" aria-label="เลือกปีงบประมาณ"></select>
+    </div>
+    <div class="trend-tabs" id="trendTabs" role="tablist"></div>
+    <div id="trendChart"></div>
+    <div class="trend-summary" id="trendSummary"></div>
+  </section>
+
+  <p class="foot-note">ชี้เมาส์เพื่อดูข้อมูลย่อ · คลิกวันที่ การ์ดตัวชี้วัด หรือแท่งกราฟเพื่อดูรายละเอียด · เชื่อมข้อมูลสดจาก Google Sheet ของฝ่ายโสตทัศนูปกรณ์</p>
 
   <footer class="site-footer">
     <p>© 2569 คณะวิศวกรรมศาสตร์ มหาวิทยาลัยมหาสารคาม</p>
@@ -386,6 +534,25 @@
     <div class="modal-body" id="modalBody"></div>
   </div>
 </div>
+
+<div class="overlay" id="kpiOverlay">
+  <div class="modal kpi-modal" role="dialog" aria-modal="true" aria-labelledby="kpiTitle">
+    <div class="modal-head" id="kpiHead">
+      <div>
+        <div class="modal-date" id="kpiTitle"></div>
+        <div class="modal-sub" id="kpiSub"></div>
+      </div>
+      <div class="head-actions">
+        <button class="close-btn" id="kpiPrev" aria-label="เดือนก่อนหน้า" title="เดือนก่อนหน้า">‹</button>
+        <button class="close-btn" id="kpiNext" aria-label="เดือนถัดไป" title="เดือนถัดไป">›</button>
+        <button class="close-btn" id="kpiClose" aria-label="ปิด">✕</button>
+      </div>
+    </div>
+    <div class="modal-body" id="kpiBody"></div>
+  </div>
+</div>
+
+<div class="tip" id="tip" role="tooltip"></div>
 
 <div class="overlay" id="requestOverlay">
   <div class="modal request-modal">
@@ -645,11 +812,11 @@
     const onPlanPct = Math.round((counts.success/total)*100);
 
     metricRow.innerHTML = `
-      <div class="metric-card"><div class="metric-num">${totalEvents}</div><div class="metric-label">กิจกรรมทั้งหมด</div></div>
-      <div class="metric-card"><div class="metric-num">${timeSavedMin.toLocaleString('th-TH')}</div><div class="metric-label">เวลาให้บริการลดลง (นาที)</div></div>
-      <div class="metric-card"><div class="metric-num">${paperTotal.toLocaleString('th-TH')}</div><div class="metric-label">ลดการใช้กระดาษ (แผ่น)</div></div>
-      <div class="metric-card"><div class="metric-num">${avgLead.toFixed(1)}</div><div class="metric-label">แจ้งล่วงหน้าเฉลี่ย (วัน)</div></div>
-      <div class="metric-card"><div class="metric-num">${onPlanPct}%</div><div class="metric-label">กิจกรรมดำเนินได้ตามแผน (%)</div></div>
+      <div class="metric-card" data-kpi="count"><div class="metric-num">${totalEvents}</div><div class="metric-label">กิจกรรมทั้งหมด</div></div>
+      <div class="metric-card" data-kpi="time"><div class="metric-num">${timeSavedMin.toLocaleString('th-TH')}</div><div class="metric-label">เวลาให้บริการลดลง (นาที)</div></div>
+      <div class="metric-card" data-kpi="paper"><div class="metric-num">${paperTotal.toLocaleString('th-TH')}</div><div class="metric-label">ลดการใช้กระดาษ (แผ่น)</div></div>
+      <div class="metric-card" data-kpi="lead"><div class="metric-num">${avgLead.toFixed(1)}</div><div class="metric-label">แจ้งล่วงหน้าเฉลี่ย (วัน)</div></div>
+      <div class="metric-card" data-kpi="onplan"><div class="metric-num">${onPlanPct}%</div><div class="metric-label">กิจกรรมดำเนินได้ตามแผน (%)</div></div>
     `;
 
     statusRow.innerHTML = ["success","received","failed"].map(key=>{
@@ -657,7 +824,7 @@
       const n = counts[key];
       const pct = Math.round((n/total)*100);
       return `
-        <div class="status-card ${meta.cls}">
+        <div class="status-card ${meta.cls}" data-status="${key}">
           <div class="status-top">
             <span class="status-name">${meta.label}</span>
             <span class="status-count">${n}</span>
@@ -747,6 +914,7 @@
         // ดึงรายการจาก byDate ตอนคลิกเสมอ เพื่อให้ได้ข้อมูลชุดล่าสุดครบทุกรายการ
         const open = ()=> openModal(iso, cellDate, byDate[iso] || dayEvents);
         cell.addEventListener('click', open);
+        bindTip(cell, ()=> dayTipHTML(cellDate, byDate[iso] || dayEvents));
         cell.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); open(); } });
       }
 
@@ -790,10 +958,373 @@
     modalBody.scrollTop = 0;
     overlay.classList.add('open');
   }
+  // =====================================================================
+  //  INSIGHTS: tooltip เมื่อชี้เมาส์ · pop up KPI · แนวโน้มรายเดือนย้อนหลัง
+  // =====================================================================
+  const monthShortTh = ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];
+  const weekdayShortTh = ["อา","จ","อ","พ","พฤ","ศ","ส"];
+  const MIN_PER_EVENT = 45;
+  const KPI_DEFS = {
+    count:  { label:"กิจกรรมทั้งหมด",       unit:"กิจกรรม", icon:"📅", desc:"จำนวนกิจกรรมที่ขอรับการสนับสนุนโสตทัศนูปกรณ์", fmt:v=>fmtN(v) },
+    onplan: { label:"ดำเนินได้ตามแผน",      unit:"%",       icon:"🎯", desc:"สัดส่วนกิจกรรมสถานะ “สำเร็จ” ต่อกิจกรรมทั้งหมด", fmt:v=>Math.round(v)+"%", pct:true },
+    lead:   { label:"แจ้งล่วงหน้าเฉลี่ย",   unit:"วัน",     icon:"⏱", desc:"ค่าเฉลี่ยจำนวนวันที่แจ้งก่อนวันใช้งาน ยิ่งมากยิ่งเตรียมความพร้อมได้ดี", fmt:v=>v.toFixed(1) },
+    paper:  { label:"ลดการใช้กระดาษ",       unit:"แผ่น",    icon:"🌿", desc:"ผลรวมแผ่นกระดาษที่ไม่ต้องใช้ เพราะยื่นคำขอผ่านระบบออนไลน์", fmt:v=>fmtN(v) },
+    time:   { label:"เวลาให้บริการลดลง",    unit:"นาที",    icon:"⚡", desc:"คิดจาก "+MIN_PER_EVENT+" นาทีต่อกิจกรรม ที่ลดลงจากการขอผ่านระบบออนไลน์", fmt:v=>fmtN(v) }
+  };
+  const KPI_ORDER = ["count","onplan","lead","paper","time"];
+  const ST_COLORS = { success:"#10B981", received:"#F59E0B", failed:"#F43F5E" };
+
+  function fmtN(v){ return Math.round(v).toLocaleString('th-TH'); }
+  function pad2(n){ return String(n).padStart(2,"0"); }
+  function keyOf(y,m){ return y + "-" + pad2(m+1); }
+  function parseKey(k){ const [y,m] = k.split("-").map(Number); return { y, m:m-1 }; }
+  function shiftKey(k, d){ const {y,m} = parseKey(k); const t = new Date(y, m+d, 1); return keyOf(t.getFullYear(), t.getMonth()); }
+  function monthTitle(k){ const {y,m} = parseKey(k); return monthNamesTh[m] + " " + (y+543); }
+  function monthShort(k){ const {y,m} = parseKey(k); return monthShortTh[m] + " " + String(y+543).slice(-2); }
+  function fyOf(iso){ const y = +iso.slice(0,4), m = +iso.slice(5,7); return (m >= 10 ? y+1 : y) + 543; }
+  function fyKeys(fyBE){ const ce = fyBE - 543; const out = []; for(let i=0;i<12;i++){ const t = new Date(ce-1, 9+i, 1); out.push(keyOf(t.getFullYear(), t.getMonth())); } return out; }
+  const todayKey = keyOf(todayObj.getFullYear(), todayObj.getMonth());
+
+  let monthMap = {};
+  let trendFY = fyOf(todayISO);
+  let trendMetric = "count";
+
+  function buildMonthMap(){
+    monthMap = {};
+    events.forEach(e => { const k = e.date.slice(0,7); (monthMap[k] = monthMap[k] || []).push(e); });
+  }
+  function topCounts(list, pick, splitter){
+    const map = {};
+    list.forEach(e => {
+      const raw = pick(e) || "";
+      (splitter ? raw.split(splitter) : [raw]).map(s => s.trim()).filter(Boolean)
+        .forEach(s => { map[s] = (map[s]||0) + 1; });
+    });
+    return Object.entries(map).sort((a,b)=> b[1]-a[1]);
+  }
+  function statsOf(list){
+    list = list || [];
+    const s = { count:list.length, success:0, received:0, failed:0, paper:0, list };
+    list.forEach(e => { s[e._status || computeStatus(e)]++; s.paper += parseFloat(e.paperSaved)||0; });
+    const leads = list.map(e=>parseFloat(e.leadDays)).filter(v=>!isNaN(v));
+    s.lead = leads.length ? leads.reduce((a,b)=>a+b,0)/leads.length : null;
+    s.onplan = list.length ? s.success/list.length*100 : null;
+    s.time = list.length * MIN_PER_EVENT;
+    return s;
+  }
+  function statsForKeys(keys){ return statsOf(keys.flatMap(k => monthMap[k] || [])); }
+  function deltaHTML(cur, prev, key){
+    if(cur === null || prev === null || prev === undefined) return `<span class="delta">— ไม่มีข้อมูลเทียบ</span>`;
+    const d = cur - prev;
+    if(Math.abs(d) < 0.05) return `<span class="delta">● เท่าเดิม</span>`;
+    const txt = key === "onplan" ? Math.abs(Math.round(d)) + " จุด%" : (key === "lead" ? Math.abs(d).toFixed(1) : fmtN(Math.abs(d)));
+    return `<span class="delta ${d>0?'up':'down'}">${d>0?'▲':'▼'} ${txt}</span>`;
+  }
+  function fmtVal(key, v){ return v === null || v === undefined ? "–" : KPI_DEFS[key].fmt(v); }
+
+  // ---------------- Tooltip ----------------
+  const tip = document.getElementById('tip');
+  function moveTip(e){
+    const pad = 14, r = tip.getBoundingClientRect();
+    let x = e.clientX + pad, y = e.clientY + pad;
+    if(x + r.width > innerWidth - 8) x = e.clientX - r.width - pad;
+    if(y + r.height > innerHeight - 8) y = e.clientY - r.height - pad;
+    tip.style.left = Math.max(8,x) + "px"; tip.style.top = Math.max(8,y) + "px";
+  }
+  function hideTip(){ tip.classList.remove('show'); }
+  function bindTip(el, htmlFn){
+    el.addEventListener('pointerenter', e => {
+      if(e.pointerType !== 'mouse') return;
+      tip.innerHTML = htmlFn(); tip.classList.add('show'); moveTip(e);
+    });
+    el.addEventListener('pointermove', e => { if(e.pointerType === 'mouse' && tip.classList.contains('show')) moveTip(e); });
+    el.addEventListener('pointerleave', hideTip);
+    el.addEventListener('click', hideTip);
+  }
+  function monthTipHTML(k){
+    const s = statsOf(monthMap[k]), p = statsOf(monthMap[shiftKey(k,-1)]);
+    if(!s.count) return `<div class="tip-title">${monthTitle(k)}</div>ยังไม่มีกิจกรรม<div class="tip-hint">คลิกเพื่อดูสรุปเดือน</div>`;
+    const d = s.count - p.count;
+    return `<div class="tip-title">${monthTitle(k)}</div>
+      <div class="tip-row"><span>กิจกรรม</span><span>${s.count} ${d ? `<span class="${d>0?'up':'down'}">(${d>0?'▲':'▼'}${Math.abs(d)})</span>` : ""}</span></div>
+      <div class="tip-row"><span>สำเร็จ / รับเรื่อง / ไม่สำเร็จ</span><span>${s.success} / ${s.received} / ${s.failed}</span></div>
+      <div class="tip-row"><span>ดำเนินได้ตามแผน</span><span>${fmtVal('onplan', s.onplan)}</span></div>
+      <div class="tip-row"><span>แจ้งล่วงหน้าเฉลี่ย</span><span>${fmtVal('lead', s.lead)} วัน</span></div>
+      <div class="tip-hint">คลิกเพื่อดูสรุป KPI ของเดือนนี้</div>`;
+  }
+  function dayTipHTML(dateObj, list){
+    const rows = list.slice(0,5).map(e => `<div class="tip-ev"><i class="${e._status}"></i><div><b>${escapeHtml((e.time||"").split("-")[0])}</b>${escapeHtml(e.room)}<br><em>${escapeHtml((e.detail||"").slice(0,60))}${(e.detail||"").length>60?"…":""}</em></div></div>`).join("");
+    return `<div class="tip-title">${weekdayFullTh[dateObj.getDay()]} ${dateObj.getDate()} ${monthNamesTh[dateObj.getMonth()]} · ${list.length} กิจกรรม</div>${rows}
+      ${list.length > 5 ? `<div class="tip-ev"><em>และอีก ${list.length-5} รายการ</em></div>` : ""}
+      <div class="tip-hint">คลิกเพื่อดูรายละเอียดทั้งหมด</div>`;
+  }
+  function kpiTipHTML(key){
+    const def = KPI_DEFS[key];
+    const cur = statsOf(monthMap[todayKey]), prev = statsOf(monthMap[shiftKey(todayKey,-1)]);
+    return `<div class="tip-title">${def.icon} ${def.label}</div>${def.desc}
+      <div class="tip-row" style="margin-top:6px"><span>${monthTitle(todayKey)}</span><span>${fmtVal(key, cur[key])}</span></div>
+      <div class="tip-row"><span>${monthTitle(shiftKey(todayKey,-1))}</span><span>${fmtVal(key, prev[key])}</span></div>
+      <div class="tip-hint">คลิกเพื่อดูแนวโน้มรายเดือน</div>`;
+  }
+  function statusTipHTML(st){
+    const cur = statsOf(monthMap[todayKey]);
+    return `<div class="tip-title">${statusMeta[st].label}</div>
+      <div class="tip-row"><span>เดือนนี้ (${monthShort(todayKey)})</span><span>${cur[st]} กิจกรรม</span></div>
+      <div class="tip-hint">คลิกเพื่อดูแนวโน้มและรายการล่าสุด</div>`;
+  }
+
+  // ---------------- SVG bar chart ----------------
+  function niceMax(v){
+    if(v <= 0) return 4;
+    const raw = v/4, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+    const step = [1,2,5,10].map(x=>x*mag).find(x=>x >= raw);
+    return Math.ceil(v/step)*step;
+  }
+  function renderChart(el, cfg){
+    const keys = cfg.keys, n = keys.length;
+    const W = 760, H = cfg.compact ? 210 : 260, L = 42, R = 64, T = 24, B = 40;
+    const pw = W-L-R, ph = H-T-B, slot = pw/n, bw = Math.min(40, slot*.62);
+    const items = keys.map(k => { const s = statsOf(monthMap[k]); return { k, s, future: k > todayKey, v: k > todayKey ? null : cfg.value(s) }; });
+    const vals = items.map(i=>i.v).filter(v=>v!==null);
+    const max = cfg.pct ? 100 : niceMax(Math.max(0, ...vals));
+    const y = v => T + ph - (v/max)*ph;
+    let svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${escapeHtml(cfg.title||'กราฟแนวโน้มรายเดือน')}"><defs>`;
+    items.forEach((it,i)=>{ const [a,b] = MONTH_THEMES[parseKey(it.k).m]; svg += `<linearGradient id="${cfg.id}g${i}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`; });
+    svg += `</defs>`;
+    for(let g=0; g<=4; g++){
+      const gv = max*g/4, gy = y(gv);
+      svg += `<line x1="${L}" x2="${W-R}" y1="${gy}" y2="${gy}" stroke="#E3E6F0" ${g?'stroke-dasharray="3 4"':''}/>`;
+      svg += `<text x="${L-8}" y="${gy+4}" text-anchor="end" font-size="11" fill="#8C92AC">${cfg.pct ? Math.round(gv)+'%' : (gv%1 ? gv.toFixed(1) : fmtN(gv))}</text>`;
+    }
+    items.forEach((it,i)=>{
+      const x = L + i*slot + (slot-bw)/2, cx = x + bw/2, {m, y:yy} = parseKey(it.k);
+      if(it.k === cfg.highlight) svg += `<rect x="${L+i*slot+2}" y="${T-14}" width="${slot-4}" height="${ph+14}" rx="10" fill="${MONTH_THEMES[m][0]}" opacity=".08"/>`;
+      if(it.v !== null && it.v > 0){
+        if(cfg.stacked){
+          let base = T + ph;
+          ["success","received","failed"].forEach(st => {
+            const h = it.s[st]/max*ph; if(!h) return; base -= h;
+            svg += `<rect class="chart-bar" x="${x}" y="${base}" width="${bw}" height="${h}" fill="${ST_COLORS[st]}" style="animation-delay:${i*35}ms"/>`;
+          });
+        } else {
+          svg += `<rect class="chart-bar" x="${x}" y="${y(it.v)}" width="${bw}" height="${T+ph-y(it.v)}" rx="6" fill="url(#${cfg.id}g${i})" style="animation-delay:${i*35}ms"/>`;
+        }
+      }
+      const label = it.future ? "" : (it.v === null ? "–" : cfg.fmt(it.v));
+      svg += `<text x="${cx}" y="${(it.v ? y(it.v) : T+ph) - 6}" text-anchor="middle" font-size="12" font-weight="700" fill="${it.future ? '#C4C8D8' : '#2A2F4F'}">${label}</text>`;
+      svg += `<text x="${cx}" y="${H-B+18}" text-anchor="middle" font-size="12" font-weight="${it.k===cfg.highlight?700:500}" fill="${it.future?'#B8BDD0':'#565C78'}">${monthShortTh[m]}</text>`;
+      svg += `<text x="${cx}" y="${H-B+32}" text-anchor="middle" font-size="10" fill="#A3A8BE">${String(yy+543).slice(-2)}</text>`;
+    });
+    if(vals.length){
+      const avg = vals.reduce((a,b)=>a+b,0)/vals.length, ay = y(avg);
+      svg += `<line x1="${L}" x2="${W-R}" y1="${ay}" y2="${ay}" stroke="#161A2E" stroke-width="1.3" stroke-dasharray="6 5" opacity=".55"/>`;
+      svg += `<text x="${W-R+6}" y="${ay-3}" font-size="11" font-weight="700" fill="#161A2E">เฉลี่ย</text><text x="${W-R+6}" y="${ay+11}" font-size="11" fill="#565C78">${cfg.fmt(avg)}</text>`;
+    }
+    items.forEach((it,i)=>{ svg += `<rect class="hit" data-k="${it.k}" x="${L+i*slot}" y="${T-14}" width="${slot}" height="${ph+B+14}" rx="8" tabindex="0" role="button" aria-label="${monthTitle(it.k)}"/>`; });
+    svg += `</svg>`;
+    el.innerHTML = `<div class="chart-wrap">${svg}</div>` + (cfg.stacked ? `<div class="chart-legend"><span><i style="background:${ST_COLORS.success}"></i>สำเร็จ</span><span><i style="background:${ST_COLORS.received}"></i>รับเรื่องเรียบร้อย</span><span><i style="background:${ST_COLORS.failed}"></i>ไม่สำเร็จ</span><span>- - - ค่าเฉลี่ยต่อเดือน</span></div>` : `<div class="chart-legend"><span>- - - ค่าเฉลี่ยต่อเดือน · คลิกแท่งเพื่อดูสรุปเดือนนั้น</span></div>`);
+    el.querySelectorAll('.hit').forEach(h => {
+      const k = h.dataset.k;
+      bindTip(h, () => monthTipHTML(k));
+      h.addEventListener('click', () => openMonthKpi(k));
+      h.addEventListener('keydown', e => { if(e.key==='Enter' || e.key===' '){ e.preventDefault(); openMonthKpi(k); } });
+    });
+  }
+
+  // ---------------- Trend section ----------------
+  const trendChart = document.getElementById('trendChart');
+  const trendTabs = document.getElementById('trendTabs');
+  const trendSummary = document.getElementById('trendSummary');
+  const fySelect = document.getElementById('fySelect');
+  function renderTrend(){
+    const fys = [...new Set(events.map(e => fyOf(e.date)).concat([fyOf(todayISO)]))].sort((a,b)=>b-a);
+    if(fys.indexOf(trendFY) === -1) trendFY = fys[0];
+    fySelect.innerHTML = fys.map(f => `<option value="${f}" ${f===trendFY?'selected':''}>ปีงบประมาณ ${f}</option>`).join("");
+    const keys = fyKeys(trendFY);
+    document.getElementById('trendSub').textContent =
+      `${monthShort(keys[0])} – ${monthShort(keys[11])} · ชี้เมาส์ที่แท่งกราฟเพื่อดูตัวเลข คลิกเพื่อดูสรุป KPI ย้อนหลังรายเดือน`;
+    trendTabs.innerHTML = KPI_ORDER.map(k => `<button class="trend-tab" role="tab" data-k="${k}" aria-selected="${k===trendMetric}">${KPI_DEFS[k].icon} ${KPI_DEFS[k].label}</button>`).join("");
+    trendTabs.querySelectorAll('.trend-tab').forEach(b => b.addEventListener('click', ()=>{ trendMetric = b.dataset.k; renderTrend(); }));
+    const def = KPI_DEFS[trendMetric];
+    renderChart(trendChart, { id:"tr", keys, value:s=>s[trendMetric], fmt:def.fmt, pct:def.pct, stacked:trendMetric==="count", highlight:keyOf(viewYear, viewMonth), title:def.label });
+
+    // ไฮไลต์ที่น่าสนใจ
+    const past = keys.filter(k => k <= todayKey && (monthMap[k]||[]).length);
+    const S = k => statsOf(monthMap[k]);
+    const best = (fn) => past.reduce((b,k) => (b===null || fn(S(k)) >= fn(S(b))) ? k : b, null);
+    const hl = [];
+    const busiest = best(s=>s.count);
+    if(busiest) hl.push({ k:busiest, label:"เดือนที่มีกิจกรรมมากที่สุด", value:S(busiest).count+" กิจกรรม" });
+    const bestPlan = best(s=>s.onplan);
+    if(bestPlan) hl.push({ k:bestPlan, label:"ดำเนินได้ตามแผนสูงสุด", value:fmtVal('onplan', S(bestPlan).onplan) });
+    const bestLead = best(s=>s.lead===null?-1:s.lead);
+    if(bestLead) hl.push({ k:bestLead, label:"แจ้งล่วงหน้าเฉลี่ยนานที่สุด", value:fmtVal('lead', S(bestLead).lead)+" วัน" });
+    const latest = past[past.length-1];
+    if(latest){
+      const c = S(latest).count, p = statsOf(monthMap[shiftKey(latest,-1)]).count;
+      const txt = p ? `${c>=p?'▲':'▼'} ${Math.abs(Math.round((c-p)/p*100))}% จากเดือนก่อน` : `${c} กิจกรรม`;
+      hl.push({ k:latest, label:"เดือนล่าสุดที่มีข้อมูล", value:txt });
+    }
+    trendSummary.innerHTML = hl.length ? hl.map(h => `<button class="hl" data-k="${h.k}"><span class="hl-label">${h.label}</span><span class="hl-value">${h.value}</span><span class="hl-month">${monthTitle(h.k)}</span></button>`).join("")
+      : `<div class="empty-state" style="grid-column:1/-1">ยังไม่มีกิจกรรมในปีงบประมาณนี้</div>`;
+    trendSummary.querySelectorAll('.hl').forEach(b => { bindTip(b, ()=>monthTipHTML(b.dataset.k)); b.addEventListener('click', ()=> openMonthKpi(b.dataset.k)); });
+  }
+  fySelect.addEventListener('change', ()=>{ trendFY = +fySelect.value; renderTrend(); });
+
+  // ---------------- KPI modal ----------------
+  const kpiOverlay = document.getElementById('kpiOverlay');
+  const kpiHead = document.getElementById('kpiHead');
+  const kpiTitle = document.getElementById('kpiTitle');
+  const kpiSub = document.getElementById('kpiSub');
+  const kpiBody = document.getElementById('kpiBody');
+  const kpiPrev = document.getElementById('kpiPrev');
+  const kpiNext = document.getElementById('kpiNext');
+  let kpiMonthKey = null;
+  function openKpi(){ hideTip(); kpiOverlay.classList.add('open'); kpiBody.scrollTop = 0; }
+  function closeKpi(){ kpiOverlay.classList.remove('open'); }
+  function setHead(k){
+    if(k){ const [a,b] = MONTH_THEMES[parseKey(k).m]; kpiHead.style.background = `linear-gradient(120deg, ${a}, ${b})`; }
+    else kpiHead.style.background = "";
+  }
+  function hbars(entries, total){
+    if(!entries.length) return `<div class="empty-state" style="padding:8px">—</div>`;
+    const max = entries[0][1];
+    return entries.slice(0,5).map(([name,n]) => `<div class="hbar"><span class="hbar-name" title="${escapeHtml(name)}">${escapeHtml(name)}</span><span class="hbar-n">${n}</span><div class="hbar-track"><span style="width:${n/max*100}%"></span></div></div>`).join("");
+  }
+  function cols(labels, values){
+    const max = Math.max(1, ...values);
+    return `<div class="cols">` + labels.map((l,i)=> `<div class="col"><span class="col-n">${values[i]||""}</span><div class="col-bar" style="height:${values[i]/max*70}%;${values[i]?'':'opacity:.25'}"></div><span class="col-l">${l}</span></div>`).join("") + `</div>`;
+  }
+  function openDayFromIso(iso){
+    const [y,m,d] = iso.split("-").map(Number);
+    closeKpi(); openModal(iso, new Date(y, m-1, d), byDate[iso] || []);
+  }
+  function eventLines(list){
+    return list.map(e => `<div class="ev-line" data-iso="${e.date}"><b>${e.date.slice(8)}/${e.date.slice(5,7)}</b><b>${escapeHtml((e.time||"").split("-")[0])}</b><span class="ev-d">${escapeHtml(e.room)} · ${escapeHtml(e.detail||"")}</span><span class="status-pill ${e._status}">${statusMeta[e._status].label}</span></div>`).join("");
+  }
+  function bindEventLines(){ kpiBody.querySelectorAll('.ev-line').forEach(l => l.addEventListener('click', ()=> openDayFromIso(l.dataset.iso))); }
+
+  function openMonthKpi(k){
+    kpiMonthKey = k;
+    const s = statsOf(monthMap[k]), p = statsOf(monthMap[shiftKey(k,-1)]);
+    setHead(k);
+    kpiTitle.textContent = "สรุป KPI · " + monthTitle(k);
+    kpiSub.innerHTML = s.count ? `${s.count} กิจกรรม · เทียบกับ ${monthTitle(shiftKey(k,-1))}` : "ยังไม่มีกิจกรรมในเดือนนี้";
+    kpiPrev.hidden = false; kpiNext.hidden = false;
+    let html = "";
+    if(!s.count){
+      html = `<div class="empty-state">ไม่มีกิจกรรมที่บันทึกไว้ใน${monthTitle(k)}<br>ใช้ปุ่ม ‹ › ด้านบนเพื่อดูเดือนอื่นย้อนหลัง</div>`;
+    } else {
+      html += `<div class="kpi-grid">` + KPI_ORDER.map(key => `<div class="kpi-tile" data-k="${key}"><div class="v">${fmtVal(key, s[key])}</div><div class="l">${KPI_DEFS[key].icon} ${KPI_DEFS[key].label}${key==='lead'?' (วัน)':''}${key==='paper'?' (แผ่น)':''}${key==='time'?' (นาที)':''}</div>${deltaHTML(s[key], p.count ? p[key] : null, key)}</div>`).join("") + `</div>`;
+      const pct = st => s[st]/s.count*100;
+      html += `<div class="panel"><h3>สถานะการดำเนินงาน</h3><div class="stack-bar">${["success","received","failed"].map(st => `<span style="width:${pct(st)}%;background:${ST_COLORS[st]}" title="${statusMeta[st].label} ${s[st]}"></span>`).join("")}</div>
+        <div class="chart-legend" style="margin-top:8px">${["success","received","failed"].map(st=>`<span><i style="background:${ST_COLORS[st]}"></i>${statusMeta[st].label} ${s[st]} (${Math.round(pct(st))}%)</span>`).join("")}</div></div>`;
+      html += `<div class="panel-grid"><div class="panel"><h3>🏫 ห้อง/สถานที่ที่ใช้บ่อย</h3>${hbars(topCounts(s.list, e=>e.room))}</div>
+        <div class="panel"><h3>🎛 อุปกรณ์ที่ขอใช้บ่อย</h3>${hbars(topCounts(s.list, e=>e.equipment, /[\/,]/))}</div></div>`;
+      const wd = [0,0,0,0,0,0,0]; s.list.forEach(e => { const [y,m,d] = e.date.split("-").map(Number); wd[new Date(y,m-1,d).getDay()]++; });
+      const slot = [0,0,0]; s.list.forEach(e => { const t = timeToMin(e.time); slot[t < 720 ? 0 : (t < 990 ? 1 : 2)]++; });
+      html += `<div class="panel-grid"><div class="panel"><h3>📆 วันในสัปดาห์</h3>${cols(weekdayShortTh, wd)}</div>
+        <div class="panel"><h3>🕘 ช่วงเวลาเริ่มใช้งาน</h3>${cols(["เช้า","บ่าย","เย็น"], slot)}</div></div>`;
+      const byDay = topCounts(s.list, e=>e.date);
+      const [bd, bn] = byDay[0];
+      const [by,bm,bdd] = bd.split("-").map(Number);
+      html += `<div class="panel"><h3>🔥 วันที่มีกิจกรรมมากที่สุด</h3><button class="link-btn" data-iso="${bd}">วัน${weekdayFullTh[new Date(by,bm-1,bdd).getDay()]}ที่ ${bdd} ${monthNamesTh[bm-1]} — ${bn} กิจกรรม</button></div>`;
+    }
+    const hist = []; for(let i=5;i>=0;i--) hist.push(shiftKey(k,-i));
+    html += `<div class="panel"><h3>📈 เทียบย้อนหลัง 6 เดือน (จำนวนกิจกรรม)</h3><div id="kpiHist"></div></div>`;
+    html += `<div class="kpi-actions"><button class="summary-btn" id="goCalBtn">เปิด${monthTitle(k)}ในปฏิทิน</button></div>`;
+    kpiBody.innerHTML = html;
+    renderChart(document.getElementById('kpiHist'), { id:"mh", keys:hist, value:s=>s.count, fmt:v=>fmtN(v), stacked:true, highlight:k, compact:true });
+    kpiBody.querySelectorAll('.kpi-tile').forEach(t => bindTip(t, ()=>{
+      const key = t.dataset.k;
+      return `<div class="tip-title">${KPI_DEFS[key].label}</div>${KPI_DEFS[key].desc}
+        <div class="tip-row" style="margin-top:6px"><span>${monthShort(k)}</span><span>${fmtVal(key, s[key])}</span></div>
+        <div class="tip-row"><span>${monthShort(shiftKey(k,-1))}</span><span>${fmtVal(key, p.count ? p[key] : null)}</span></div>`;
+    }));
+    const dayBtn = kpiBody.querySelector('.link-btn[data-iso]');
+    if(dayBtn) dayBtn.addEventListener('click', ()=> openDayFromIso(dayBtn.dataset.iso));
+    document.getElementById('goCalBtn').addEventListener('click', ()=>{
+      const {y,m} = parseKey(k); viewYear = y; viewMonth = m; closeKpi(); renderCalendar(); renderTrend();
+      document.querySelector('.controls').scrollIntoView({behavior:'smooth', block:'start'});
+    });
+    openKpi();
+  }
+  kpiPrev.addEventListener('click', ()=> kpiMonthKey && openMonthKpi(shiftKey(kpiMonthKey,-1)));
+  kpiNext.addEventListener('click', ()=> kpiMonthKey && openMonthKpi(shiftKey(kpiMonthKey,1)));
+
+  function metricPanelHTML(keys, value, fmt){
+    const past = keys.filter(k => k <= todayKey && (monthMap[k]||[]).length).map(k => ({ k, v:value(statsOf(monthMap[k])) })).filter(x=>x.v!==null);
+    if(!past.length) return "";
+    const hi = past.reduce((a,b)=> b.v >= a.v ? b : a), lo = past.reduce((a,b)=> b.v <= a.v ? b : a);
+    const avg = past.reduce((a,b)=>a+b.v,0)/past.length, last = past[past.length-1];
+    const card = (label, val, k) => `<button ${k?`data-k="${k}"`:''}><span class="hl-label">${label}</span><span class="hl-value">${val}</span>${k?`<span class="hl-month">${monthTitle(k)}</span>`:'<span class="hl-month">จาก '+past.length+' เดือนที่มีข้อมูล</span>'}</button>`;
+    return `<div class="stat-list">${card("สูงสุด", fmt(hi.v), hi.k)}${card("ต่ำสุด", fmt(lo.v), lo.k)}${card("เฉลี่ยต่อเดือน", fmt(avg))}${card("เดือนล่าสุด", fmt(last.v), last.k)}</div>`;
+  }
+  function bindStatButtons(){ kpiBody.querySelectorAll('.stat-list button[data-k]').forEach(b => b.addEventListener('click', ()=> openMonthKpi(b.dataset.k))); }
+
+  function openMetricKpi(key){
+    kpiMonthKey = null; kpiPrev.hidden = true; kpiNext.hidden = true; setHead(null);
+    const def = KPI_DEFS[key], keys = fyKeys(trendFY);
+    const all = statsOf(events), fy = statsForKeys(keys);
+    kpiTitle.textContent = def.icon + " " + def.label;
+    kpiSub.textContent = def.desc;
+    kpiBody.innerHTML = `
+      <div class="big-row"><div><div class="v">${fmtVal(key, fy[key])}</div><div class="l">ปีงบประมาณ ${trendFY}${def.pct?'':' ('+def.unit+')'}</div></div>
+        <div><div class="v">${fmtVal(key, all[key])}</div><div class="l">ข้อมูลทั้งหมดในระบบ</div></div></div>
+      <div class="panel"><h3>แนวโน้มรายเดือน · ปีงบประมาณ ${trendFY}</h3><div id="kpiChart"></div></div>
+      ${metricPanelHTML(keys, s=>s[key], def.fmt)}`;
+    renderChart(document.getElementById('kpiChart'), { id:"mk", keys, value:s=>s[key], fmt:def.fmt, pct:def.pct, stacked:key==="count", highlight:keyOf(viewYear, viewMonth), title:def.label });
+    bindStatButtons();
+    openKpi();
+  }
+
+  function openStatusKpi(st){
+    kpiMonthKey = null; kpiPrev.hidden = true; kpiNext.hidden = true; setHead(null);
+    const keys = fyKeys(trendFY), fy = statsForKeys(keys);
+    kpiTitle.textContent = "สถานะ: " + statusMeta[st].label;
+    kpiSub.textContent = `ปีงบประมาณ ${trendFY} · ${fy[st]} จาก ${fy.count} กิจกรรม (${fy.count ? Math.round(fy[st]/fy.count*100) : 0}%)`;
+    const recent = events.filter(e => e._status === st).sort((a,b)=> b.date.localeCompare(a.date) || timeToMin(b.time)-timeToMin(a.time)).slice(0,10);
+    kpiBody.innerHTML = `
+      <div class="panel"><h3>จำนวนกิจกรรมสถานะ “${statusMeta[st].label}” รายเดือน</h3><div id="kpiChart"></div></div>
+      ${metricPanelHTML(keys, s=>s[st], v=>fmtN(v))}
+      <div class="panel" style="margin-top:12px"><h3>รายการล่าสุด (คลิกเพื่อดูวันนั้น)</h3>${recent.length ? eventLines(recent) : '<div class="empty-state" style="padding:8px">ไม่มีรายการ</div>'}</div>`;
+    renderChart(document.getElementById('kpiChart'), { id:"ms", keys, value:s=>s[st], fmt:v=>fmtN(v), highlight:keyOf(viewYear, viewMonth) });
+    bindStatButtons(); bindEventLines();
+    openKpi();
+  }
+
+  document.getElementById('kpiClose').addEventListener('click', closeKpi);
+  kpiOverlay.addEventListener('click', e => { if(e.target === kpiOverlay) closeKpi(); });
+
+  function activate(el, fn){
+    el.tabIndex = 0; el.setAttribute('role','button');
+    el.addEventListener('click', fn);
+    el.addEventListener('keydown', e => { if(e.key==='Enter' || e.key===' '){ e.preventDefault(); fn(); } });
+  }
+  function bindCards(){
+    metricRow.querySelectorAll('.metric-card').forEach(c => {
+      const key = c.dataset.kpi;
+      c.insertAdjacentHTML('beforeend', `<span class="card-hint">📊 ดูแนวโน้มรายเดือน</span>`);
+      bindTip(c, ()=> kpiTipHTML(key)); activate(c, ()=> openMetricKpi(key));
+    });
+    statusRow.querySelectorAll('.status-card').forEach(c => {
+      const st = c.dataset.status;
+      c.insertAdjacentHTML('beforeend', `<span class="card-hint">📊 ดูแนวโน้มและรายการ</span>`);
+      bindTip(c, ()=> statusTipHTML(st)); activate(c, ()=> openStatusKpi(st));
+    });
+  }
+  bindTip(monthLabel, ()=> monthTipHTML(keyOf(viewYear, viewMonth)));
+  activate(monthLabel, ()=> openMonthKpi(keyOf(viewYear, viewMonth)));
+  document.getElementById('monthSummaryBtn').addEventListener('click', ()=> openMonthKpi(keyOf(viewYear, viewMonth)));
+
+
   function renderAll(){
     regroup();
+    buildMonthMap();
     renderMetrics();
+    bindCards();
     renderCalendar();
+    renderTrend();
   }
 
   document.getElementById('closeBtn').addEventListener('click', ()=> overlay.classList.remove('open'));
@@ -814,20 +1345,22 @@
     if(e.key === 'Escape'){
       overlay.classList.remove('open');
       document.getElementById('requestOverlay').classList.remove('open');
+      document.getElementById('kpiOverlay').classList.remove('open');
+      document.getElementById('tip').classList.remove('show');
     }
   });
 
   document.getElementById('prevBtn').addEventListener('click', ()=>{
     viewMonth--; if(viewMonth < 0){ viewMonth = 11; viewYear--; }
-    renderCalendar();
+    renderCalendar(); renderTrend();
   });
   document.getElementById('nextBtn').addEventListener('click', ()=>{
     viewMonth++; if(viewMonth > 11){ viewMonth = 0; viewYear++; }
-    renderCalendar();
+    renderCalendar(); renderTrend();
   });
   document.getElementById('todayBtn').addEventListener('click', ()=>{
     viewYear = todayObj.getFullYear(); viewMonth = todayObj.getMonth();
-    renderCalendar();
+    renderCalendar(); renderTrend();
   });
 
   // ---- จับคู่หัวคอลัมน์ (label จาก gviz) ให้ยืดหยุ่นแม้เว้นวรรค/ลำดับต่างกัน ----
