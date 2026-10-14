@@ -572,7 +572,7 @@
     <div>
       <div class="brand-eyebrow">คณะวิศวกรรมศาสตร์ · มหาวิทยาลัยมหาสารคาม</div>
       <h1>ปฏิทินการสนับสนุนกิจกรรมโสตทัศนูปกรณ์</h1>
-      <p class="subtitle">ตารางการใช้ห้อง / ระบบโสตทัศนูปกรณ์ ตามแผนล่วงหน้า ปีงบประมาณ 2569</p>
+      <p class="subtitle">ตารางการใช้ห้อง / ระบบโสตทัศนูปกรณ์ ตามแผนล่วงหน้า</p>
     </div>
     <div class="sync-box">
       <div class="sync-status"><span class="sync-dot" id="syncDot"></span><span id="syncText">กำลังเตรียมข้อมูล…</span></div>
@@ -685,7 +685,7 @@
 
 
   <footer class="site-footer">
-    <p>© 2569 คณะวิศวกรรมศาสตร์ มหาวิทยาลัยมหาสารคาม</p>
+    <p>© <span id="copyYear">2569</span> คณะวิศวกรรมศาสตร์ มหาวิทยาลัยมหาสารคาม</p>
     <p>พัฒนาโดย นายปัญญา จีระฉัตร | นักวิชาการโสตทัศนศึกษา | <a href="mailto:panya.j@msu.ac.th">panya.j@msu.ac.th</a></p>
   </footer>
 
@@ -1943,6 +1943,8 @@
   if(WEBAPP_URL) renderOpenForm();
   loadLove();
 
+  // ปี พ.ศ. ท้ายหน้าอัปเดตเองทุกปี
+  document.getElementById('copyYear').textContent = new Date().getFullYear() + 543;
   syncFromSheet();
 
 })();

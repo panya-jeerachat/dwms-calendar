@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ระบบผู้ดูแล · งานโสตทัศนูปกรณ์</title>
+<title>ระบบผู้ดูแล · ปฏิทินการสนับสนุนกิจกรรมโสตทัศนูปกรณ์</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -71,6 +71,7 @@
   .login-hero .mascot{font-size:46px;line-height:1;display:inline-block;animation:bob 3s ease-in-out infinite}
   .login-hero h1{margin:10px 0 2px;font-size:25px}
   .login-hero p{margin:0;opacity:.9;font-size:13.5px}
+  .login-hero .login-sub{font-family:'Prompt',sans-serif;font-weight:600;font-size:17px;line-height:1.35;margin-bottom:4px}
   .login-body{padding:24px 28px 26px}
   .login-foot{text-align:center;margin-top:14px;font-size:13px}
   .login-foot a{color:var(--ink);font-weight:600}
@@ -257,8 +258,9 @@
   <div class="login-card">
     <div class="login-hero">
       <div class="mascot">🎬</div>
-      <h1>ระบบผู้ดูแล DWMS</h1>
-      <p id="orgName"></p>
+      <h1>ระบบผู้ดูแล</h1>
+      <div class="login-sub">ปฏิทินการสนับสนุนกิจกรรมโสตทัศนูปกรณ์</div>
+      <p>คณะวิศวกรรมศาสตร์ มหาวิทยาลัยมหาสารคาม</p>
     </div>
     <div class="login-body">
       <form id="loginForm" autocomplete="on">
@@ -293,7 +295,7 @@
 <!-- =================== แอป =================== -->
 <section id="app" hidden>
   <header class="topbar">
-    <div class="brand"><div class="logo">🎬</div><div><b>DWMS · ระบบผู้ดูแล</b><span>งานโสตทัศนูปกรณ์ คณะวิศวกรรมศาสตร์ มมส</span></div></div>
+    <div class="brand"><div class="logo">🎬</div><div><b>ระบบผู้ดูแล · ปฏิทินการสนับสนุนกิจกรรมโสตทัศนูปกรณ์</b><span>คณะวิศวกรรมศาสตร์ มหาวิทยาลัยมหาสารคาม</span></div></div>
     <div class="me-chip"><div class="av" id="meAv"></div><div><b id="meName"></b><small id="meRole"></small></div></div>
     <button class="btn sm" id="logoutBtn">ออกจากระบบ</button>
   </header>
@@ -546,7 +548,6 @@ const BOOT = {"webAppUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82v
   }
 
   /* ---------------- เข้าสู่ระบบ ---------------- */
-  $('#orgName').textContent = BOOT.org || "";
   if(BOOT.publicUrl) $('#publicLink').href = BOOT.publicUrl; else $('#publicLink').hidden = true;
   $('#toggleForgot').addEventListener('click', ()=>{
     const f = $('#forgotForm').hidden;
