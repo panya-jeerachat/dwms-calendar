@@ -644,9 +644,8 @@
       </div>
       <div class="lf-pane" data-lp="rate" id="openRateBox">
         <h3>💖 คุณพึงพอใจบริการของเราแค่ไหน?</h3>
-        <p>ทุกคนประเมินได้ ไม่ต้องเข้าสู่ระบบ และไม่เก็บชื่อหรืออีเมล · ใช้เวลาไม่ถึง 10 วินาที</p>
+        <p>🔒 ไม่ระบุตัวตน 100% — ไม่ต้องเข้าสู่ระบบ ไม่เก็บชื่อ อีเมล หรือสถานะของผู้ประเมิน · ใช้เวลาไม่ถึง 10 วินาที</p>
         <div class="open-faces" id="openFaces" role="radiogroup" aria-label="คะแนน 1 ถึง 5"></div>
-        <div class="role-chips" id="openRoles"><span>คุณคือ (ไม่บังคับ):</span></div>
         <textarea class="lf-input lr-comment" id="openComment" maxlength="300" placeholder="อยากบอกอะไรเรา? คำชม ข้อเสนอแนะ หรือสิ่งที่อยากให้ปรับปรุง (ไม่บังคับ)"></textarea>
         <input class="hp-field" id="openHp" tabindex="-1" autocomplete="off" aria-hidden="true">
         <button type="button" class="lf-btn" id="openSend" style="margin-top:10px;width:100%" disabled>เลือกหน้าที่ตรงกับความรู้สึกก่อนนะ</button>
@@ -684,7 +683,6 @@
     </div>
   </div>
 
-  <p class="foot-note">ชี้เมาส์เพื่อดูข้อมูลย่อ · คลิกวันที่ การ์ดตัวชี้วัด หรือแท่งกราฟเพื่อดูรายละเอียด · เชื่อมข้อมูลสดจาก Google Sheet ของฝ่ายโสตทัศนูปกรณ์</p>
 
   <footer class="site-footer">
     <p>© 2569 คณะวิศวกรรมศาสตร์ มหาวิทยาลัยมหาสารคาม</p>
@@ -1788,7 +1786,19 @@
     document.querySelectorAll('.lf-pane').forEach(p=> p.hidden = p.dataset.lp !== t.dataset.lt);
   }));
 
-  function jsonp(params){
+  // เรียก API แบบไม่ส่งคุกกี้บัญชี Google → ใช้ได้แม้ Chrome ลงชื่อไว้หลายบัญชี
+  async function jsonp(params){
+    try {
+      const resp = await fetch(WEBAPP_URL + "?" + new URLSearchParams(params).toString(),
+        { method:"GET", credentials:"omit", redirect:"follow", cache:"no-store" });
+      return await resp.json();
+    } catch(e){
+      console.warn("[DWMS] fetch API ไม่สำเร็จ ลองช่องทางสำรอง", e);
+      try { return await jsonpScript(params); }
+      catch(e2){ throw new Error("เชื่อมต่อระบบไม่สำเร็จ กรุณาลองใหม่อีกครั้งในอีกสักครู่"); }
+    }
+  }
+  function jsonpScript(params){
     return new Promise((resolve, reject)=>{
       const cb = "__dwms" + Date.now() + Math.floor(Math.random()*1e5);
       const s = document.createElement('script');
@@ -1816,7 +1826,7 @@
       return `<div class="ld-row"><span>${LOVE_FACES[n].e} ${n} · ${LOVE_FACES[n].l}</span><div class="ld-track"><span style="width:${v/max*100}%;background:${LOVE_FACES[n].c}"></span></div><b>${v}</b></div>`;
     }).join("");
     const rc = (s && s.recent) || [];
-    document.getElementById('loveComments').innerHTML = rc.map(c=> `<div class="bubble"><span class="f">${LOVE_FACES[c.score].e}</span>${escapeHtml(c.comment)}<small>${c.role ? escapeHtml(c.role) + " · " : ""}${c.date ? (+c.date.slice(8)) + " " + monthShortTh[+c.date.slice(5,7)-1] + " " + String(+c.date.slice(0,4)+543).slice(-2) : ""} · ${"★".repeat(c.score)}</small></div>`).join("");
+    document.getElementById('loveComments').innerHTML = rc.map(c=> `<div class="bubble"><span class="f">${LOVE_FACES[c.score].e}</span>${escapeHtml(c.comment)}<small>${c.date ? (+c.date.slice(8)) + " " + monthShortTh[+c.date.slice(5,7)-1] + " " + String(+c.date.slice(0,4)+543).slice(-2) : ""} · ${"★".repeat(c.score)}</small></div>`).join("");
     document.getElementById('loveComments').hidden = !rc.length;
   }
   function loadLove(){
@@ -1883,8 +1893,7 @@
   try { const q = new URLSearchParams(location.search).get('code'); if(q) document.getElementById('lfCode').value = q; } catch(e){}
 
   // ---------- ประเมินความพึงพอใจทั่วไป (ทุกคน) ----------
-  const OPEN_ROLES = ["นิสิต","อาจารย์","บุคลากร","บุคคลภายนอก"];
-  let openScore = 0, openRole = "";
+  let openScore = 0;
   function clientId(){
     let id = safeStore.get('dwms_cid');
     if(!id){ id = "c" + Math.random().toString(36).slice(2) + Date.now().toString(36); safeStore.set('dwms_cid', id); }
@@ -1899,12 +1908,6 @@
       faces.querySelectorAll('.face-btn').forEach(x=>{ const on = x===b; x.setAttribute('aria-pressed', on); x.setAttribute('aria-checked', on); });
       const s = document.getElementById('openSend'); s.disabled = false; s.textContent = "ส่งการประเมิน " + LOVE_FACES[openScore].e;
     }));
-    const roles = document.getElementById('openRoles');
-    roles.insertAdjacentHTML('beforeend', OPEN_ROLES.map(r=>`<button type="button" class="role-chip" data-r="${r}" aria-pressed="false">${r}</button>`).join(""));
-    roles.querySelectorAll('.role-chip').forEach(c=> c.addEventListener('click', ()=>{
-      openRole = openRole === c.dataset.r ? "" : c.dataset.r;
-      roles.querySelectorAll('.role-chip').forEach(x=> x.setAttribute('aria-pressed', String(x.dataset.r === openRole)));
-    }));
     document.getElementById('openSend').addEventListener('click', sendOpenRating);
     const last = +safeStore.get('dwms_rated_at') || 0;
     if(Date.now() - last < 12*3600*1000) showOpenThanks(+safeStore.get('dwms_rated_score') || 5, true);
@@ -1917,8 +1920,7 @@
       <p>${earlier ? "คุณประเมินไปแล้วเมื่อไม่นานมานี้ " : ""}ทุกความเห็นช่วยให้งานโสตทัศนูปกรณ์พัฒนาบริการให้ดีขึ้น</p>
       <button type="button" class="lf-btn" id="openAgain" style="background:#fff;color:var(--accent-strong);border:2px solid var(--a);box-shadow:none">✏️ ประเมินอีกครั้ง</button></div>`;
     document.getElementById('openAgain').addEventListener('click', ()=>{
-      box.innerHTML = box.dataset.form; openScore = 0; openRole = "";
-      document.getElementById('openRoles').innerHTML = "<span>คุณคือ (ไม่บังคับ):</span>";
+      box.innerHTML = box.dataset.form; openScore = 0;
       safeStore.set('dwms_rated_at', "0");
       renderOpenForm();
     });
@@ -1927,7 +1929,7 @@
     const btn = document.getElementById('openSend'), msg = document.getElementById('openMsg');
     if(!openScore) return;
     btn.disabled = true; btn.textContent = "กำลังส่ง…"; msg.hidden = true;
-    jsonp({ api:"ratePublic", score:openScore, role:openRole, comment:document.getElementById('openComment').value,
+    jsonp({ api:"ratePublic", score:openScore, comment:document.getElementById('openComment').value,
             hp:document.getElementById('openHp').value, cid:clientId() }).then(r=>{
       if(!r.ok) throw new Error(r.error);
       safeStore.set('dwms_rated_at', String(Date.now())); safeStore.set('dwms_rated_score', String(openScore));

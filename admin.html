@@ -314,7 +314,7 @@
     <section data-pane="requests">
       <div class="sec-head">
         <div><h2>คำขอรับบริการ</h2><p>คลิกรายการเพื่อระบุผู้ขอรับบริการ อัปเดตสถานะ และส่งอีเมลแจ้งพร้อม QR Code</p></div>
-        <button class="btn sm" id="reloadReq">🔄 โหลดข้อมูลใหม่</button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm" data-report>📊 เปิด Google Sheet ผู้รับบริการ</button><button class="btn sm" id="reloadReq">🔄 โหลดข้อมูลใหม่</button></div>
       </div>
       <div class="stat-row" id="statRow"></div>
       <div class="filters">
@@ -331,7 +331,7 @@
     <!-- ความพึงพอใจ -->
     <section data-pane="ratings" hidden>
       <div class="sec-head"><div><h2>ความพึงพอใจในการรับบริการ</h2><p>ผลประเมินจากผู้ขอรับบริการผ่านลิงก์ในอีเมลและหน้าปฏิทินสาธารณะ</p></div>
-        <button class="btn sm" id="reloadRatings">🔄 โหลดใหม่</button></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm" data-report>📊 เปิด Google Sheet ความพึงพอใจ</button><button class="btn sm" id="reloadRatings">🔄 โหลดใหม่</button></div></div>
       <div id="ratingsBox"><div class="loading"><span class="spinner dark"></span>กำลังโหลด…</div></div>
     </section>
 
@@ -895,6 +895,18 @@ const BOOT = {"webAppUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82v
     } catch(err){ $('#ratingsBox').innerHTML = `<div class="empty"><div class="e">😵</div>${esc(err.message)}</div>`; }
   }
   $('#reloadRatings').addEventListener('click', loadRatings);
+
+  /* ---------------- Google Sheet รายงาน (ชื่อ อีเมล สถานะ คะแนน ความคิดเห็น) ---------------- */
+  $$('[data-report]').forEach(b=> b.addEventListener('click', ()=>{
+    const w = window.open("", "_blank");          // เปิดแท็บไว้ก่อน กันเบราว์เซอร์บล็อกป๊อปอัป
+    if(w) w.document.write('<p style="font-family:sans-serif;padding:24px">⏳ กำลังอัปเดตรายงานล่าสุด…</p>');
+    busy(b, async ()=>{
+      try {
+        const r = await run('reportInfo', S.token);
+        if(w) w.location.href = r.url; else toast("เปิดรายงาน: " + r.url, "ok");
+      } catch(err){ if(w) w.close(); toast(err.message, "err"); }
+    });
+  }));
 
   /* ---------------- ผู้ใช้ ---------------- */
   async function loadUsers(){
