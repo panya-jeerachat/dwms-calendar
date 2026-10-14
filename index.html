@@ -510,6 +510,47 @@
     #staffNav{margin-left:0;}
   }
   @media (prefers-reduced-motion:reduce){ .love-score .face{animation:none;} }
+
+  /* ===== เลือกวิธีเข้าสู่ระบบ (เจ้าหน้าที่) ===== */
+  .chooser{background:var(--surface); border-radius:24px; max-width:520px; width:100%; padding:22px 22px 18px; box-shadow:0 40px 90px -30px rgba(16,18,38,.6); animation:pop .2s ease-out; margin-top:6vh; position:relative; overflow:hidden;}
+  .chooser::before{content:""; position:absolute; inset:0 0 auto 0; height:6px; background:var(--grad);}
+  .ch-head{display:flex; align-items:center; gap:12px;}
+  .ch-ico{width:42px; height:42px; border-radius:14px; display:grid; place-items:center; font-size:20px; background:linear-gradient(135deg,#F59E0B,#F97316); box-shadow:0 8px 18px -8px #F97316;}
+  .ch-head h3{font-family:'Prompt',sans-serif; font-size:20px; margin:0; flex:1;}
+  .ch-x{border:none; background:#F1F2F8; width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:15px; color:var(--text-soft);}
+  .ch-x:hover{background:#E4E6F2;}
+  .ch-desc{font-size:13.5px; color:var(--text-soft); margin:12px 0 14px; line-height:1.6;}
+  .ch-opt{position:relative; display:flex; gap:14px; align-items:flex-start; text-decoration:none; color:var(--text); border:2px solid var(--border); border-radius:18px; padding:15px 16px; margin-bottom:10px; background:#fff; transition:border-color .15s, transform .15s, box-shadow .15s;}
+  .ch-opt:hover, .ch-opt:focus-visible{border-color:var(--a); transform:translateY(-2px); box-shadow:0 14px 28px -18px var(--a);}
+  .ch-opt.last{border-color:#10B981; background:linear-gradient(135deg,#ECFDF5,#fff 70%);}
+  .ch-opt .ic{width:40px; height:40px; border-radius:12px; flex-shrink:0; display:grid; place-items:center; font-size:19px; color:#fff;}
+  .ch-opt .ic.msu{background:linear-gradient(135deg,#3B82F6,#6366F1);}
+  .ch-opt .ic.free{background:linear-gradient(135deg,#14B8A6,#06B6D4);}
+  .ch-opt b{display:block; font-size:15.5px; margin-bottom:3px;}
+  .ch-opt span.t{display:block; font-size:13px; color:var(--text-soft); line-height:1.55;}
+  .ch-badge{position:absolute; top:-11px; right:14px; background:#10B981; color:#fff; font-size:11.5px; font-weight:700; padding:2px 10px; border-radius:99px; box-shadow:0 6px 12px -6px #10B981;}
+  .ch-foot{font-size:12px; color:var(--text-faint); margin:8px 2px 0; line-height:1.6;}
+
+  /* ===== แท็บ ประเมิน / ติดตาม ===== */
+  .lf-tabs{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px;}
+  .lf-tab{font:inherit; font-size:13.5px; font-weight:700; border:1.5px solid var(--border-strong); background:#fff; color:var(--text-soft); border-radius:999px; padding:8px 16px; cursor:pointer;}
+  .lf-tab:hover{border-color:var(--a); color:var(--accent-strong);}
+  .lf-tab[aria-selected="true"]{background:var(--grad); color:#fff; border-color:transparent; box-shadow:0 8px 18px -10px var(--a);}
+  .lf-pane h3{margin-bottom:2px;}
+  .lf-pane > p{margin:2px 0 12px; font-size:12.5px; color:var(--text-soft);}
+  .open-faces{display:grid; grid-template-columns:repeat(5,1fr); gap:10px;}
+  .open-faces .face-btn{padding:12px 2px 8px;}
+  .open-faces .face-btn .e{font-size:38px; transition:transform .2s;}
+  .open-faces .face-btn:hover .e{transform:scale(1.12) rotate(-6deg);}
+  .role-chips{display:flex; gap:6px; flex-wrap:wrap; margin-top:12px; align-items:center; font-size:12.5px; color:var(--text-soft);}
+  .role-chip{font:inherit; font-size:12.5px; font-weight:600; border:1.5px solid var(--border-strong); background:#fff; border-radius:999px; padding:5px 12px; cursor:pointer; color:var(--text-soft);}
+  .role-chip[aria-pressed="true"]{border-color:var(--a); background:color-mix(in srgb, var(--a) 12%, #fff); color:var(--accent-strong);}
+  .hp-field{position:absolute; left:-9999px; width:1px; height:1px; opacity:0;}
+  .thanks-box{text-align:center; padding:16px 8px 6px;}
+  .thanks-box .big{font-size:58px; line-height:1; display:inline-block; animation:wiggle 2.4s ease-in-out infinite;}
+  .thanks-box h3{margin:8px 0 4px; font-size:19px;}
+  .thanks-box p{margin:0 0 12px; font-size:13.5px; color:var(--text-soft);}
+  @media (max-width:520px){ .open-faces{gap:6px;} .open-faces .face-btn .e{font-size:30px;} .chooser{padding:18px 16px 14px;} }
 </style>
 </head>
 <body>
@@ -590,14 +631,29 @@
 
   <section class="love-card" id="satisfaction" aria-labelledby="loveTitle">
     <h2 id="loveTitle">💖 ความพึงพอใจในการรับบริการ</h2>
-    <p class="love-sub">เสียงจากผู้ขอรับบริการ ช่วยให้งานโสตทัศนูปกรณ์พัฒนาบริการให้ดียิ่งขึ้นทุกวัน</p>
+    <p class="love-sub">เสียงจากผู้ใช้บริการทุกคน ทั้งนิสิต อาจารย์ บุคลากร และบุคคลภายนอก ช่วยให้งานโสตทัศนูปกรณ์พัฒนาบริการให้ดียิ่งขึ้นทุกวัน</p>
     <div class="love-grid">
       <div class="love-score" id="loveScore"><span class="face">⏳</span><small>กำลังโหลดผลประเมิน…</small></div>
       <div class="love-dist" id="loveDist"></div>
     </div>
     <div class="love-comments" id="loveComments" hidden></div>
-    <div class="love-form">
-      <h3>📝 ติดตามสถานะ และประเมินการรับบริการของคุณ</h3>
+    <div class="love-form" id="rate">
+      <div class="lf-tabs" role="tablist">
+        <button type="button" class="lf-tab" role="tab" data-lt="rate" aria-selected="true">⭐ ให้คะแนนความพึงพอใจ</button>
+        <button type="button" class="lf-tab" role="tab" data-lt="track" aria-selected="false">🔎 ติดตามสถานะคำขอของฉัน</button>
+      </div>
+      <div class="lf-pane" data-lp="rate" id="openRateBox">
+        <h3>💖 คุณพึงพอใจบริการของเราแค่ไหน?</h3>
+        <p>ทุกคนประเมินได้ ไม่ต้องเข้าสู่ระบบ และไม่เก็บชื่อหรืออีเมล · ใช้เวลาไม่ถึง 10 วินาที</p>
+        <div class="open-faces" id="openFaces" role="radiogroup" aria-label="คะแนน 1 ถึง 5"></div>
+        <div class="role-chips" id="openRoles"><span>คุณคือ (ไม่บังคับ):</span></div>
+        <textarea class="lf-input lr-comment" id="openComment" maxlength="300" placeholder="อยากบอกอะไรเรา? คำชม ข้อเสนอแนะ หรือสิ่งที่อยากให้ปรับปรุง (ไม่บังคับ)"></textarea>
+        <input class="hp-field" id="openHp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button type="button" class="lf-btn" id="openSend" style="margin-top:10px;width:100%" disabled>เลือกหน้าที่ตรงกับความรู้สึกก่อนนะ</button>
+        <div class="lf-msg" id="openMsg" hidden></div>
+      </div>
+      <div class="lf-pane" data-lp="track" hidden>
+      <h3>🔎 ติดตามสถานะ และประเมินคำขอของคุณ</h3>
       <p id="loveFormNote">กรอกรหัสติดตาม (อยู่ในอีเมลแจ้งสถานะ เช่น AV-691014-ABC) และอีเมลที่ใช้ขอรับบริการ</p>
       <form class="lf-row" id="lookupForm">
         <input class="lf-input" id="lfCode" required placeholder="รหัสติดตาม AV-xxxxxx-xxx" autocomplete="off" aria-label="รหัสติดตาม">
@@ -605,8 +661,28 @@
         <button class="lf-btn" id="lookupBtn">🔍 ตรวจสอบ</button>
       </form>
       <div id="lookupResult" aria-live="polite"></div>
+      </div>
     </div>
   </section>
+
+  <!-- เลือกวิธีเข้าสู่ระบบสำหรับเจ้าหน้าที่ -->
+  <div class="overlay" id="staffChooser">
+    <div class="chooser" role="dialog" aria-modal="true" aria-labelledby="chTitle">
+      <div class="ch-head"><span class="ch-ico">🔒</span><h3 id="chTitle">เลือกวิธีเข้าสู่ระบบ</h3><button type="button" class="ch-x" id="chClose" aria-label="ปิด">✕</button></div>
+      <p class="ch-desc">เลือกวิธีที่ใช้ได้กับเครื่องนี้ ระบบจะจำไว้ให้ ครั้งต่อไปกดปุ่มเดียวเข้าได้เลย<br>สำหรับผู้ดูแลระบบและบุคลากรงานโสตทัศนูปกรณ์</p>
+      <a class="ch-opt" data-way="msu" id="chMsu" href="#" target="_blank" rel="noopener">
+        <span class="ch-badge" hidden>วิธีที่ใช้ล่าสุด</span>
+        <span class="ic msu">🏛</span>
+        <span><b>เข้าด้วยบัญชี @msu.ac.th</b><span class="t">สำหรับเครื่องที่ลงชื่อเข้าใช้ Google ด้วยอีเมลมหาวิทยาลัยอยู่แล้ว เช่น เครื่องที่ล็อกอิน msu.ac.th ไว้ — แนะนำสำหรับเจ้าหน้าที่ส่วนใหญ่</span></span>
+      </a>
+      <a class="ch-opt" data-way="free" id="chFree" href="admin.html" target="_blank" rel="noopener">
+        <span class="ch-badge" hidden>วิธีที่ใช้ล่าสุด</span>
+        <span class="ic free">🌐</span>
+        <span><b>เข้าแบบไม่ผูกบัญชี Google</b><span class="t">ใช้เมื่อวิธีแรกขึ้นหน้าขอสิทธิ์หรือ “Sorry, unable to open the file” หรือเครื่องนั้นลงชื่อ Google ไว้หลายบัญชี ไม่ได้ลงชื่อ หรือใช้อีเมลอื่นที่ไม่ใช่ของมหาวิทยาลัย</span></span>
+      </a>
+      <p class="ch-foot">ทั้งสองวิธีเข้าหน้าเดียวกัน และยังต้องกรอกอีเมลกับรหัสผ่านของระบบเหมือนเดิม ต่างกันแค่ช่องทางที่ใช้เปิดหน้าเท่านั้น ถ้ากดแล้วขึ้นข้อผิดพลาด ให้กลับมาเลือกอีกวิธีได้ทันที</p>
+    </div>
+  </div>
 
   <p class="foot-note">ชี้เมาส์เพื่อดูข้อมูลย่อ · คลิกวันที่ การ์ดตัวชี้วัด หรือแท่งกราฟเพื่อดูรายละเอียด · เชื่อมข้อมูลสดจาก Google Sheet ของฝ่ายโสตทัศนูปกรณ์</p>
 
@@ -1677,7 +1753,40 @@
   // =====================================================================
   const LOVE_FACES = [null,{e:"😞",l:"ต้องปรับปรุง",c:"#F43F5E",bg:"#FFE4EA"},{e:"🙁",l:"พอใช้",c:"#F97316",bg:"#FFEBDD"},{e:"😐",l:"ปานกลาง",c:"#EAB308",bg:"#FFF4D6"},{e:"😊",l:"ดี",c:"#10B981",bg:"#E3F8EC"},{e:"😍",l:"ดีมาก",c:"#8B5CF6",bg:"#EEEAFF"}];
   const staffNav = document.getElementById('staffNav');
-  if(WEBAPP_URL) staffNav.href = WEBAPP_URL; else staffNav.hidden = true;
+  const chooser = document.getElementById('staffChooser');
+  const safeStore = { get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } },
+                      set(k,v){ try { localStorage.setItem(k, v); } catch(e){} } };
+  if(!WEBAPP_URL) staffNav.hidden = true;
+  else {
+    // วิธีที่ 1: บังคับใช้บัญชี @msu.ac.th / วิธีที่ 2: admin.html (อยู่โฟลเดอร์เดียวกับหน้านี้) เรียก API โดยไม่ใช้บัญชี Google
+    document.getElementById('chMsu').href = WEBAPP_URL.replace("/macros/s/", "/a/macros/msu.ac.th/s/");
+    document.getElementById('chFree').href = new URL("admin.html", location.href).href;
+    staffNav.href = "#";
+    staffNav.removeAttribute('target');
+  }
+  function openChooser(){
+    const last = safeStore.get('dwms_login_way');
+    chooser.querySelectorAll('.ch-opt').forEach(o=>{
+      const on = o.dataset.way === last;
+      o.classList.toggle('last', on);
+      o.querySelector('.ch-badge').hidden = !on;
+    });
+    chooser.classList.add('open');
+    setTimeout(()=> (chooser.querySelector('.ch-opt.last') || document.getElementById('chMsu')).focus(), 60);
+  }
+  function closeChooser(){ chooser.classList.remove('open'); }
+  staffNav.addEventListener('click', e=>{ if(!WEBAPP_URL) return; e.preventDefault(); openChooser(); });
+  document.getElementById('chClose').addEventListener('click', closeChooser);
+  chooser.addEventListener('click', e=>{ if(e.target === chooser) closeChooser(); });
+  document.addEventListener('keydown', e=>{ if(e.key === 'Escape') closeChooser(); });
+  chooser.querySelectorAll('.ch-opt').forEach(o=> o.addEventListener('click', ()=>{ safeStore.set('dwms_login_way', o.dataset.way); setTimeout(closeChooser, 150); }));
+  try { if(new URLSearchParams(location.search).get('staff') && WEBAPP_URL) openChooser(); } catch(e){}
+
+  // แท็บ ให้คะแนน / ติดตามสถานะ
+  document.querySelectorAll('.lf-tab').forEach(t=> t.addEventListener('click', ()=>{
+    document.querySelectorAll('.lf-tab').forEach(x=> x.setAttribute('aria-selected', String(x===t)));
+    document.querySelectorAll('.lf-pane').forEach(p=> p.hidden = p.dataset.lp !== t.dataset.lt);
+  }));
 
   function jsonp(params){
     return new Promise((resolve, reject)=>{
@@ -1694,20 +1803,20 @@
 
   function renderLoveSummary(s){
     const has = s && s.count;
-    const face = has ? LOVE_FACES[Math.max(1, Math.min(5, Math.round(s.avg)))].e : "🌱";
+    const face = has ? LOVE_FACES[Math.max(1, Math.min(5, Math.round(s.avg)))].e : "🤗";
     const full = has ? Math.round(s.avg) : 0;
     document.getElementById('loveScore').innerHTML = `
       <div><span class="face">${face}</span></div>
       <div class="big">${has ? s.avg.toFixed(1) : "–"}</div>
       <div class="stars" aria-label="${has ? s.avg : 0} จาก 5">${"★".repeat(full)}${"☆".repeat(5-full)}</div>
-      <small>${has ? `จาก ${s.count.toLocaleString('th-TH')} การประเมิน · พึงพอใจมาก ${s.satisfiedPct}%` : "ยังไม่มีผลประเมิน มาเป็นคนแรกกันนะ"}</small>`;
+      <small>${has ? `จาก ${s.count.toLocaleString('th-TH')} การประเมิน · พึงพอใจมาก ${s.satisfiedPct}%` : "ยังไม่มีผลประเมิน มาเป็นคนแรกที่ให้คะแนนกันนะ 💖"}</small>`;
     const max = Math.max(1, ...((s && s.dist) || [0]));
     document.getElementById('loveDist').innerHTML = [5,4,3,2,1].map(n=>{
       const v = has ? s.dist[n-1] : 0;
       return `<div class="ld-row"><span>${LOVE_FACES[n].e} ${n} · ${LOVE_FACES[n].l}</span><div class="ld-track"><span style="width:${v/max*100}%;background:${LOVE_FACES[n].c}"></span></div><b>${v}</b></div>`;
     }).join("");
     const rc = (s && s.recent) || [];
-    document.getElementById('loveComments').innerHTML = rc.map(c=> `<div class="bubble"><span class="f">${LOVE_FACES[c.score].e}</span>${escapeHtml(c.comment)}<small>${c.date ? (+c.date.slice(8)) + " " + monthShortTh[+c.date.slice(5,7)-1] + " " + String(+c.date.slice(0,4)+543).slice(-2) : ""} · ${"★".repeat(c.score)}</small></div>`).join("");
+    document.getElementById('loveComments').innerHTML = rc.map(c=> `<div class="bubble"><span class="f">${LOVE_FACES[c.score].e}</span>${escapeHtml(c.comment)}<small>${c.role ? escapeHtml(c.role) + " · " : ""}${c.date ? (+c.date.slice(8)) + " " + monthShortTh[+c.date.slice(5,7)-1] + " " + String(+c.date.slice(0,4)+543).slice(-2) : ""} · ${"★".repeat(c.score)}</small></div>`).join("");
     document.getElementById('loveComments').hidden = !rc.length;
   }
   function loadLove(){
@@ -1715,6 +1824,7 @@
       renderLoveSummary(null);
       document.getElementById('lookupForm').hidden = true;
       document.getElementById('loveFormNote').textContent = "ระบบติดตามสถานะ/ประเมินจะเปิดใช้งานเร็วๆ นี้";
+      document.getElementById('openRateBox').innerHTML = '<p class="love-off">ระบบประเมินจะเปิดใช้งานเร็วๆ นี้</p>';
       return;
     }
     jsonp({ api:"summary" }).then(r=> renderLoveSummary(r.ok ? r : null)).catch(()=> renderLoveSummary(null));
@@ -1771,6 +1881,64 @@
   }
   // ลิงก์ ?code=AV-xxxx จะกรอกรหัสให้อัตโนมัติ
   try { const q = new URLSearchParams(location.search).get('code'); if(q) document.getElementById('lfCode').value = q; } catch(e){}
+
+  // ---------- ประเมินความพึงพอใจทั่วไป (ทุกคน) ----------
+  const OPEN_ROLES = ["นิสิต","อาจารย์","บุคลากร","บุคคลภายนอก"];
+  let openScore = 0, openRole = "";
+  function clientId(){
+    let id = safeStore.get('dwms_cid');
+    if(!id){ id = "c" + Math.random().toString(36).slice(2) + Date.now().toString(36); safeStore.set('dwms_cid', id); }
+    return id;
+  }
+  function renderOpenForm(){
+    const faces = document.getElementById('openFaces');
+    if(!faces) return;
+    faces.innerHTML = [1,2,3,4,5].map(n=>`<button type="button" class="face-btn" role="radio" data-n="${n}" aria-pressed="${n===openScore}" aria-checked="${n===openScore}" style="--fc:${LOVE_FACES[n].c};--fbg:${LOVE_FACES[n].bg}"><span class="e">${LOVE_FACES[n].e}</span><b>${n}</b><small>${LOVE_FACES[n].l}</small></button>`).join("");
+    faces.querySelectorAll('.face-btn').forEach(b=> b.addEventListener('click', ()=>{
+      openScore = +b.dataset.n;
+      faces.querySelectorAll('.face-btn').forEach(x=>{ const on = x===b; x.setAttribute('aria-pressed', on); x.setAttribute('aria-checked', on); });
+      const s = document.getElementById('openSend'); s.disabled = false; s.textContent = "ส่งการประเมิน " + LOVE_FACES[openScore].e;
+    }));
+    const roles = document.getElementById('openRoles');
+    roles.insertAdjacentHTML('beforeend', OPEN_ROLES.map(r=>`<button type="button" class="role-chip" data-r="${r}" aria-pressed="false">${r}</button>`).join(""));
+    roles.querySelectorAll('.role-chip').forEach(c=> c.addEventListener('click', ()=>{
+      openRole = openRole === c.dataset.r ? "" : c.dataset.r;
+      roles.querySelectorAll('.role-chip').forEach(x=> x.setAttribute('aria-pressed', String(x.dataset.r === openRole)));
+    }));
+    document.getElementById('openSend').addEventListener('click', sendOpenRating);
+    const last = +safeStore.get('dwms_rated_at') || 0;
+    if(Date.now() - last < 12*3600*1000) showOpenThanks(+safeStore.get('dwms_rated_score') || 5, true);
+  }
+  function showOpenThanks(score, earlier){
+    const box = document.getElementById('openRateBox');
+    box.dataset.form = box.dataset.form || box.innerHTML;
+    box.innerHTML = `<div class="thanks-box"><span class="big">${LOVE_FACES[score].e}</span>
+      <h3>ขอบคุณที่ช่วยประเมินนะ 💖</h3>
+      <p>${earlier ? "คุณประเมินไปแล้วเมื่อไม่นานมานี้ " : ""}ทุกความเห็นช่วยให้งานโสตทัศนูปกรณ์พัฒนาบริการให้ดีขึ้น</p>
+      <button type="button" class="lf-btn" id="openAgain" style="background:#fff;color:var(--accent-strong);border:2px solid var(--a);box-shadow:none">✏️ ประเมินอีกครั้ง</button></div>`;
+    document.getElementById('openAgain').addEventListener('click', ()=>{
+      box.innerHTML = box.dataset.form; openScore = 0; openRole = "";
+      document.getElementById('openRoles').innerHTML = "<span>คุณคือ (ไม่บังคับ):</span>";
+      safeStore.set('dwms_rated_at', "0");
+      renderOpenForm();
+    });
+  }
+  function sendOpenRating(){
+    const btn = document.getElementById('openSend'), msg = document.getElementById('openMsg');
+    if(!openScore) return;
+    btn.disabled = true; btn.textContent = "กำลังส่ง…"; msg.hidden = true;
+    jsonp({ api:"ratePublic", score:openScore, role:openRole, comment:document.getElementById('openComment').value,
+            hp:document.getElementById('openHp').value, cid:clientId() }).then(r=>{
+      if(!r.ok) throw new Error(r.error);
+      safeStore.set('dwms_rated_at', String(Date.now())); safeStore.set('dwms_rated_score', String(openScore));
+      if(r.summary) renderLoveSummary(r.summary);
+      showOpenThanks(openScore, false);
+    }).catch(err=>{
+      msg.textContent = err.message; msg.hidden = false;
+      btn.disabled = false; btn.textContent = "ลองส่งอีกครั้ง " + LOVE_FACES[openScore].e;
+    });
+  }
+  if(WEBAPP_URL) renderOpenForm();
   loadLove();
 
   syncFromSheet();

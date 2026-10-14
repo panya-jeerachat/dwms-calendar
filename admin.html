@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ระบบผู้ดูแล · งานโสตทัศนูปกรณ์</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Prompt:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --a:#6366F1; --b:#EC4899;
+    --grad:linear-gradient(125deg,var(--a),var(--b));
+    --bg:#F4F5FC; --surface:#fff; --border:#E4E6F2; --border-strong:#CDD1E4;
+    --text:#1E1B4B; --soft:#5B5F82; --faint:#9195B4;
+    --tint:color-mix(in srgb, var(--a) 10%, #fff);
+    --ink:color-mix(in srgb, var(--a) 80%, #000);
+    --ok:#10B981; --ok-ink:#047857; --ok-soft:#DDF8EE;
+    --wait:#F59E0B; --wait-ink:#9A4A06; --wait-soft:#FFF1D6;
+    --bad:#F43F5E; --bad-ink:#BE123C; --bad-soft:#FFE4EA;
+    --r:20px;
+    --shadow:0 1px 2px rgba(30,27,75,.05), 0 10px 30px -16px rgba(30,27,75,.25);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:'IBM Plex Sans Thai',system-ui,sans-serif; color:var(--text); line-height:1.55; -webkit-font-smoothing:antialiased;
+    background:
+      radial-gradient(700px 360px at 105% -5%, color-mix(in srgb,var(--b) 18%,transparent), transparent 70%),
+      radial-gradient(700px 360px at -5% 10%, color-mix(in srgb,var(--a) 16%,transparent), transparent 70%),
+      var(--bg);
+    min-height:100vh;
+  }
+  h1,h2,h3,.display{font-family:'Prompt','IBM Plex Sans Thai',sans-serif}
+  button,input,select,textarea{font:inherit;color:inherit}
+  :focus-visible{outline:3px solid color-mix(in srgb,var(--a) 55%,#fff);outline-offset:2px}
+  [hidden]{display:none!important}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+
+  /* ---------- ปุ่ม/ฟอร์ม ---------- */
+  .btn{border:none;cursor:pointer;border-radius:999px;padding:10px 18px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:filter .15s,transform .1s;background:var(--surface);border:1.5px solid var(--border-strong)}
+  .btn:hover{border-color:var(--a);color:var(--ink)}
+  .btn:active{transform:scale(.98)}
+  .btn.primary{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 8px 20px -10px var(--a)}
+  .btn.primary:hover{filter:brightness(1.07);color:#fff}
+  .btn.big{width:100%;padding:13px 18px;font-size:15.5px}
+  .btn.sm{padding:6px 12px;font-size:12.5px}
+  .btn.danger{color:var(--bad-ink);border-color:color-mix(in srgb,var(--bad) 40%,#fff)}
+  .btn.danger:hover{background:var(--bad-soft)}
+  .btn:disabled{opacity:.55;cursor:default;filter:none}
+  .link{background:none;border:none;color:var(--ink);font-weight:600;cursor:pointer;padding:4px;text-decoration:underline;text-underline-offset:3px}
+  label.field{display:block;font-size:13px;font-weight:600;color:var(--soft);margin-bottom:12px}
+  .input{width:100%;margin-top:5px;border:1.5px solid var(--border-strong);border-radius:14px;padding:11px 14px;background:#fff;font-size:15px;font-weight:500;color:var(--text);transition:border-color .15s, box-shadow .15s}
+  .input:focus{outline:none;border-color:var(--a);box-shadow:0 0 0 4px color-mix(in srgb,var(--a) 15%,transparent)}
+  textarea.input{min-height:84px;resize:vertical}
+  .pw-wrap{position:relative}
+  .pw-wrap .input{padding-right:48px}
+  .eye{position:absolute;right:6px;top:calc(50% + 2px);transform:translateY(-50%);border:none;background:none;cursor:pointer;font-size:17px;padding:6px 8px;border-radius:10px}
+  .eye:hover{background:var(--tint)}
+  .hint{font-size:12.5px;color:var(--faint);font-weight:400}
+  .msg{border-radius:14px;padding:10px 14px;font-size:13.5px;margin-bottom:12px}
+  .msg.err{background:var(--bad-soft);color:var(--bad-ink)}
+  .msg.ok{background:var(--ok-soft);color:var(--ok-ink)}
+
+  /* ---------- หน้าเข้าสู่ระบบ ---------- */
+  #login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px 16px}
+  .login-card{width:100%;max-width:420px;background:var(--surface);border-radius:28px;box-shadow:0 30px 70px -30px color-mix(in srgb,var(--a) 60%,transparent);overflow:hidden}
+  .login-hero{background:var(--grad);background-size:200% 200%;animation:drift 12s ease-in-out infinite alternate;color:#fff;padding:30px 28px 26px;position:relative;overflow:hidden}
+  .login-hero::after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.13);right:-70px;top:-90px}
+  .login-hero .mascot{font-size:46px;line-height:1;display:inline-block;animation:bob 3s ease-in-out infinite}
+  .login-hero h1{margin:10px 0 2px;font-size:25px}
+  .login-hero p{margin:0;opacity:.9;font-size:13.5px}
+  .login-body{padding:24px 28px 26px}
+  .login-foot{text-align:center;margin-top:14px;font-size:13px}
+  .login-foot a{color:var(--ink);font-weight:600}
+  @keyframes drift{from{background-position:0% 50%}to{background-position:100% 50%}}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-6px) rotate(4deg)}}
+
+  /* ---------- แอป ---------- */
+  .topbar{background:var(--grad);color:#fff;padding:14px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 10px 30px -18px var(--a)}
+  .brand{display:flex;align-items:center;gap:10px;margin-right:auto}
+  .brand .logo{width:40px;height:40px;border-radius:14px;background:rgba(255,255,255,.2);display:grid;place-items:center;font-size:21px}
+  .brand b{font-family:'Prompt';font-size:17px;display:block;line-height:1.2}
+  .brand span{font-size:12px;opacity:.88}
+  .me-chip{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 6px 4px 5px}
+  .me-chip .av{width:32px;height:32px;font-size:13px}
+  .me-chip small{display:block;font-size:11px;opacity:.85;line-height:1.2}
+  .me-chip b{font-size:13px;line-height:1.2;display:block;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .topbar .btn{background:rgba(255,255,255,.95);border:none;color:var(--ink)}
+  .wrap{max-width:1180px;margin:0 auto;padding:18px 20px 60px}
+  .banner{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--wait-soft);border:1.5px solid color-mix(in srgb,var(--wait) 45%,#fff);color:var(--wait-ink);border-radius:18px;padding:12px 16px;margin-bottom:16px;font-size:14px}
+  .banner b{font-size:15px}
+  .banner .btn{margin-left:auto}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+  .tab{border:1.5px solid var(--border-strong);background:var(--surface);border-radius:999px;padding:9px 17px;font-weight:600;font-size:14px;cursor:pointer;color:var(--soft)}
+  .tab:hover{border-color:var(--a);color:var(--ink)}
+  .tab[aria-selected="true"]{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 8px 18px -10px var(--a)}
+  .tab .count{display:inline-block;min-width:20px;padding:0 6px;border-radius:99px;background:rgba(0,0,0,.08);font-size:11.5px;margin-left:4px}
+  .tab[aria-selected="true"] .count{background:rgba(255,255,255,.25)}
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);padding:18px 20px}
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+  .sec-head h2{margin:0;font-size:21px}
+  .sec-head p{margin:2px 0 0;color:var(--soft);font-size:13.5px}
+
+  /* สรุปสถานะ */
+  .stat-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px}
+  .stat{border:1.5px solid var(--border);background:var(--surface);border-radius:18px;padding:12px 14px;text-align:left;cursor:pointer;transition:transform .12s,border-color .12s;box-shadow:var(--shadow)}
+  .stat:hover{transform:translateY(-2px);border-color:var(--a)}
+  .stat.on{border-color:var(--a);box-shadow:0 0 0 3px color-mix(in srgb,var(--a) 18%,transparent)}
+  .stat .n{font-family:'Prompt';font-size:26px;font-weight:700;line-height:1.1}
+  .stat .l{font-size:12.5px;color:var(--soft);font-weight:600}
+  .stat .e{float:right;font-size:20px}
+  .stat.all .n{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat.received .n{color:var(--wait-ink)} .stat.success .n{color:var(--ok-ink)} .stat.failed .n{color:var(--bad-ink)} .stat.noreq .n{color:#7C3AED}
+
+  .filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+  .search{flex:1;min-width:220px;position:relative}
+  .search .input{margin:0;padding-left:40px}
+  .search::before{content:"🔍";position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px}
+  select.input{width:auto;margin:0;padding-right:30px;cursor:pointer}
+
+  /* การ์ดคำขอ */
+  .group-label{font-family:'Prompt';font-weight:600;font-size:15px;color:var(--ink);margin:16px 4px 8px}
+  .req-list{display:flex;flex-direction:column;gap:10px}
+  .req-card{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;text-align:left;width:100%;background:var(--surface);border:1.5px solid var(--border);border-radius:18px;padding:12px 14px;cursor:pointer;box-shadow:var(--shadow);transition:transform .12s,border-color .12s;position:relative;overflow:hidden}
+  .req-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--c)}
+  .req-card:hover{transform:translateY(-2px);border-color:var(--c)}
+  .st-received{--c:var(--wait);--cs:var(--wait-soft);--ci:var(--wait-ink)}
+  .st-success{--c:var(--ok);--cs:var(--ok-soft);--ci:var(--ok-ink)}
+  .st-failed{--c:var(--bad);--cs:var(--bad-soft);--ci:var(--bad-ink)}
+  .date-badge{width:62px;text-align:center;border-radius:16px;padding:7px 4px 6px;color:#fff;background:var(--g,var(--grad))}
+  .date-badge b{display:block;font-family:'Prompt';font-size:23px;line-height:1}
+  .date-badge span{display:block;font-size:11.5px;font-weight:600;margin-top:3px}
+  .date-badge i{display:block;font-style:normal;font-size:10.5px;opacity:.85}
+  .req-top{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:13px}
+  .chip{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 10px;font-weight:600;font-size:12px;background:var(--tint);color:var(--ink)}
+  .chip.time{font-family:'IBM Plex Mono'}
+  .chip.code{background:#F1F2F8;color:var(--soft);font-family:'IBM Plex Mono';font-size:11.5px}
+  .req-detail{font-weight:600;font-size:15px;margin:4px 0 2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .req-who{font-size:12.5px;color:var(--soft)}
+  .req-who.missing{color:#7C3AED;font-weight:600}
+  .req-side{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+  .pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:3px 11px;font-size:12.5px;font-weight:700;background:var(--cs);color:var(--ci);white-space:nowrap}
+  .pill::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c)}
+  .mini{font-size:12px;color:var(--faint);white-space:nowrap}
+  .stars{color:#F59E0B;letter-spacing:1px;font-size:13px}
+  .empty{text-align:center;padding:40px 16px;color:var(--soft)}
+  .empty .e{font-size:44px}
+  .more-wrap{text-align:center;margin-top:14px}
+
+  /* ---------- Modal ---------- */
+  .overlay{position:fixed;inset:0;background:rgba(20,18,50,.5);backdrop-filter:blur(3px);display:none;align-items:flex-start;justify-content:center;padding:4vh 14px;z-index:40;overflow-y:auto}
+  .overlay.open{display:flex}
+  .modal{background:var(--bg);border-radius:26px;width:100%;max-width:680px;box-shadow:0 40px 90px -30px rgba(20,18,50,.6);overflow:hidden;animation:pop .18s ease-out}
+  .modal.sm{max-width:460px}
+  @keyframes pop{from{transform:translateY(10px) scale(.98);opacity:0}to{transform:none;opacity:1}}
+  .m-head{background:var(--hg,var(--grad));color:#fff;padding:20px 22px;display:flex;gap:12px;align-items:flex-start}
+  .m-head h3{margin:0;font-size:20px;line-height:1.3}
+  .m-head p{margin:3px 0 0;font-size:13.5px;opacity:.92}
+  .m-head .x{margin-left:auto;flex-shrink:0;width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,.22);color:#fff;font-size:16px;cursor:pointer}
+  .m-head .x:hover{background:rgba(255,255,255,.35)}
+  .m-body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:14px}
+  .box{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:15px 16px}
+  .box h4{margin:0 0 10px;font-family:'Prompt';font-size:15.5px;display:flex;align-items:center;gap:8px}
+  .kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px}
+  .kv dt{color:var(--soft)} .kv dd{margin:0;font-weight:600}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .status-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+  .status-opt{border:2px solid var(--border);background:#fff;border-radius:16px;padding:12px 8px;text-align:center;cursor:pointer;font-weight:700;font-size:13.5px;transition:all .12s}
+  .status-opt .e{display:block;font-size:26px;line-height:1.2}
+  .status-opt:hover{border-color:var(--c)}
+  .status-opt[aria-pressed="true"]{border-color:var(--c);background:var(--cs);color:var(--ci);box-shadow:0 8px 18px -12px var(--c)}
+  .check{display:flex;gap:10px;align-items:flex-start;font-size:14px;cursor:pointer;margin:6px 0 12px}
+  .check input{width:19px;height:19px;accent-color:var(--a);margin-top:2px;flex-shrink:0}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+  .notify-info{font-size:12.5px;color:var(--soft);margin-top:8px}
+
+  /* ช่องค้นหาบุคลากร */
+  .picker{position:relative}
+  .picker .input{padding-left:42px}
+  .picker::before{content:"🔎";position:absolute;left:15px;top:38px;font-size:15px;z-index:1}
+  .dropdown{position:absolute;left:0;right:0;top:calc(100% - 6px);background:#fff;border:1.5px solid var(--a);border-radius:16px;box-shadow:0 20px 40px -18px rgba(30,27,75,.45);z-index:5;max-height:330px;overflow-y:auto;padding:6px}
+  .dd-item{display:flex;gap:10px;align-items:center;width:100%;text-align:left;border:none;background:none;border-radius:12px;padding:8px 10px;cursor:pointer}
+  .dd-item:hover,.dd-item.active{background:var(--tint)}
+  .dd-item b{display:block;font-size:14px}
+  .dd-item small{display:block;font-size:12px;color:var(--soft)}
+  .dd-item mark{background:color-mix(in srgb,var(--b) 25%,#fff);color:inherit;border-radius:4px;padding:0 1px}
+  .dd-note{font-size:12px;color:var(--faint);padding:6px 10px}
+  .av{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0;font-family:'Prompt'}
+
+  /* ผู้ใช้ */
+  .user-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+  .user-card{background:var(--surface);border:1.5px solid var(--border);border-radius:20px;padding:15px 16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px}
+  .user-card.off{opacity:.62}
+  .u-top{display:flex;gap:12px;align-items:center}
+  .u-top .av{width:46px;height:46px;font-size:18px}
+  .u-top b{display:block;font-size:15.5px;line-height:1.3}
+  .u-top small{display:block;font-size:12.5px;color:var(--soft);word-break:break-all}
+  .badge{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700}
+  .badge.admin{background:linear-gradient(120deg,#FDE68A,#FBCFE8);color:#7C2D12}
+  .badge.staff{background:#E0F2FE;color:#075985}
+  .badge.off{background:#F1F2F8;color:var(--soft)}
+  .badge.warn{background:var(--wait-soft);color:var(--wait-ink)}
+  .u-meta{font-size:12.5px;color:var(--soft)}
+  .u-actions{display:flex;gap:6px;flex-wrap:wrap}
+  .role-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+
+  /* ความพึงพอใจ */
+  .sat-top{display:grid;grid-template-columns:260px 1fr;gap:14px;margin-bottom:14px}
+  .sat-score{background:var(--grad);color:#fff;border-radius:22px;padding:20px;text-align:center;box-shadow:0 18px 36px -20px var(--a)}
+  .sat-score .big{font-family:'Prompt';font-size:52px;font-weight:700;line-height:1}
+  .sat-score .face{font-size:40px}
+  .dist-row{display:grid;grid-template-columns:132px 1fr 38px;gap:10px;align-items:center;margin-bottom:9px;font-size:13.5px}
+  .dist-track{height:12px;border-radius:99px;background:#F0F1F8;overflow:hidden}
+  .dist-track span{display:block;height:100%;border-radius:99px}
+  .fb{display:flex;gap:12px;padding:12px 2px;border-bottom:1px dashed var(--border)}
+  .fb:last-child{border-bottom:none}
+  .fb .face{font-size:30px;line-height:1}
+  .fb b{font-size:14px}
+  .fb p{margin:2px 0 0;font-size:14px}
+  .fb small{color:var(--faint);font-size:12px}
+
+  /* toast / loading */
+  #toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:60;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:calc(100% - 28px);max-width:520px}
+  .toast{background:#1E1B4B;color:#fff;border-radius:16px;padding:11px 18px;font-size:14px;box-shadow:0 16px 36px -14px rgba(0,0,0,.5);animation:pop .18s ease-out;pointer-events:auto}
+  .toast.ok{background:linear-gradient(120deg,#059669,#0EA5E9)}
+  .toast.err{background:linear-gradient(120deg,#E11D48,#9333EA)}
+  .spinner{width:18px;height:18px;border-radius:50%;border:3px solid rgba(255,255,255,.4);border-top-color:#fff;animation:spin .8s linear infinite;display:inline-block}
+  .spinner.dark{border-color:color-mix(in srgb,var(--a) 25%,transparent);border-top-color:var(--a)}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loading{display:flex;align-items:center;justify-content:center;gap:10px;padding:40px;color:var(--soft)}
+
+  @media (max-width:820px){
+    .stat-row{grid-template-columns:repeat(2,1fr)} .stat.all{grid-column:1/-1}
+    .sat-top{grid-template-columns:1fr}
+  }
+  @media (max-width:600px){
+    .wrap{padding:14px 12px 50px}
+    .topbar{padding:12px 14px}
+    .brand span{display:none}
+    .me-chip small{display:none}
+    .req-card{grid-template-columns:auto 1fr;gap:10px}
+    .req-side{grid-column:1/-1;flex-direction:row;justify-content:space-between;align-items:center}
+    .row2{grid-template-columns:1fr}
+    .status-opts{grid-template-columns:1fr 1fr 1fr}
+    .status-opt{font-size:12px;padding:10px 4px}
+    .m-body{padding:14px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+
+<!-- =================== เข้าสู่ระบบ =================== -->
+<section id="login" hidden>
+  <div class="login-card">
+    <div class="login-hero">
+      <div class="mascot">🎬</div>
+      <h1>ระบบผู้ดูแล DWMS</h1>
+      <p id="orgName"></p>
+    </div>
+    <div class="login-body">
+      <form id="loginForm" autocomplete="on">
+        <div class="msg err" id="sysErr" hidden></div>
+        <div class="msg ok" id="firstRun" hidden>👋 <b>เข้าใช้ครั้งแรก</b> ใช้ชื่อผู้ใช้ <b class="mono">admin</b> รหัสผ่าน <b class="mono">123456</b> แล้วตั้งรหัสผ่านใหม่ที่ “บัญชีของฉัน” ทันที</div>
+        <div class="msg err" id="loginErr" hidden></div>
+        <label class="field">ชื่อผู้ใช้ หรืออีเมล @msu.ac.th
+          <input class="input" id="lgId" autocomplete="username" required placeholder="admin หรือ name@msu.ac.th">
+        </label>
+        <label class="field">รหัสผ่าน
+          <div class="pw-wrap"><input class="input" id="lgPw" type="password" autocomplete="current-password" required><button type="button" class="eye" data-eye="lgPw" aria-label="แสดงรหัสผ่าน">👁</button></div>
+        </label>
+        <button class="btn primary big" id="loginBtn">เข้าสู่ระบบ</button>
+      </form>
+      <form id="forgotForm" hidden>
+        <h3 style="margin:0 0 4px">🔑 ลืมรหัสผ่าน?</h3>
+        <p class="hint" style="margin:0 0 14px">กรอกอีเมล @msu.ac.th ของคุณ ระบบจะส่งรหัสผ่านใหม่ไปให้ทางอีเมลทันที ไม่ต้องรอผู้ดูแล</p>
+        <div class="msg" id="forgotMsg" hidden></div>
+        <label class="field">อีเมลของคุณ
+          <input class="input" id="fgEmail" type="email" required placeholder="name@msu.ac.th">
+        </label>
+        <button class="btn primary big" id="forgotBtn">📧 ส่งรหัสผ่านใหม่ให้ฉัน</button>
+      </form>
+      <div class="login-foot">
+        <button class="link" id="toggleForgot" type="button">ลืมรหัสผ่าน?</button>
+        <div style="margin-top:8px"><a id="publicLink" href="#" target="_blank" rel="noopener">← กลับไปหน้าปฏิทินสาธารณะ</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== แอป =================== -->
+<section id="app" hidden>
+  <header class="topbar">
+    <div class="brand"><div class="logo">🎬</div><div><b>DWMS · ระบบผู้ดูแล</b><span>งานโสตทัศนูปกรณ์ คณะวิศวกรรมศาสตร์ มมส</span></div></div>
+    <div class="me-chip"><div class="av" id="meAv"></div><div><b id="meName"></b><small id="meRole"></small></div></div>
+    <button class="btn sm" id="logoutBtn">ออกจากระบบ</button>
+  </header>
+  <div class="wrap">
+    <div class="banner" id="pwBanner" hidden>
+      <span style="font-size:24px">🔐</span>
+      <div><b>คุณยังใช้รหัสผ่านเริ่มต้น/ชั่วคราวอยู่</b><br>แนะนำให้ตั้งรหัสผ่านใหม่ของคุณเอง (อย่างน้อย 6 ตัวอักษร)</div>
+      <button class="btn sm" data-goto="account">ตั้งรหัสผ่านใหม่</button>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button class="tab" role="tab" data-tab="requests">📋 คำขอรับบริการ <span class="count" id="cntReq"></span></button>
+      <button class="tab" role="tab" data-tab="ratings">💖 ความพึงพอใจ</button>
+      <button class="tab" role="tab" data-tab="users" id="tabUsersBtn">👥 ผู้ดูแล/บุคลากร</button>
+      <button class="tab" role="tab" data-tab="account">🔐 บัญชีของฉัน</button>
+    </nav>
+
+    <!-- คำขอ -->
+    <section data-pane="requests">
+      <div class="sec-head">
+        <div><h2>คำขอรับบริการ</h2><p>คลิกรายการเพื่อระบุผู้ขอรับบริการ อัปเดตสถานะ และส่งอีเมลแจ้งพร้อม QR Code</p></div>
+        <button class="btn sm" id="reloadReq">🔄 โหลดข้อมูลใหม่</button>
+      </div>
+      <div class="stat-row" id="statRow"></div>
+      <div class="filters">
+        <div class="search"><input class="input" id="reqSearch" placeholder="ค้นหา ห้อง รายละเอียด ชื่อผู้ขอ หรือรหัสติดตาม"></div>
+        <select class="input" id="reqWhen" aria-label="ช่วงเวลา">
+          <option value="all">ทุกช่วงเวลา</option>
+          <option value="upcoming">กำลังจะมาถึง</option>
+          <option value="past">ที่ผ่านมา</option>
+        </select>
+      </div>
+      <div id="reqList"><div class="loading"><span class="spinner dark"></span>กำลังโหลดคำขอ…</div></div>
+    </section>
+
+    <!-- ความพึงพอใจ -->
+    <section data-pane="ratings" hidden>
+      <div class="sec-head"><div><h2>ความพึงพอใจในการรับบริการ</h2><p>ผลประเมินจากผู้ขอรับบริการผ่านลิงก์ในอีเมลและหน้าปฏิทินสาธารณะ</p></div>
+        <button class="btn sm" id="reloadRatings">🔄 โหลดใหม่</button></div>
+      <div id="ratingsBox"><div class="loading"><span class="spinner dark"></span>กำลังโหลด…</div></div>
+    </section>
+
+    <!-- ผู้ใช้ -->
+    <section data-pane="users" hidden>
+      <div class="sec-head">
+        <div><h2>ผู้ดูแล/บุคลากร</h2><p id="usersSub">ชื่อ หน่วยงาน และตำแหน่ง ซิงก์จากฐานข้อมูลบุคลากรกลางของคณะอัตโนมัติ</p></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="sysCheckBtn">🩺 ตรวจสอบระบบ</button><button class="btn primary" id="addUserBtn">＋ เพิ่มผู้ดูแล/บุคลากร</button></div>
+      </div>
+      <div id="usersBox"><div class="loading"><span class="spinner dark"></span>กำลังโหลด…</div></div>
+    </section>
+
+    <!-- บัญชีของฉัน -->
+    <section data-pane="account" hidden>
+      <div class="sec-head"><div><h2>บัญชีของฉัน</h2><p>ตั้งรหัสผ่านใหม่ได้ตามต้องการ อย่างน้อย 6 ตัวอักษร</p></div></div>
+      <div class="row2" style="align-items:start">
+        <div class="panel" id="profileBox"></div>
+        <form class="panel" id="pwForm">
+          <h3 style="margin:0 0 12px">🔐 เปลี่ยนรหัสผ่าน</h3>
+          <div class="msg" id="pwMsg" hidden></div>
+          <label class="field">รหัสผ่านปัจจุบัน
+            <div class="pw-wrap"><input class="input" id="pwOld" type="password" autocomplete="current-password" required><button type="button" class="eye" data-eye="pwOld" aria-label="แสดงรหัสผ่าน">👁</button></div></label>
+          <label class="field">รหัสผ่านใหม่
+            <div class="pw-wrap"><input class="input" id="pwNew" type="password" autocomplete="new-password" required minlength="6"><button type="button" class="eye" data-eye="pwNew" aria-label="แสดงรหัสผ่าน">👁</button></div>
+            <span class="hint">อย่างน้อย 6 ตัวอักษร ใช้ตัวเลข/ตัวอักษรอะไรก็ได้ตามสะดวก (ผู้ใช้รับผิดชอบรหัสผ่านของตนเอง)</span></label>
+          <label class="field">ยืนยันรหัสผ่านใหม่
+            <input class="input" id="pwNew2" type="password" autocomplete="new-password" required></label>
+          <button class="btn primary big" id="pwBtn">บันทึกรหัสผ่านใหม่</button>
+        </form>
+      </div>
+    </section>
+  </div>
+</section>
+
+<!-- =================== Modal: จัดการคำขอ =================== -->
+<div class="overlay" id="reqModal" role="dialog" aria-modal="true" aria-labelledby="reqTitle">
+  <div class="modal">
+    <div class="m-head" id="reqHead">
+      <div><h3 id="reqTitle"></h3><p id="reqSub"></p></div>
+      <button class="x" data-close aria-label="ปิด">✕</button>
+    </div>
+    <div class="m-body" id="reqBody"></div>
+  </div>
+</div>
+
+<!-- =================== Modal: เพิ่มผู้ใช้ =================== -->
+<div class="overlay" id="userModal" role="dialog" aria-modal="true" aria-labelledby="userTitle">
+  <div class="modal sm">
+    <div class="m-head">
+      <div><h3 id="userTitle">เพิ่มผู้ดูแล/บุคลากร</h3><p>ค้นหาจากฐานข้อมูลบุคลากรคณะ พิมพ์เพียง 1–3 ตัวอักษร</p></div>
+      <button class="x" data-close aria-label="ปิด">✕</button>
+    </div>
+    <form class="m-body" id="userForm">
+      <div class="box">
+        <div class="picker">
+          <label class="field" style="margin-bottom:4px">ค้นหาบุคลากร
+            <input class="input" id="uSearch" autocomplete="off" placeholder="พิมพ์ชื่อ นามสกุล หรืออีเมล">
+          </label>
+          <div class="dropdown" id="uDrop" hidden></div>
+        </div>
+        <div class="hint" id="dirInfo">กำลังโหลดฐานข้อมูลบุคลากร…</div>
+      </div>
+      <div class="box">
+        <div class="msg err" id="userErr" hidden></div>
+        <label class="field">ชื่อ-สกุล <input class="input" id="uName" required></label>
+        <label class="field">อีเมล (@msu.ac.th เท่านั้น) <input class="input" id="uEmail" type="email" required></label>
+        <div class="row2">
+          <label class="field">หน่วยงาน/สาขา <input class="input" id="uDept"></label>
+          <label class="field">ตำแหน่ง <input class="input" id="uPos"></label>
+        </div>
+        <div class="field" style="margin-bottom:6px">สิทธิ์การใช้งาน</div>
+        <div class="role-opts">
+          <button type="button" class="status-opt st-success" data-role="staff" aria-pressed="true"><span class="e">🧑‍💼</span>บุคลากร<br><span class="hint">จัดการคำขอ/แจ้งสถานะ</span></button>
+          <button type="button" class="status-opt st-received" data-role="admin" aria-pressed="false"><span class="e">👑</span>ผู้ดูแลระบบ<br><span class="hint">+ จัดการผู้ใช้</span></button>
+        </div>
+        <label class="check"><input type="checkbox" id="uNotify" checked><span>📧 ส่งอีเมลแจ้งบัญชีและรหัสผ่านเริ่มต้น <b>123456</b> ให้ผู้ใช้ใหม่</span></label>
+        <div class="actions"><button type="button" class="btn" data-close>ยกเลิก</button><button class="btn primary" id="uSave">＋ เพิ่มผู้ใช้</button></div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- =================== Modal: ตรวจสอบระบบ =================== -->
+<div class="overlay" id="sysModal" role="dialog" aria-modal="true" aria-labelledby="sysTitle">
+  <div class="modal">
+    <div class="m-head"><div><h3 id="sysTitle">🩺 ตรวจสอบระบบ</h3><p>ตรวจชีตคำขอ ฐานข้อมูลผู้ดูแล ฐานข้อมูลบุคลากร อีเมล และลิงก์เว็บแอป</p></div><button class="x" data-close aria-label="ปิด">✕</button></div>
+    <div class="m-body"><div class="box" id="sysBody"></div></div>
+  </div>
+</div>
+
+<!-- =================== Modal: ยืนยัน =================== -->
+<div class="overlay" id="confirmModal" role="alertdialog" aria-modal="true" aria-labelledby="cfTitle">
+  <div class="modal sm">
+    <div class="m-head" id="cfHead"><div><h3 id="cfTitle"></h3></div></div>
+    <div class="m-body">
+      <div id="cfMsg" style="font-size:15px"></div>
+      <label class="check" id="cfCheckWrap" hidden><input type="checkbox" id="cfCheck"><span id="cfCheckText"></span></label>
+      <div class="actions"><button class="btn" id="cfNo">ยกเลิก</button><button class="btn primary" id="cfYes">ยืนยัน</button></div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" aria-live="polite"></div>
+
+<script>
+const BOOT = {"webAppUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82vwnCzEQT5DMgCbUkrK7lV2kkejzMZSpCdLHxBGEnW7Y7MpDMsToERveW/exec", "apiUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82vwnCzEQT5DMgCbUkrK7lV2kkejzMZSpCdLHxBGEnW7Y7MpDMsToERveW/exec", "publicUrl": "./", "org": "งานโสตทัศนูปกรณ์ คณะวิศวกรรมศาสตร์ มหาวิทยาลัยมหาสารคาม", "minPw": 6, "domain": "msu.ac.th", "contact": "panya.j@msu.ac.th"} /* admin.html สำหรับ GitHub: เข้าแบบไม่ผูกบัญชี Google */;
+(function(){
+  /* ---------------- ธีมไดนามิกตามเดือน ---------------- */
+  const MONTH_THEMES = [["#6D28D9","#DB2777"],["#DB2777","#EA580C"],["#C2410C","#E11D48"],["#0891B2","#16A34A"],
+    ["#15803D","#0284C7"],["#0369A1","#7C3AED"],["#7C3AED","#DB2777"],["#1D4ED8","#0891B2"],
+    ["#4F46E5","#DB2777"],["#EA580C","#BE123C"],["#0F766E","#4F46E5"],["#BE185D","#6D28D9"]];
+  const th = MONTH_THEMES[new Date().getMonth()];
+  document.documentElement.style.setProperty('--a', th[0]);
+  document.documentElement.style.setProperty('--b', th[1]);
+
+  const $ = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+  const MS = ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];
+  const MF = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
+  const WD = ["อา","จ","อ","พ","พฤ","ศ","ส"];
+  const WDF = ["อาทิตย์","จันทร์","อังคาร","พุธ","พฤหัสบดี","ศุกร์","เสาร์"];
+  const ST = { received:{label:"รับเรื่องเรียบร้อย", e:"📥"}, success:{label:"สำเร็จ", e:"✅"}, failed:{label:"ไม่สำเร็จ", e:"⚠️"} };
+  const FACES = [null,{e:"😞",l:"ต้องปรับปรุง",c:"#F43F5E"},{e:"🙁",l:"พอใช้",c:"#F97316"},{e:"😐",l:"ปานกลาง",c:"#EAB308"},{e:"😊",l:"ดี",c:"#10B981"},{e:"😍",l:"ดีมาก",c:"#8B5CF6"}];
+  const TITLES = /^((นาย|นางสาว|นาง|ดร\\.|ผศ\\.|รศ\\.|ศ\\.|อ\\.|ว่าที่\\s*ร\\.ต\\.)\\s*)+/;
+  const STATUS_GRAD = { received:"linear-gradient(125deg,#F59E0B,#F97316)", success:"linear-gradient(125deg,#10B981,#06B6D4)", failed:"linear-gradient(125deg,#F43F5E,#A855F7)" };
+
+  const S = { token:"", user:null, requests:[], directory:[], dirLoadedAt:"", dirLoading:null, users:[],
+              filter:{ q:"", status:"all", noReq:false, when:"all" }, shown:60 };
+  try { S.token = sessionStorage.getItem('dwms_token') || ""; } catch(e){}
+
+  const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const todayISO = (()=>{ const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); })();
+  function thaiDate(iso, withDay){ if(!iso) return "-"; const [y,m,d]=iso.split("-").map(Number); const t=new Date(y,m-1,d); return (withDay?"วัน"+WDF[t.getDay()]+"ที่ ":"")+d+" "+MF[m-1]+" "+(y+543); }
+  function stampText(s){ if(!s) return ""; const [d,t]=s.split(" "); return thaiDate(d)+(t?" "+t+" น.":""); }
+  function hueOf(s){ let h=0; for(const ch of String(s)) h=(h*31+ch.charCodeAt(0))%360; return h; }
+  function avatar(name, email){
+    const n = String(name||email||"?").replace(TITLES,"");
+    const h = hueOf(email||name);
+    return `<div class="av" style="background:linear-gradient(135deg,hsl(${h} 80% 58%),hsl(${(h+50)%360} 80% 55%))">${esc(n.charAt(0)||"?")}</div>`;
+  }
+  function dirName(email){ const p = email && S.directory.find(x=> x.email===email); return p ? p.name : ""; }
+  function whoName(r){ return r.requesterName || dirName(r.requesterEmail); }
+  function stars(n){ return n ? "★".repeat(n)+"☆".repeat(5-n) : ""; }
+
+  /* ---------------- เรียกเซิร์ฟเวอร์ ----------------
+     ใช้ API (fetch แบบไม่ส่งคุกกี้ Google) เป็นหลัก → ใช้ได้แม้ Chrome ลงชื่อหลายบัญชี
+     ถ้าเครือข่ายเรียก API ไม่ได้ และหน้านี้เปิดจาก Apps Script จะสลับไปใช้ google.script.run อัตโนมัติ */
+  const API = BOOT.apiUrl || "";
+  const HAS_GSR = typeof google !== "undefined" && google.script && google.script.run;
+  let useGsr = !API;
+  const cleanMsg = m => String(m).replace(/^(Exception|Error):\s*/,"");
+  function viaGsr(fn, args){
+    return new Promise((res, rej)=> google.script.run.withSuccessHandler(res)
+      .withFailureHandler(e=> rej(new Error(cleanMsg((e && e.message) || e))))[fn](...args));
+  }
+  async function viaApi(fn, args){
+    let resp, data;
+    try {
+      resp = await fetch(API, { method:"POST", headers:{ "Content-Type":"text/plain;charset=utf-8" },
+        body: JSON.stringify({ fn, args }), credentials:"omit", redirect:"follow" });
+    } catch(e){ const er = new Error("เชื่อมต่อเซิร์ฟเวอร์ไม่สำเร็จ กรุณาตรวจสอบอินเทอร์เน็ตแล้วลองใหม่"); er.network = true; throw er; }
+    try { data = await resp.json(); }
+    catch(e){ const er = new Error("เซิร์ฟเวอร์ตอบกลับไม่ถูกต้อง (HTTP " + resp.status + ") — ตรวจว่า Deploy เป็น “ทุกคน” และเป็นเวอร์ชันล่าสุด"); er.network = true; throw er; }
+    if(!data.ok) throw new Error(cleanMsg(data.error));
+    return data.result;
+  }
+  async function call(fn, args){
+    if(!useGsr){
+      try { return await viaApi(fn, args); }
+      catch(e){ if(e.network && HAS_GSR){ useGsr = true; return viaGsr(fn, args); } throw e; }
+    }
+    if(!HAS_GSR) throw new Error("ยังไม่ได้ตั้งค่าลิงก์เซิร์ฟเวอร์ (apiUrl)");
+    return viaGsr(fn, args);
+  }
+  function run(fn, ...args){
+    return call(fn, args).catch(err=>{
+      if(String(err.message).indexOf("SESSION_EXPIRED") !== -1){ expired(); throw new Error("เซสชันหมดอายุ กรุณาเข้าสู่ระบบอีกครั้ง"); }
+      throw err;
+    });
+  }
+  function toast(text, type){
+    const el = document.createElement('div');
+    el.className = 'toast ' + (type||'');
+    el.textContent = text;
+    $('#toast').appendChild(el);
+    setTimeout(()=> el.remove(), type==='err' ? 6500 : 4200);
+  }
+  async function busy(btn, fn){
+    const html = btn.innerHTML; btn.disabled = true;
+    btn.innerHTML = `<span class="spinner${btn.classList.contains('primary')?'':' dark'}"></span> กำลังดำเนินการ…`;
+    try { return await fn(); } finally { btn.disabled = false; btn.innerHTML = html; }
+  }
+  function openModal(id){ const o=$(id); o.classList.add('open'); o.scrollTop = 0; }
+  function closeModal(id){ $(id).classList.remove('open'); }
+  $$('.overlay').forEach(o=>{
+    o.addEventListener('click', e=>{ if(e.target===o && o.id!=='confirmModal') o.classList.remove('open'); });
+    o.querySelectorAll('[data-close]').forEach(b=> b.addEventListener('click', ()=> o.classList.remove('open')));
+  });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ const open=$$('.overlay.open'); if(open.length) open[open.length-1].classList.remove('open'); } });
+  $$('[data-eye]').forEach(b=> b.addEventListener('click', ()=>{ const i=document.getElementById(b.dataset.eye); i.type = i.type==='password'?'text':'password'; b.textContent = i.type==='password'?'👁':'🙈'; }));
+
+  function askConfirm(o){
+    return new Promise(resolve=>{
+      $('#cfTitle').textContent = o.title; $('#cfMsg').innerHTML = o.html || esc(o.message||"");
+      $('#cfHead').style.setProperty('--hg', o.danger ? STATUS_GRAD.failed : 'var(--grad)');
+      $('#cfYes').textContent = o.ok || "ยืนยัน";
+      $('#cfCheckWrap').hidden = !o.check; if(o.check){ $('#cfCheckText').innerHTML = o.check; $('#cfCheck').checked = o.checkDefault !== false; }
+      openModal('#confirmModal');
+      const done = v => { closeModal('#confirmModal'); $('#cfYes').onclick = $('#cfNo').onclick = null; resolve(v ? { ok:true, checked: $('#cfCheck').checked } : null); };
+      $('#cfYes').onclick = ()=> done(true); $('#cfNo').onclick = ()=> done(false);
+    });
+  }
+
+  /* ---------------- เข้าสู่ระบบ ---------------- */
+  $('#orgName').textContent = BOOT.org || "";
+  if(BOOT.publicUrl) $('#publicLink').href = BOOT.publicUrl; else $('#publicLink').hidden = true;
+  $('#toggleForgot').addEventListener('click', ()=>{
+    const f = $('#forgotForm').hidden;
+    $('#forgotForm').hidden = !f; $('#loginForm').hidden = f;
+    $('#toggleForgot').textContent = f ? "← กลับไปหน้าเข้าสู่ระบบ" : "ลืมรหัสผ่าน?";
+    $('#forgotMsg').hidden = true;
+    (f ? $('#fgEmail') : $('#lgId')).focus();
+  });
+  $('#loginForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    $('#loginErr').hidden = true;
+    busy($('#loginBtn'), async ()=>{
+      try {
+        const res = await run('login', $('#lgId').value, $('#lgPw').value);
+        S.token = res.token; S.user = res.user;
+        try { sessionStorage.setItem('dwms_token', S.token); } catch(e){}
+        $('#lgPw').value = "";
+        showApp();
+      } catch(err){ $('#loginErr').textContent = err.message; $('#loginErr').hidden = false; }
+    });
+  });
+  $('#forgotForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    busy($('#forgotBtn'), async ()=>{
+      const m = $('#forgotMsg');
+      try { const r = await run('forgotPassword', $('#fgEmail').value); m.className='msg ok'; m.textContent = r.message; }
+      catch(err){ m.className='msg err'; m.textContent = err.message; }
+      m.hidden = false;
+    });
+  });
+  function showLogin(){ $('#app').hidden = true; $('#login').hidden = false; setTimeout(()=> $('#lgId').focus(), 50); }
+  function expired(){
+    S.token = ""; S.user = null; try{ sessionStorage.removeItem('dwms_token'); }catch(e){}
+    $$('.overlay.open').forEach(o=>o.classList.remove('open'));
+    $('#firstRun').hidden = true;
+    showLogin();
+    if(typeof checkStatus === 'function') checkStatus();
+  }
+  $('#logoutBtn').addEventListener('click', ()=>{ run('logout', S.token).catch(()=>{}); expired(); toast("ออกจากระบบแล้ว 👋"); });
+
+  /* ---------------- แอปหลัก ---------------- */
+  function showApp(){
+    $('#login').hidden = true; $('#app').hidden = false;
+    renderMe();
+    $('#tabUsersBtn').hidden = S.user.role !== 'admin';
+    switchTab('requests');
+    loadRequests();
+    loadDirectory();
+  }
+  function renderMe(){
+    const u = S.user;
+    $('#meAv').outerHTML = avatar(u.name, u.email).replace('class="av"','class="av" id="meAv"');
+    $('#meName').textContent = u.name || u.username;
+    $('#meRole').textContent = u.role === 'admin' ? "👑 ผู้ดูแลระบบ" : "🧑‍💼 บุคลากร";
+    $('#pwBanner').hidden = !u.mustChange;
+    $('#profileBox').innerHTML = `
+      <div class="u-top">${avatar(u.name,u.email)}<div><b>${esc(u.name||u.username)}</b><small>${esc(u.email)}</small></div></div>
+      <dl class="kv" style="margin-top:14px">
+        <dt>ชื่อผู้ใช้</dt><dd>${esc(u.username)}${u.username!==u.email?` หรือ ${esc(u.email)}`:""}</dd>
+        <dt>สิทธิ์</dt><dd><span class="badge ${u.role}">${u.role==='admin'?"👑 ผู้ดูแลระบบ":"🧑‍💼 บุคลากร"}</span></dd>
+        ${u.department?`<dt>หน่วยงาน</dt><dd>${esc(u.department)}</dd>`:""}
+        ${u.position?`<dt>ตำแหน่ง</dt><dd>${esc(u.position)}</dd>`:""}
+        <dt>เข้าใช้ล่าสุด</dt><dd>${esc(stampText(u.lastLogin)||"-")}</dd>
+      </dl>
+      <p class="hint" style="margin:14px 0 0">💡 ลืมรหัสผ่านเมื่อไรก็กด “ลืมรหัสผ่าน?” ที่หน้าเข้าสู่ระบบ ระบบจะส่งรหัสใหม่ไปที่ ${esc(u.email)}</p>`;
+  }
+  function switchTab(name){
+    $$('.tab').forEach(t=> t.setAttribute('aria-selected', String(t.dataset.tab===name)));
+    $$('[data-pane]').forEach(p=> p.hidden = p.dataset.pane !== name);
+    if(name==='users') loadUsers();
+    if(name==='ratings') loadRatings();
+  }
+  $$('.tab').forEach(t=> t.addEventListener('click', ()=> switchTab(t.dataset.tab)));
+  $$('[data-goto]').forEach(b=> b.addEventListener('click', ()=>{ switchTab(b.dataset.goto); setTimeout(()=>$('#pwOld').focus(),50); }));
+
+  /* ---------------- ฐานข้อมูลบุคลากร (โหลดสดทุกครั้งที่เปิดหน้าต่างค้นหา) ---------------- */
+  function loadDirectory(){
+    if(S.dirLoading) return S.dirLoading;
+    S.dirLoading = run('getDirectory', S.token).then(r=>{
+      S.directory = r.people || []; S.dirLoadedAt = r.loadedAt;
+      if(S.requests.length && !$('#reqModal').classList.contains('open')) renderRequests();
+      $$('[data-dirinfo]').forEach(el=> el.textContent = dirInfoText());
+      $('#dirInfo').textContent = dirInfoText();
+      $$('.picker input').forEach(i=> i.dispatchEvent(new Event('refresh')));
+    }).catch(err=>{
+      const t = "โหลดฐานข้อมูลบุคลากรไม่สำเร็จ: " + err.message + " (ยังกรอกชื่อ/อีเมลเองได้)";
+      $('#dirInfo').textContent = t; $$('[data-dirinfo]').forEach(el=> el.textContent = t);
+    }).finally(()=>{ S.dirLoading = null; });
+    return S.dirLoading;
+  }
+  function dirInfoText(){ return `📚 ฐานข้อมูลบุคลากรคณะ ${S.directory.length.toLocaleString('th-TH')} รายชื่อ · อัปเดตล่าสุด ${stampText(S.dirLoadedAt)}`; }
+  function highlight(text, q){
+    const s = String(text||""); const i = s.toLowerCase().indexOf(q);
+    if(!q || i<0) return esc(s);
+    return esc(s.slice(0,i)) + "<mark>" + esc(s.slice(i,i+q.length)) + "</mark>" + esc(s.slice(i+q.length));
+  }
+  function attachPicker(input, drop, onPick){
+    let items = [], active = -1;
+    function render(){
+      const q = input.value.trim().toLowerCase();
+      if(!q){ drop.hidden = true; return; }
+      if(!S.directory.length){ drop.innerHTML = `<div class="dd-note">${S.dirLoading?'⏳ กำลังโหลดฐานข้อมูลบุคลากร…':'ไม่มีข้อมูลบุคลากร กรอกชื่อและอีเมลด้านล่างได้เลย'}</div>`; drop.hidden = false; return; }
+      const scored = [];
+      S.directory.forEach(p=>{
+        const name = p.name.toLowerCase(), email = p.email.toLowerCase();
+        const hay = name+" "+email+" "+(p.department||"").toLowerCase()+" "+(p.position||"").toLowerCase();
+        if(hay.indexOf(q) === -1) return;
+        const bare = name.replace(TITLES,"");
+        const score = bare.startsWith(q) ? 0 : email.startsWith(q) ? 1 : name.indexOf(" "+q) !== -1 ? 2 : 3;
+        scored.push([score, p]);
+      });
+      scored.sort((a,b)=> a[0]-b[0] || a[1].name.localeCompare(b[1].name,'th'));
+      items = scored.slice(0,8).map(x=>x[1]); active = items.length ? 0 : -1;
+      drop.innerHTML = items.length
+        ? items.map((p,i)=>`<button type="button" class="dd-item${i===active?' active':''}" data-i="${i}">${avatar(p.name,p.email)}<span><b>${highlight(p.name,q)}</b><small>${highlight(p.email,q)}${p.department||p.position?` · ${highlight([p.position,p.department].filter(Boolean).join(" · "),q)}`:""}</small></span></button>`).join("") +
+          `<div class="dd-note">พบ ${scored.length} รายชื่อ${scored.length>8?" · พิมพ์เพิ่มเพื่อให้แคบลง":""}</div>`
+        : `<div class="dd-note">ไม่พบ “${esc(input.value)}” ในฐานข้อมูลบุคลากร — กรอกชื่อและอีเมลเองด้านล่างได้</div>`;
+      drop.hidden = false;
+      drop.querySelectorAll('.dd-item').forEach(b=> b.addEventListener('mousedown', e=>{ e.preventDefault(); pick(+b.dataset.i); }));
+    }
+    function pick(i){ const p = items[i]; if(!p) return; onPick(p); input.value = ""; drop.hidden = true; }
+    input.addEventListener('input', render);
+    input.addEventListener('refresh', ()=>{ if(document.activeElement===input) render(); });
+    input.addEventListener('focus', render);
+    input.addEventListener('blur', ()=> setTimeout(()=> drop.hidden = true, 120));
+    input.addEventListener('keydown', e=>{
+      if(drop.hidden || !items.length) return;
+      if(e.key==='ArrowDown' || e.key==='ArrowUp'){
+        e.preventDefault(); active = (active + (e.key==='ArrowDown'?1:-1) + items.length) % items.length;
+        drop.querySelectorAll('.dd-item').forEach((b,i)=> b.classList.toggle('active', i===active));
+      } else if(e.key==='Enter'){ e.preventDefault(); pick(active); }
+      else if(e.key==='Escape'){ drop.hidden = true; e.stopPropagation(); }
+    });
+  }
+
+  /* ---------------- คำขอรับบริการ ---------------- */
+  async function loadRequests(){
+    $('#reqList').innerHTML = `<div class="loading"><span class="spinner dark"></span>กำลังโหลดคำขอ…</div>`;
+    try {
+      const r = await run('listRequests', S.token);
+      S.requests = r.requests; S.user = r.me; renderMe(); S.hasFormEmail = r.hasFormEmail;
+      renderRequests();
+    } catch(err){ $('#reqList').innerHTML = `<div class="empty"><div class="e">😵</div>${esc(err.message)}</div>`; }
+  }
+  $('#reloadReq').addEventListener('click', loadRequests);
+  $('#reqSearch').addEventListener('input', e=>{ S.filter.q = e.target.value.trim().toLowerCase(); S.shown = 60; renderRequests(); });
+  $('#reqWhen').addEventListener('change', e=>{ S.filter.when = e.target.value; S.shown = 60; renderRequests(); });
+
+  function renderStats(){
+    const R = S.requests;
+    const c = { all:R.length, received:0, success:0, failed:0, noreq:0 };
+    R.forEach(r=>{ c[r.status]++; if(!r.requesterEmail) c.noreq++; });
+    const defs = [["all","📋","ทั้งหมด"],["received","📥","รับเรื่องเรียบร้อย"],["success","✅","สำเร็จ"],["failed","⚠️","ไม่สำเร็จ"],["noreq","✉️","ยังไม่มีอีเมลผู้ขอ"]];
+    $('#statRow').innerHTML = defs.map(([k,e,l])=>{
+      const on = k==='noreq' ? S.filter.noReq : (!S.filter.noReq && S.filter.status===k);
+      return `<button class="stat ${k}${on?' on':''}" data-k="${k}"><span class="e">${e}</span><div class="n">${c[k].toLocaleString('th-TH')}</div><div class="l">${l}</div></button>`;
+    }).join("");
+    $$('#statRow .stat').forEach(b=> b.addEventListener('click', ()=>{
+      if(b.dataset.k==='noreq'){ S.filter.noReq = !S.filter.noReq; if(S.filter.noReq) S.filter.status='all'; }
+      else { S.filter.noReq = false; S.filter.status = b.dataset.k; }
+      S.shown = 60; renderRequests();
+    }));
+    $('#cntReq').textContent = c.received || "";
+  }
+  function filtered(){
+    const f = S.filter;
+    return S.requests.filter(r=>{
+      if(f.status!=='all' && r.status!==f.status) return false;
+      if(f.noReq && r.requesterEmail) return false;
+      if(f.when==='upcoming' && r.date < todayISO) return false;
+      if(f.when==='past' && r.date >= todayISO) return false;
+      if(f.q){ const hay = [r.code,r.room,r.detail,r.requesterName,r.requesterEmail,r.time,r.equipment,thaiDate(r.date)].join(" ").toLowerCase(); if(hay.indexOf(f.q)===-1) return false; }
+      return true;
+    });
+  }
+  function dateBadge(iso){
+    const [y,m,d] = iso.split("-").map(Number); const wd = new Date(y,m-1,d).getDay();
+    const t = MONTH_THEMES[m-1];
+    return `<div class="date-badge" style="--g:linear-gradient(140deg,${t[0]},${t[1]})"><b>${d}</b><span>${MS[m-1]} ${String(y+543).slice(-2)}</span><i>${WD[wd]}</i></div>`;
+  }
+  function reqCard(r){
+    return `<button class="req-card st-${r.status}" data-code="${esc(r.code)}">
+      ${dateBadge(r.date)}
+      <div style="min-width:0">
+        <div class="req-top"><span class="chip time">⏰ ${esc(r.time||"-")}</span><span class="chip">🏫 ${esc(r.room||"-")}</span><span class="chip code">${esc(r.code)}</span></div>
+        <div class="req-detail">${esc(r.detail||"-")}</div>
+        ${r.requesterEmail ? `<div class="req-who">👤 ${whoName(r)?esc(whoName(r))+" · ":""}${esc(r.requesterEmail)}</div>` : `<div class="req-who missing">✉️ ยังไม่ระบุอีเมลผู้ขอรับบริการ — คลิกเพื่อเพิ่ม</div>`}
+      </div>
+      <div class="req-side">
+        <span class="pill">${ST[r.status].label}</span>
+        ${r.rating?`<span class="stars" title="${r.rating}/5">${stars(r.rating)}</span>`:""}
+        ${r.notifyCount?`<span class="mini">📧 แจ้งแล้ว ${r.notifyCount} ครั้ง</span>`:""}
+      </div>
+    </button>`;
+  }
+  function renderRequests(){
+    renderStats();
+    const list = filtered();
+    if(!list.length){ $('#reqList').innerHTML = `<div class="empty"><div class="e">🍃</div>ไม่พบคำขอที่ตรงกับเงื่อนไข</div>`; return; }
+    const up = list.filter(r=> r.date >= todayISO).sort((a,b)=> a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
+    const past = list.filter(r=> r.date < todayISO);
+    let budget = S.shown, html = "";
+    const block = (label, arr)=>{
+      if(!arr.length || budget<=0) return;
+      const part = arr.slice(0, budget); budget -= part.length;
+      html += `<div class="group-label">${label} (${arr.length})</div><div class="req-list">${part.map(reqCard).join("")}</div>`;
+    };
+    block("📌 กำลังจะมาถึง", up); block("🕘 ที่ผ่านมา", past);
+    if(list.length > S.shown) html += `<div class="more-wrap"><button class="btn" id="moreBtn">แสดงเพิ่มอีก ${Math.min(60, list.length-S.shown)} รายการ</button></div>`;
+    $('#reqList').innerHTML = html;
+    $$('#reqList .req-card').forEach(c=> c.addEventListener('click', ()=> openRequest(c.dataset.code)));
+    const mb = $('#moreBtn'); if(mb) mb.addEventListener('click', ()=>{ S.shown += 60; renderRequests(); });
+  }
+  function replaceRequest(nr){
+    const i = S.requests.findIndex(r=> r.code===nr.code);
+    if(i>=0) S.requests[i] = nr;
+    renderRequests();
+  }
+
+  function openRequest(code){
+    const r = S.requests.find(x=> x.code===code); if(!r) return;
+    let chosen = r.status;
+    $('#reqHead').style.setProperty('--hg', STATUS_GRAD[r.status]);
+    $('#reqTitle').textContent = `${ST[r.status].e} ${r.room || "คำขอรับบริการ"} · ${r.time||""}`;
+    $('#reqSub').textContent = `${thaiDate(r.date,true)} · รหัสติดตาม ${r.code}`;
+    $('#reqBody').innerHTML = `
+      <div class="box">
+        <h4>📝 รายละเอียดคำขอ</h4>
+        <dl class="kv">
+          <dt>รายละเอียด</dt><dd>${esc(r.detail||"-")}</dd>
+          <dt>อุปกรณ์</dt><dd>${esc(r.equipment||"-")}</dd>
+          <dt>แจ้งล่วงหน้า</dt><dd>${r.requestDate?esc(thaiDate(r.requestDate))+" · ":""}${r.leadDays!==""?`${esc(r.leadDays)} วัน`:"-"}</dd>
+          <dt>สถานะปัจจุบัน</dt><dd><span class="st-${r.status}"><span class="pill">${ST[r.status].label}</span></span></dd>
+          ${r.updatedBy?`<dt>อัปเดตโดย</dt><dd>${esc(r.updatedBy)} · ${esc(stampText(r.updatedAt))}</dd>`:""}
+        </dl>
+      </div>
+      <form class="box" id="rqForm">
+        <h4>👤 ผู้ขอรับบริการ <span class="hint">(ใช้ส่งอีเมลแจ้งสถานะ)</span></h4>
+        <div class="picker">
+          <label class="field" style="margin-bottom:4px">ค้นหาจากฐานข้อมูลบุคลากร
+            <input class="input" id="rqSearch" autocomplete="off" placeholder="พิมพ์ 1–3 ตัวอักษร เช่น ชื่อ หรืออีเมล">
+          </label>
+          <div class="dropdown" id="rqDrop" hidden></div>
+        </div>
+        <div class="hint" data-dirinfo style="margin-bottom:12px">${S.directory.length?esc(dirInfoText()):"กำลังโหลดฐานข้อมูลบุคลากร…"}</div>
+        <div class="row2">
+          <label class="field">ชื่อ-สกุล <input class="input" id="rqName" value="${esc(whoName(r))}"></label>
+          <label class="field">อีเมล <input class="input" id="rqEmail" type="email" value="${esc(r.requesterEmail)}" placeholder="นิสิต/บุคคลภายนอกพิมพ์เองได้"></label>
+        </div>
+        ${r.formEmail?`<div class="hint" style="margin:-4px 0 10px">📨 อีเมลจากแบบฟอร์ม: ${esc(r.formEmail)}</div>`:""}
+        <div class="actions"><button class="btn" id="rqSave">💾 บันทึกผู้ขอรับบริการ</button></div>
+      </form>
+      <div class="box">
+        <h4>🚦 อัปเดตสถานะและแจ้งผู้ขอรับบริการ</h4>
+        <div class="status-opts">
+          ${["received","success","failed"].map(k=>`<button type="button" class="status-opt st-${k}" data-st="${k}" aria-pressed="${k===chosen}"><span class="e">${ST[k].e}</span>${ST[k].label}</button>`).join("")}
+        </div>
+        <label class="field">ข้อความถึงผู้ขอรับบริการ (ไม่บังคับ)
+          <textarea class="input" id="stNote" placeholder="เช่น เตรียมไมค์ไร้สาย 2 ตัวไว้ให้แล้ว / ขออภัย ห้องไม่ว่างในวันดังกล่าว">${esc(r.note)}</textarea></label>
+        <label class="check"><input type="checkbox" id="stNotify" checked><span>📧 ส่งอีเมลแจ้งสถานะ พร้อมรายละเอียด QR Code ปุ่มลิงก์ติดตาม${" "}และแบบประเมินความพึงพอใจ 1–5 (เมื่อดำเนินการเสร็จ)</span></label>
+        <div class="actions">
+          ${r.requesterEmail?`<button type="button" class="btn sm" id="resendBtn">↻ ส่งอีเมลสถานะเดิมอีกครั้ง</button>`:""}
+          ${r.trackUrl?`<button type="button" class="btn sm" id="copyTrack">🔗 คัดลอกลิงก์ติดตาม</button>`:""}
+          <button type="button" class="btn primary" id="stSave">บันทึกสถานะ</button>
+        </div>
+        <div class="notify-info" id="notifyInfo">${r.notifyCount?`📧 แจ้งผู้ขอรับบริการแล้ว ${r.notifyCount} ครั้ง · ล่าสุด ${esc(stampText(r.notifiedAt))}`:(r.requesterEmail?"ยังไม่เคยส่งอีเมลแจ้งสถานะ":"⚠️ ยังไม่มีอีเมลผู้ขอรับบริการ — บันทึกผู้ขอก่อนเพื่อส่งอีเมลแจ้ง")}</div>
+      </div>
+      ${r.rating?`<div class="box"><h4>💖 ผลประเมินความพึงพอใจ</h4><div style="display:flex;gap:12px;align-items:center"><span style="font-size:40px">${FACES[r.rating].e}</span><div><b class="stars" style="font-size:18px">${stars(r.rating)}</b> <b>${r.rating}/5 · ${FACES[r.rating].l}</b>${r.comment?`<div>“${esc(r.comment)}”</div>`:""}<div class="hint">${esc(stampText(r.ratedAt))}</div></div></div></div>`:""}`;
+
+    attachPicker($('#rqSearch'), $('#rqDrop'), p=>{ $('#rqName').value = p.name; $('#rqEmail').value = p.email; toast(`เลือก ${p.name} แล้ว อย่าลืมกดบันทึก 💾`); });
+    loadDirectory();
+    $$('#reqBody .status-opt').forEach(b=> b.addEventListener('click', ()=>{
+      chosen = b.dataset.st; $$('#reqBody .status-opt').forEach(x=> x.setAttribute('aria-pressed', String(x===b)));
+    }));
+    $('#rqForm').addEventListener('submit', e=>{
+      e.preventDefault();
+      busy($('#rqSave'), async ()=>{
+        try {
+          const res = await run('saveRequester', S.token, r.code, $('#rqName').value, $('#rqEmail').value);
+          replaceRequest(res.request); toast("บันทึกผู้ขอรับบริการแล้ว ✨", "ok"); openRequest(r.code);
+        } catch(err){ toast(err.message, "err"); }
+      });
+    });
+    $('#stSave').addEventListener('click', ()=>{
+      const notify = $('#stNotify').checked;
+      busy($('#stSave'), async ()=>{
+        try {
+          // บันทึกผู้ขอที่เพิ่งกรอก (ถ้ายังไม่ได้กด 💾)
+          const nm = $('#rqName').value.trim(), em = $('#rqEmail').value.trim();
+          if(em !== (r.requesterEmail||"") || nm !== (r.requesterName||"")){
+            await run('saveRequester', S.token, r.code, nm, em);
+          }
+          const res = await run('updateStatus', S.token, r.code, chosen, $('#stNote').value, notify);
+          replaceRequest(res.request);
+          if(res.warning) toast("บันทึกสถานะแล้ว แต่ " + res.warning, "err");
+          else toast(res.mailed ? `บันทึกแล้ว และส่งอีเมลถึง ${res.request.requesterEmail} 💌` : "บันทึกสถานะแล้ว ✨", "ok");
+          openRequest(r.code);
+        } catch(err){ toast(err.message, "err"); }
+      });
+    });
+    const rs = $('#resendBtn');
+    if(rs) rs.addEventListener('click', ()=> busy(rs, async ()=>{
+      try { const res = await run('resendStatus', S.token, r.code); replaceRequest(res.request); toast("ส่งอีเมลอีกครั้งแล้ว 💌","ok"); openRequest(r.code); }
+      catch(err){ toast(err.message,"err"); }
+    }));
+    const ct = $('#copyTrack');
+    if(ct) ct.addEventListener('click', ()=> copyText(r.trackUrl));
+    openModal('#reqModal');
+  }
+  function copyText(t){
+    const done = ()=> toast("คัดลอกลิงก์แล้ว 📋","ok");
+    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, fallback); else fallback();
+    function fallback(){ const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); done(); }catch(e){ prompt("คัดลอกลิงก์นี้", t); } ta.remove(); }
+  }
+
+  /* ---------------- ความพึงพอใจ ---------------- */
+  async function loadRatings(){
+    $('#ratingsBox').innerHTML = `<div class="loading"><span class="spinner dark"></span>กำลังโหลด…</div>`;
+    try {
+      const r = await run('listRatings', S.token);
+      const s = r.summary;
+      const face = s.count ? FACES[Math.max(1, Math.min(5, Math.round(s.avg)))].e : "🤗";
+      const max = Math.max(1, ...s.dist);
+      $('#ratingsBox').innerHTML = `
+        <div class="sat-top">
+          <div class="sat-score"><div class="face">${face}</div><div class="big">${s.count ? s.avg.toFixed(1) : "–"}</div><div>คะแนนเฉลี่ยจาก 5</div><div style="margin-top:6px;font-size:13px;opacity:.92">${s.count} การประเมิน · พึงพอใจ (4–5) ${s.satisfiedPct}%</div><div style="margin-top:4px;font-size:12px;opacity:.85">📧 ผู้ขอรับบริการ ${s.sources.service} · 🌐 ประเมินทั่วไป ${s.sources.public}</div></div>
+          <div class="panel">${[5,4,3,2,1].map(n=>`<div class="dist-row"><span>${FACES[n].e} ${n} · ${FACES[n].l}</span><div class="dist-track"><span style="width:${s.dist[n-1]/max*100}%;background:${FACES[n].c}"></span></div><b>${s.dist[n-1]}</b></div>`).join("")}</div>
+        </div>
+        <div class="panel"><h3 style="margin:0 0 6px">💬 ความคิดเห็นทั้งหมด</h3>
+          <p class="hint" style="margin:0 0 6px">กด “🙈 ซ่อน” เพื่อนำผลประเมินที่ไม่เหมาะสมหรือสแปมออกจากหน้าสาธารณะและการคำนวณคะแนน</p>
+          ${r.items.length ? r.items.map(it=>`<div class="fb" style="${it.hidden?'opacity:.5':''}"><span class="face">${FACES[it.score].e}</span><div style="flex:1;min-width:0">
+            <b>${it.source==='service' ? esc(it.requesterName||dirName(it.requesterEmail)||it.requesterEmail||"ผู้ขอรับบริการ") : "ผู้ประเมินทั่วไป"+(it.role?" · "+esc(it.role):"")}</b>
+            <span class="badge ${it.source==='service'?'staff':'warn'}" style="margin-left:4px">${it.source==='service'?"📧 ผู้ขอรับบริการ":"🌐 หน้าสาธารณะ"}</span>
+            ${it.hidden?'<span class="badge off">🙈 ซ่อนอยู่</span>':''} <span class="stars">${stars(it.score)}</span>
+            <p>${it.comment?esc(it.comment):'<span class="hint">ไม่มีความคิดเห็น</span>'}</p>
+            <small>${it.source==='service'?`${esc(it.code)} · ${esc(it.room)} · ${esc(thaiDate(it.date))} · `:""}ประเมินเมื่อ ${esc(stampText(it.ratedAt))}</small></div>
+            <button class="btn sm" data-hide="${esc(it.source)}|${esc(it.id)}|${it.hidden?0:1}" style="align-self:center">${it.hidden?"👁 แสดง":"🙈 ซ่อน"}</button></div>`).join("") : `<div class="empty"><div class="e">💌</div>ยังไม่มีผลประเมิน — ผู้ขอรับบริการประเมินได้จากลิงก์ในอีเมล และทุกคนประเมินได้ที่ท้ายหน้าปฏิทินสาธารณะ</div>`}
+        </div>`;
+      $$('#ratingsBox [data-hide]').forEach(b=> b.addEventListener('click', ()=>{
+        const [src, id, h] = b.dataset.hide.split("|");
+        busy(b, async ()=>{
+          try { await run('setRatingHidden', S.token, src, id, h==="1"); toast(h==="1" ? "ซ่อนจากหน้าสาธารณะแล้ว 🙈" : "แสดงบนหน้าสาธารณะแล้ว 👁", "ok"); loadRatings(); }
+          catch(err){ toast(err.message, "err"); }
+        });
+      }));
+    } catch(err){ $('#ratingsBox').innerHTML = `<div class="empty"><div class="e">😵</div>${esc(err.message)}</div>`; }
+  }
+  $('#reloadRatings').addEventListener('click', loadRatings);
+
+  /* ---------------- ผู้ใช้ ---------------- */
+  async function loadUsers(){
+    $('#usersBox').innerHTML = `<div class="loading"><span class="spinner dark"></span>กำลังโหลดและซิงก์กับฐานข้อมูลบุคลากร…</div>`;
+    try {
+      const r = await run('listUsers', S.token);
+      S.users = r.users; S.user = r.me; renderMe();
+      $('#usersSub').textContent = r.dirError ? "⚠️ ซิงก์ฐานข้อมูลบุคลากรไม่สำเร็จ: " + r.dirError
+        : `ชื่อ หน่วยงาน และตำแหน่ง ซิงก์จากฐานข้อมูลบุคลากรกลางอัตโนมัติ${r.synced?` · อัปเดตล่าสุด ${r.synced} คน`:""}`;
+      renderUsers();
+    } catch(err){ $('#usersBox').innerHTML = `<div class="empty"><div class="e">😵</div>${esc(err.message)}</div>`; }
+  }
+  function renderUsers(){
+    if(!S.users.length){ $('#usersBox').innerHTML = `<div class="empty"><div class="e">👥</div>ยังไม่มีผู้ใช้</div>`; return; }
+    $('#usersBox').innerHTML = `<div class="user-grid">${S.users.map(u=>{
+      const self = u.username === S.user.username;
+      return `<div class="user-card${u.active?'':' off'}" data-u="${esc(u.username)}">
+        <div class="u-top">${avatar(u.name,u.email)}<div style="min-width:0"><b>${esc(u.name||u.username)}${self?' <span class="hint">(คุณ)</span>':''}</b><small>${esc(u.email)}${u.username!==u.email?` · ชื่อผู้ใช้ ${esc(u.username)}`:""}</small></div></div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span class="badge ${u.role}">${u.role==='admin'?"👑 ผู้ดูแลระบบ":"🧑‍💼 บุคลากร"}</span>
+          ${u.active?"":`<span class="badge off">⏸ ระงับการใช้งาน</span>`}
+          ${u.mustChange?`<span class="badge warn">🔐 ยังใช้รหัสเริ่มต้น</span>`:""}
+        </div>
+        <div class="u-meta">${[u.position,u.department].filter(Boolean).map(esc).join(" · ")||"&nbsp;"}<br>เข้าใช้ล่าสุด: ${esc(stampText(u.lastLogin)||"ยังไม่เคยเข้าใช้")}</div>
+        ${self?"":`<div class="u-actions">
+          <button class="btn sm" data-act="role">${u.role==='admin'?"⬇ เปลี่ยนเป็นบุคลากร":"👑 ตั้งเป็นผู้ดูแล"}</button>
+          <button class="btn sm" data-act="reset">🔄 รีเซ็ตรหัสผ่าน</button>
+          <button class="btn sm" data-act="active">${u.active?"⏸ ระงับ":"▶ เปิดใช้งาน"}</button>
+          <button class="btn sm danger" data-act="delete">🗑 ลบ</button></div>`}
+      </div>`; }).join("")}</div>`;
+    $$('#usersBox [data-act]').forEach(b=> b.addEventListener('click', ()=> userAction(b, b.closest('[data-u]').dataset.u, b.dataset.act)));
+  }
+  async function userAction(btn, username, act){
+    const u = S.users.find(x=> x.username===username); if(!u) return;
+    const who = `<b>${esc(u.name||u.email)}</b> (${esc(u.email)})`;
+    let c;
+    try {
+      if(act==='role'){
+        const to = u.role==='admin' ? 'staff' : 'admin';
+        if(!(c = await askConfirm({ title:"เปลี่ยนสิทธิ์การใช้งาน", html:`เปลี่ยน ${who} เป็น <b>${to==='admin'?"👑 ผู้ดูแลระบบ":"🧑‍💼 บุคลากร"}</b> ใช่ไหม?` }))) return;
+        await busy(btn, ()=> run('updateUser', S.token, username, { role: to }));
+      } else if(act==='active'){
+        if(!(c = await askConfirm({ title: u.active?"ระงับการใช้งาน":"เปิดใช้งาน", html:`${u.active?"ระงับ":"เปิดใช้งาน"}บัญชี ${who} ใช่ไหม?`, danger:u.active }))) return;
+        await busy(btn, ()=> run('updateUser', S.token, username, { active: !u.active }));
+      } else if(act==='reset'){
+        if(!(c = await askConfirm({ title:"รีเซ็ตรหัสผ่าน", html:`รีเซ็ตรหัสผ่านของ ${who} เป็น <b class="mono">123456</b> ใช่ไหม?<br><span class="hint">ผู้ใช้กด “ลืมรหัสผ่าน” เองได้เสมอ ไม่จำเป็นต้องรีเซ็ตให้</span>`, check:"📧 ส่งอีเมลแจ้งผู้ใช้" }))) return;
+        const r = await busy(btn, ()=> run('resetUserPassword', S.token, username, c.checked));
+        toast(r.mailed ? "รีเซ็ตแล้ว และส่งอีเมลแจ้งผู้ใช้แล้ว 💌" : "รีเซ็ตรหัสผ่านเป็น 123456 แล้ว", "ok");
+      } else if(act==='delete'){
+        if(!(c = await askConfirm({ title:"ลบผู้ใช้", html:`ลบบัญชี ${who} ออกจากระบบถาวรใช่ไหม?`, danger:true, ok:"ลบ" }))) return;
+        await busy(btn, ()=> run('deleteUser', S.token, username));
+        toast("ลบผู้ใช้แล้ว", "ok");
+      }
+      await loadUsers();
+    } catch(err){ toast(err.message, "err"); }
+  }
+
+  let newRole = "staff";
+  $('#addUserBtn').addEventListener('click', ()=>{
+    $('#userForm').reset(); $('#userErr').hidden = true; newRole = "staff";
+    $$('#userForm [data-role]').forEach(b=> b.setAttribute('aria-pressed', String(b.dataset.role==='staff')));
+    $('#dirInfo').textContent = S.directory.length ? dirInfoText() + " · กำลังรีเฟรช…" : "กำลังโหลดฐานข้อมูลบุคลากร…";
+    S.dirLoading = null; loadDirectory();      // โหลดใหม่ทุกครั้งที่เปิด → ข้อมูลเป็นปัจจุบันเสมอ
+    openModal('#userModal'); setTimeout(()=> $('#uSearch').focus(), 60);
+  });
+  $$('#userForm [data-role]').forEach(b=> b.addEventListener('click', ()=>{
+    newRole = b.dataset.role; $$('#userForm [data-role]').forEach(x=> x.setAttribute('aria-pressed', String(x===b)));
+  }));
+  attachPicker($('#uSearch'), $('#uDrop'), p=>{
+    $('#uName').value = p.name; $('#uEmail').value = p.email; $('#uDept').value = p.department||""; $('#uPos').value = p.position||"";
+    const exists = S.users.find(u=> u.email===p.email);
+    $('#userErr').hidden = !exists; if(exists) $('#userErr').textContent = "บุคคลนี้มีบัญชีในระบบอยู่แล้ว";
+  });
+  $('#userForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    const email = $('#uEmail').value.trim().toLowerCase();
+    const err = $('#userErr');
+    if(!new RegExp("@" + BOOT.domain.replace(/\./g,"\\.") + "$","i").test(email)){ err.textContent = "ต้องใช้อีเมล @" + BOOT.domain + " เท่านั้น"; err.hidden = false; return; }
+    busy($('#uSave'), async ()=>{
+      try {
+        const r = await run('addUser', S.token, { name:$('#uName').value, email, department:$('#uDept').value, position:$('#uPos').value, role:newRole, notify:$('#uNotify').checked });
+        closeModal('#userModal');
+        toast(`เพิ่ม ${r.user.name} แล้ว 🎉` + (r.mailed ? " · ส่งอีเมลแจ้งแล้ว" : r.mailError ? " · ส่งอีเมลไม่สำเร็จ: " + r.mailError : ""), r.mailError ? "err" : "ok");
+        loadUsers();
+      } catch(ex){ err.textContent = ex.message; err.hidden = false; }
+    });
+  });
+
+  /* ---------------- เปลี่ยนรหัสผ่าน ---------------- */
+  $('#pwForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    const m = $('#pwMsg'); m.hidden = true;
+    const n1 = $('#pwNew').value, n2 = $('#pwNew2').value;
+    if(n1.length < BOOT.minPw){ m.className='msg err'; m.textContent=`รหัสผ่านใหม่ต้องมีอย่างน้อย ${BOOT.minPw} ตัวอักษร`; m.hidden=false; return; }
+    if(n1 !== n2){ m.className='msg err'; m.textContent="รหัสผ่านใหม่ทั้งสองช่องไม่ตรงกัน"; m.hidden=false; return; }
+    busy($('#pwBtn'), async ()=>{
+      try {
+        const r = await run('changePassword', S.token, $('#pwOld').value, n1);
+        S.user = r.user; renderMe(); $('#pwForm').reset();
+        m.className='msg ok'; m.textContent="เปลี่ยนรหัสผ่านเรียบร้อย 🎉 ครั้งหน้าใช้รหัสใหม่ได้เลย"; m.hidden=false;
+      } catch(err){ m.className='msg err'; m.textContent=err.message; m.hidden=false; }
+    });
+  });
+
+  /* ---------------- ตรวจสอบระบบ ---------------- */
+  $('#sysCheckBtn').addEventListener('click', ()=>{
+    $('#sysBody').innerHTML = `<div class="loading"><span class="spinner dark"></span>กำลังตรวจสอบทุกส่วนของระบบ…</div>`;
+    openModal('#sysModal');
+    run('adminCheckSystem', S.token).then(r=>{
+      $('#sysBody').innerHTML = r.lines.map(l=> `<div style="padding:6px 0;border-bottom:1px dashed var(--border);font-size:14px;word-break:break-word">${esc(l).replace(/(https:\/\/\S+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>')}</div>`).join("");
+    }).catch(err=> $('#sysBody').innerHTML = `<div class="msg err">${esc(err.message)}</div>`);
+  });
+
+  /* ---------------- เริ่มต้น ---------------- */
+  function checkStatus(){
+    run('systemStatus').then(st=>{
+      $('#sysErr').hidden = st.ok; if(!st.ok) $('#sysErr').textContent = "⚠️ " + st.problem;
+      $('#firstRun').hidden = !st.firstRun;
+    }).catch(err=>{ $('#sysErr').textContent = "⚠️ เชื่อมต่อระบบไม่สำเร็จ: " + err.message; $('#sysErr').hidden = false; });
+  }
+  if(S.token){
+    run('whoami', S.token).then(r=>{ S.user = r.user; showApp(); }).catch(()=>{ showLogin(); checkStatus(); });
+  } else { showLogin(); checkStatus(); }
+})();
+</script>
+</body>
+</html>
