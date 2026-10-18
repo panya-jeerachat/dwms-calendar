@@ -367,7 +367,7 @@
   .kpi-modal{max-width:820px;}
   .head-actions{display:flex; gap:6px; flex-shrink:0;}
   .head-actions .close-btn[hidden]{display:none;}
-  .kpi-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:14px;}
+  .kpi-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px;}
   .kpi-tile{background:#fff; border:1px solid var(--border); border-radius:12px; padding:11px 12px;}
   .kpi-tile .v{font-family:'Prompt',sans-serif; font-size:22px; font-weight:700; color:var(--accent-strong); line-height:1.15;}
   .kpi-tile .l{font-size:11.5px; color:var(--text-soft); margin-top:2px;}
@@ -409,7 +409,6 @@
   @media (max-width:760px){
     .trend-summary{grid-template-columns:repeat(2,1fr);}
     .kpi-grid{grid-template-columns:repeat(2,1fr);}
-    .kpi-grid .kpi-tile:first-child{grid-column:1 / -1;}
     .panel-grid{grid-template-columns:1fr;}
     .stat-list{grid-template-columns:repeat(2,1fr);}
     .trend-card{padding:16px 14px;}
@@ -551,6 +550,117 @@
   .thanks-box h3{margin:8px 0 4px; font-size:19px;}
   .thanks-box p{margin:0 0 12px; font-size:13.5px; color:var(--text-soft);}
   @media (max-width:520px){ .open-faces{gap:6px;} .open-faces .face-btn .e{font-size:30px;} .chooser{padding:18px 16px 14px;} }
+
+  /* ===== เจาะลึกข้อมูลการให้บริการ ===== */
+  .deep-card{margin-top:20px; background:var(--surface); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); padding:20px 22px 22px;}
+  .deep-card h2{font-family:'Prompt',sans-serif; font-size:20px; font-weight:700; margin:0; color:var(--accent-strong);}
+  .deep-kpis{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:16px 0 12px;}
+  .dk{position:relative; overflow:hidden; border-radius:16px; padding:13px 14px 12px; color:#fff; background:linear-gradient(135deg,var(--c1),var(--c2)); box-shadow:0 12px 24px -16px var(--c1); cursor:default;}
+  .dk::after{content:""; position:absolute; right:-24px; top:-24px; width:90px; height:90px; border-radius:50%; background:rgba(255,255,255,.14);}
+  .dk .i{font-size:18px;}
+  .dk .v{font-family:'Prompt',sans-serif; font-size:23px; font-weight:700; line-height:1.15; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .dk .l{font-size:12px; opacity:.92;}
+  .deep-insight{border-radius:16px; padding:13px 16px; margin-bottom:14px; font-size:13.5px; line-height:1.7;
+    background:linear-gradient(120deg, color-mix(in srgb,var(--a) 10%,#fff), color-mix(in srgb,var(--b) 10%,#fff)); border:1.5px solid color-mix(in srgb,var(--a) 25%,#fff);}
+  .deep-insight b.t{font-family:'Prompt',sans-serif; color:var(--accent-strong); display:block; margin-bottom:4px; font-size:15px;}
+  .deep-insight ul{margin:0; padding-left:20px;}
+  .deep-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .deep-panel{border:1px solid var(--border); border-radius:16px; padding:14px 16px; background:#FCFCFF; min-width:0;}
+  .deep-panel.wide{grid-column:1 / -1;}
+  .deep-panel h3{font-family:'Prompt',sans-serif; font-size:15px; margin:0 0 10px; display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;}
+  .deep-panel h3 small{font-family:'IBM Plex Sans Thai',sans-serif; font-weight:400; font-size:12px; color:var(--text-faint);}
+  .heat{display:grid; grid-template-columns:44px repeat(14, minmax(26px,1fr)); gap:4px; font-size:11px; min-width:520px;}
+  .heat .hh{color:var(--text-faint); text-align:center; font-size:10.5px;}
+  .heat .hd{color:var(--text-soft); font-weight:600; display:flex; align-items:center;}
+  .heat .c{height:30px; border-radius:7px; display:grid; place-items:center; font-weight:700; font-size:11.5px; color:#fff; cursor:pointer; transition:transform .12s;}
+  .heat .c.z{background:#F1F2F8; color:transparent; cursor:default;}
+  .heat .c:not(.z):hover{transform:scale(1.12); box-shadow:0 6px 14px -6px var(--a);}
+  .heat-legend{display:flex; align-items:center; gap:8px; font-size:11.5px; color:var(--text-faint); margin-top:8px; justify-content:flex-end;}
+  .heat-legend i{width:120px; height:8px; border-radius:99px; background:linear-gradient(90deg, color-mix(in srgb,var(--a) 25%,#F1F2F8), var(--a), var(--b));}
+  .donut-wrap{display:flex; gap:14px; align-items:center; flex-wrap:wrap;}
+  .donut-wrap svg{width:170px; height:170px; flex-shrink:0;}
+  .donut-wrap svg circle.seg{cursor:pointer; transition:stroke-width .15s;}
+  .donut-wrap svg circle.seg:hover{stroke-width:30;}
+  .legend{flex:1; min-width:170px; display:flex; flex-direction:column; gap:5px;}
+  .lg{display:grid; grid-template-columns:12px 1fr auto; gap:8px; align-items:center; font-size:12.5px; border:none; background:none; text-align:left; padding:3px 6px; border-radius:8px; cursor:pointer; font-family:inherit; color:var(--text);}
+  .lg:hover{background:color-mix(in srgb,var(--a) 8%,#fff);}
+  .lg i{width:12px; height:12px; border-radius:4px;}
+  .lg b{font-size:12.5px;}
+  .rbar{display:grid; grid-template-columns:minmax(0,1fr) auto; gap:3px 10px; align-items:center; font-size:12.5px; margin-bottom:9px; cursor:pointer; border-radius:8px; padding:2px 4px;}
+  .rbar:hover{background:color-mix(in srgb,var(--a) 6%,#fff);}
+  .rbar .nm{white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:600;}
+  .rbar .nm small{font-weight:400; color:var(--text-faint);}
+  .rbar .n{font-weight:700;}
+  .rbar .tr{grid-column:1 / -1; height:9px; border-radius:99px; background:#EEF0F7; overflow:hidden;}
+  .rbar .tr span{display:block; height:100%; border-radius:99px; transition:width .7s ease;}
+  .leadcols{display:flex; gap:10px; align-items:flex-end; height:160px; padding-top:6px;}
+  .lc{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; gap:4px; cursor:pointer;}
+  .lc .bar{width:100%; max-width:56px; border-radius:10px 10px 4px 4px; min-height:3px; transition:height .7s ease;}
+  .lc .n{font-weight:700; font-size:13px;}
+  .lc .p{font-size:11px; color:var(--text-faint);}
+  .lc .lb{font-size:11.5px; color:var(--text-soft); text-align:center; line-height:1.25;}
+  .lc:hover .bar{filter:brightness(1.08);}
+  .lead-note{margin-top:10px; font-size:12.5px; border-radius:12px; padding:8px 12px; background:var(--warn-soft); color:var(--warn-ink);}
+  .lead-note.good{background:var(--success-soft); color:var(--success-ink);}
+
+  /* ===== Digital Twin 3 มิติ ===== */
+  .twin-card{margin-top:22px; border-radius:24px; padding:20px 22px 22px; background:var(--surface); border:1px solid var(--border); box-shadow:var(--shadow);}
+  .twin-head{display:flex; justify-content:space-between; align-items:flex-end; gap:12px; flex-wrap:wrap; margin-bottom:14px;}
+  .twin-head h2{font-family:'Prompt',sans-serif; font-size:21px; margin:0; color:var(--accent-strong);}
+  .twin-head p{margin:2px 0 0; font-size:13px; color:var(--text-soft);}
+  .twin-actions{display:flex; gap:8px; flex-wrap:wrap;}
+  .twin-btn{font:inherit; font-size:13px; font-weight:700; border:none; border-radius:999px; padding:9px 16px; cursor:pointer; color:#fff; background:var(--grad); box-shadow:0 8px 18px -10px var(--a);}
+  .twin-btn.ghost{background:#fff; color:var(--accent-strong); border:1.5px solid var(--a); box-shadow:none;}
+  .twin-stage{position:relative; height:470px; border-radius:22px; overflow:hidden;
+    background:
+      radial-gradient(600px 300px at 15% 10%, color-mix(in srgb,var(--a) 55%,transparent), transparent 70%),
+      radial-gradient(600px 320px at 90% 100%, color-mix(in srgb,var(--b) 50%,transparent), transparent 70%),
+      linear-gradient(180deg,#0A0F2C,#060918);}
+  .twin-stage canvas{width:100%; height:100%; display:block; cursor:grab; touch-action:pan-y;}
+  .twin-stage canvas.drag{cursor:grabbing;}
+  .twin-stage canvas.hover{cursor:pointer;}
+  .twin-hud{position:absolute; left:14px; top:14px; display:flex; gap:8px; flex-wrap:wrap; pointer-events:none; max-width:calc(100% - 28px);}
+  .hud-chip{background:rgba(10,15,44,.55); backdrop-filter:blur(6px); border:1px solid rgba(255,255,255,.18); color:#fff; border-radius:12px; padding:6px 11px; font-size:11.5px; line-height:1.25;}
+  .hud-chip b{display:block; font-family:'Prompt',sans-serif; font-size:16px;}
+  .hud-live{display:flex; align-items:center; gap:6px; font-weight:700; letter-spacing:.5px;}
+  .hud-live::before{content:""; width:8px; height:8px; border-radius:50%; background:#34F5B0; box-shadow:0 0 0 0 rgba(52,245,176,.7); animation:livepulse 1.6s infinite;}
+  @keyframes livepulse{0%{box-shadow:0 0 0 0 rgba(52,245,176,.7)}70%{box-shadow:0 0 0 10px rgba(52,245,176,0)}100%{box-shadow:0 0 0 0 rgba(52,245,176,0)}}
+  .twin-hint{position:absolute; right:14px; bottom:12px; color:rgba(255,255,255,.7); font-size:11.5px; pointer-events:none;}
+  .twin-caption{position:absolute; left:50%; bottom:18px; transform:translateX(-50%); background:rgba(255,255,255,.95); color:var(--text); border-radius:16px; padding:10px 16px; font-size:13.5px; box-shadow:0 14px 30px -14px rgba(0,0,0,.6); max-width:min(560px, calc(100% - 28px)); text-align:center; border-top:4px solid var(--sc,#6366F1);}
+  .twin-caption b{font-family:'Prompt',sans-serif; font-size:15px;}
+  .twin-stage [hidden]{display:none !important;}
+  .twin-loading, .twin-fallback{position:absolute; inset:0; display:grid; place-items:center; color:#fff; font-size:14px; text-align:center; padding:20px;}
+  .twin-steps{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:14px; counter-reset:st;}
+  .ts{position:relative; font:inherit; text-align:left; border:1.5px solid var(--border); background:#fff; border-radius:16px; padding:11px 12px 10px; cursor:pointer; transition:transform .15s, border-color .15s, box-shadow .15s; color:var(--text);}
+  .ts:hover, .ts.on{transform:translateY(-3px); border-color:var(--sc); box-shadow:0 12px 22px -16px var(--sc);}
+  .ts .no{position:absolute; top:10px; right:10px; width:22px; height:22px; border-radius:50%; background:var(--sc); color:#fff; font-size:11.5px; font-weight:700; display:grid; place-items:center;}
+  .ts .e{font-size:22px;}
+  .ts b{display:block; font-family:'Prompt',sans-serif; font-size:14px; line-height:1.3; margin-top:2px; padding-right:24px;}
+  .ts small{display:block; font-size:11.5px; color:var(--text-faint);}
+  .ts .st{display:inline-block; margin-top:6px; font-size:12px; font-weight:700; color:var(--sc); background:color-mix(in srgb,var(--sc) 12%,#fff); border-radius:99px; padding:2px 9px;}
+  /* pop up ขั้นตอน */
+  .flow-modal{max-width:640px;}
+  .flow-modal .modal-head{background:linear-gradient(130deg,var(--sc),var(--sc2)); color:#fff;}
+  .flow-modal .modal-head .modal-sub{color:rgba(255,255,255,.92);}
+  .flow-dots{display:flex; gap:6px; margin-top:10px; flex-wrap:wrap;}
+  .flow-dots button{width:26px; height:26px; border-radius:50%; border:1.5px solid rgba(255,255,255,.6); background:rgba(255,255,255,.18); color:#fff; font-size:11.5px; font-weight:700; cursor:pointer;}
+  .flow-dots button[aria-current="true"]{background:#fff; color:var(--sc);}
+  .fl-tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:8px; margin:4px 0 14px;}
+  .fl-tile{border-radius:14px; padding:10px 12px; background:color-mix(in srgb,var(--sc) 9%,#fff); border:1px solid color-mix(in srgb,var(--sc) 25%,#fff);}
+  .fl-tile .v{font-family:'Prompt',sans-serif; font-size:20px; font-weight:700; color:var(--sc); line-height:1.2;}
+  .fl-tile .l{font-size:12px; color:var(--text-soft);}
+  .fl-sec{margin-bottom:12px;}
+  .fl-sec h4{font-family:'Prompt',sans-serif; font-size:14.5px; margin:0 0 6px;}
+  .fl-sec ul{margin:0; padding-left:20px; font-size:13.5px; line-height:1.7;}
+  .fl-chips{display:flex; gap:6px; flex-wrap:wrap;}
+  .fl-chips span{font-size:12px; border-radius:99px; padding:3px 10px; background:#F1F2F8; color:var(--text-soft);}
+  .fl-who{display:inline-flex; align-items:center; gap:6px; margin-top:8px; background:rgba(255,255,255,.22); border:1px solid rgba(255,255,255,.45); border-radius:99px; padding:3px 12px; font-size:12.5px; font-weight:600;}
+  .fl-nav{display:flex; justify-content:space-between; gap:8px; margin-top:6px; flex-wrap:wrap;}
+  .fl-nav button, .fl-nav a{font:inherit; font-size:13px; font-weight:700; border-radius:999px; padding:8px 15px; cursor:pointer; text-decoration:none; border:1.5px solid var(--sc); color:var(--sc); background:#fff;}
+  .fl-nav .go{background:var(--sc); color:#fff;}
+  @media (max-width:860px){ .deep-kpis{grid-template-columns:repeat(2,1fr);} .twin-steps{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:760px){ .deep-grid{grid-template-columns:1fr;} .twin-stage{height:380px;} .deep-card,.twin-card{padding:16px 14px;} .hud-chip.opt{display:none;} }
+  @media (prefers-reduced-motion:reduce){ .hud-live::before{animation:none;} }
 </style>
 </head>
 <body>
@@ -629,6 +739,49 @@
     <div class="trend-summary" id="trendSummary"></div>
   </section>
 
+
+  <section class="deep-card" id="deepCard" aria-labelledby="deepTitle">
+    <div class="trend-head">
+      <div>
+        <h2 id="deepTitle">🔍 เจาะลึกข้อมูลการให้บริการ</h2>
+        <p class="trend-sub" id="deepSub"></p>
+      </div>
+      <select class="fy-select" id="deepScope" aria-label="เลือกช่วงเวลาที่ต้องการวิเคราะห์"></select>
+    </div>
+    <div class="deep-kpis" id="deepKpis"></div>
+    <div class="deep-insight" id="deepInsight"></div>
+    <div class="deep-grid">
+      <div class="deep-panel wide"><h3>🗓 ช่วงเวลาที่มีการใช้งานหนาแน่น <small>วันในสัปดาห์ × เวลาเริ่มกิจกรรม · ยิ่งสีเข้มยิ่งมีกิจกรรมมาก</small></h3><div id="deepHeat"></div></div>
+      <div class="deep-panel wide"><h3>📈 ชั่วโมงให้บริการ และจำนวนกิจกรรมรายเดือน <small>ทั้งปีงบประมาณ</small></h3><div id="deepCombo"></div></div>
+      <div class="deep-panel"><h3>🎯 ประเภทกิจกรรม <small>จัดกลุ่มจากรายละเอียดกิจกรรม</small></h3><div id="deepCat"></div></div>
+      <div class="deep-panel"><h3>🎛 อุปกรณ์ที่ขอใช้ <small>จำนวนกิจกรรมที่ขอแต่ละชนิด</small></h3><div id="deepEquip"></div></div>
+      <div class="deep-panel"><h3>🏫 ห้อง/สถานที่ยอดนิยม <small>จำนวนครั้ง · ชั่วโมงใช้งาน</small></h3><div id="deepRooms"></div></div>
+      <div class="deep-panel"><h3>⏱ ระยะเวลาการแจ้งล่วงหน้า <small>เกณฑ์ที่แนะนำ ≥ 3 วัน</small></h3><div id="deepLead"></div></div>
+    </div>
+  </section>
+
+  <section class="twin-card" id="twinCard" aria-labelledby="twinTitle">
+    <div class="twin-head">
+      <div>
+        <h2 id="twinTitle">🛰️ เส้นทางการกำกับติดตาม · Digital Twin 3 มิติ</h2>
+        <p>8 ขั้นตอนตั้งแต่ส่งคำขอจนถึงสรุปผลและพัฒนาต่อเนื่อง · ความสูงของเสาแสงคือปริมาณข้อมูลจริง · ลากเพื่อหมุนมุมมอง คลิกสถานีเพื่อดูรายละเอียด</p>
+      </div>
+      <div class="twin-actions">
+        <button type="button" class="twin-btn" id="twinTour">▶ ทัวร์ทีละขั้นตอน</button>
+        <button type="button" class="twin-btn ghost" id="twinSpin">⟳ หมุนอัตโนมัติ: เปิด</button>
+      </div>
+    </div>
+    <div class="twin-stage" id="twinStage">
+      <canvas id="twinCanvas" role="img" aria-label="แบบจำลอง 3 มิติ เส้นทางการกำกับติดตาม 8 ขั้นตอน"></canvas>
+      <div class="twin-hud" id="twinHud"></div>
+      <div class="twin-loading" id="twinLoading">⏳ กำลังสร้างแบบจำลอง 3 มิติ…</div>
+      <div class="twin-fallback" id="twinFallback" hidden></div>
+      <div class="twin-caption" id="twinCaption" hidden></div>
+      <div class="twin-hint">🖱 ลากเพื่อหมุน · คลิกสถานีเพื่อดูข้อมูล</div>
+    </div>
+    <div class="twin-steps" id="twinSteps"></div>
+  </section>
+
   <section class="love-card" id="satisfaction" aria-labelledby="loveTitle">
     <h2 id="loveTitle">💖 ความพึงพอใจในการรับบริการ</h2>
     <p class="love-sub">เสียงจากผู้ใช้บริการทุกคน ทั้งนิสิต อาจารย์ บุคลากร และบุคคลภายนอก ช่วยให้งานโสตทัศนูปกรณ์พัฒนาบริการให้ดียิ่งขึ้นทุกวัน</p>
@@ -689,6 +842,19 @@
     <p>พัฒนาโดย นายปัญญา จีระฉัตร | นักวิชาการโสตทัศนศึกษา | <a href="mailto:panya.j@msu.ac.th">panya.j@msu.ac.th</a></p>
   </footer>
 
+</div>
+
+<div class="overlay" id="flowOverlay">
+  <div class="modal flow-modal" role="dialog" aria-modal="true" aria-labelledby="flowTitle">
+    <div class="modal-head">
+      <div>
+        <div class="modal-date" id="flowTitle"></div>
+        <div class="modal-sub" id="flowSub"></div>
+      </div>
+      <button class="close-btn" id="flowClose" aria-label="ปิด">✕</button>
+    </div>
+    <div class="modal-body" id="flowBody"></div>
+  </div>
 </div>
 
 <div class="overlay" id="overlay">
@@ -1017,6 +1183,7 @@
     const [a,b] = MONTH_THEMES[m] || MONTH_THEMES[0];
     document.documentElement.style.setProperty('--a', a);
     document.documentElement.style.setProperty('--b', b);
+    document.dispatchEvent(new Event('dwms-theme'));
   }
   function renderCalendar(){
     applyMonthTheme(viewMonth);
@@ -1140,9 +1307,10 @@
     onplan: { label:"ดำเนินได้ตามแผน",      unit:"%",       icon:"🎯", desc:"สัดส่วนกิจกรรมสถานะ “สำเร็จ” ต่อกิจกรรมทั้งหมด", fmt:v=>Math.round(v)+"%", pct:true },
     lead:   { label:"แจ้งล่วงหน้าเฉลี่ย",   unit:"วัน",     icon:"⏱", desc:"ค่าเฉลี่ยจำนวนวันที่แจ้งก่อนวันใช้งาน ยิ่งมากยิ่งเตรียมความพร้อมได้ดี", fmt:v=>v.toFixed(1) },
     paper:  { label:"ลดการใช้กระดาษ",       unit:"แผ่น",    icon:"🌿", desc:"ผลรวมแผ่นกระดาษที่ไม่ต้องใช้ เพราะยื่นคำขอผ่านระบบออนไลน์", fmt:v=>fmtN(v) },
-    time:   { label:"เวลาให้บริการลดลง",    unit:"นาที",    icon:"⚡", desc:"คิดจาก "+MIN_PER_EVENT+" นาทีต่อกิจกรรม ที่ลดลงจากการขอผ่านระบบออนไลน์", fmt:v=>fmtN(v) }
+    time:   { label:"เวลาให้บริการลดลง",    unit:"นาที",    icon:"⚡", desc:"คิดจาก "+MIN_PER_EVENT+" นาทีต่อกิจกรรม ที่ลดลงจากการขอผ่านระบบออนไลน์", fmt:v=>fmtN(v) },
+    hours:  { label:"ชั่วโมงให้บริการ",     unit:"ชั่วโมง", icon:"⏰", desc:"ผลรวมช่วงเวลาที่ให้บริการตามเวลาที่ขอใช้ เช่น 08:30–16:30 = 8 ชั่วโมง", fmt:v=> v >= 100 ? fmtN(v) : (Math.round(v*10)/10).toLocaleString('th-TH') }
   };
-  const KPI_ORDER = ["count","onplan","lead","paper","time"];
+  const KPI_ORDER = ["count","hours","onplan","lead","paper","time"];
   const ST_COLORS = { success:"#10B981", received:"#F59E0B", failed:"#F43F5E" };
 
   function fmtN(v){ return Math.round(v).toLocaleString('th-TH'); }
@@ -1181,6 +1349,7 @@
     s.lead = leads.length ? leads.reduce((a,b)=>a+b,0)/leads.length : null;
     s.onplan = list.length ? s.success/list.length*100 : null;
     s.time = list.length * MIN_PER_EVENT;
+    s.hours = list.reduce((a,e)=> a + durationH(e), 0);
     return s;
   }
   function statsForKeys(keys){ return statsOf(keys.flatMap(k => monthMap[k] || [])); }
@@ -1188,7 +1357,7 @@
     if(cur === null || prev === null || prev === undefined) return `<span class="delta">— ไม่มีข้อมูลเทียบ</span>`;
     const d = cur - prev;
     if(Math.abs(d) < 0.05) return `<span class="delta">● เท่าเดิม</span>`;
-    const txt = key === "onplan" ? Math.abs(Math.round(d)) + " จุด%" : (key === "lead" ? Math.abs(d).toFixed(1) : fmtN(Math.abs(d)));
+    const txt = key === "onplan" ? Math.abs(Math.round(d)) + " จุด%" : (key === "lead" || key === "hours" ? (Math.round(Math.abs(d)*10)/10).toLocaleString('th-TH') : fmtN(Math.abs(d)));
     return `<span class="delta ${d>0?'up':'down'}">${d>0?'▲':'▼'} ${txt}</span>`;
   }
   function fmtVal(key, v){ return v === null || v === undefined ? "–" : KPI_DEFS[key].fmt(v); }
@@ -1340,7 +1509,7 @@
       : `<div class="empty-state" style="grid-column:1/-1">ยังไม่มีกิจกรรมในปีงบประมาณนี้</div>`;
     trendSummary.querySelectorAll('.hl').forEach(b => { bindTip(b, ()=>monthTipHTML(b.dataset.k)); b.addEventListener('click', ()=> openMonthKpi(b.dataset.k)); });
   }
-  fySelect.addEventListener('change', ()=>{ trendFY = +fySelect.value; renderTrend(); });
+  fySelect.addEventListener('change', ()=>{ trendFY = +fySelect.value; renderTrend(); renderDeep(); });
 
   // ---------------- KPI modal ----------------
   const kpiOverlay = document.getElementById('kpiOverlay');
@@ -1386,7 +1555,7 @@
     if(!s.count){
       html = `<div class="empty-state">ไม่มีกิจกรรมที่บันทึกไว้ใน${monthTitle(k)}<br>ใช้ปุ่ม ‹ › ด้านบนเพื่อดูเดือนอื่นย้อนหลัง</div>`;
     } else {
-      html += `<div class="kpi-grid">` + KPI_ORDER.map(key => `<div class="kpi-tile" data-k="${key}"><div class="v">${fmtVal(key, s[key])}</div><div class="l">${KPI_DEFS[key].icon} ${KPI_DEFS[key].label}${key==='lead'?' (วัน)':''}${key==='paper'?' (แผ่น)':''}${key==='time'?' (นาที)':''}</div>${deltaHTML(s[key], p.count ? p[key] : null, key)}</div>`).join("") + `</div>`;
+      html += `<div class="kpi-grid">` + KPI_ORDER.map(key => `<div class="kpi-tile" data-k="${key}"><div class="v">${fmtVal(key, s[key])}</div><div class="l">${KPI_DEFS[key].icon} ${KPI_DEFS[key].label}${key==='lead'?' (วัน)':''}${key==='paper'?' (แผ่น)':''}${key==='time'?' (นาที)':''}${key==='hours'?' (ชม.)':''}</div>${deltaHTML(s[key], p.count ? p[key] : null, key)}</div>`).join("") + `</div>`;
       const pct = st => s[st]/s.count*100;
       html += `<div class="panel"><h3>สถานะการดำเนินงาน</h3><div class="stack-bar">${["success","received","failed"].map(st => `<span style="width:${pct(st)}%;background:${ST_COLORS[st]}" title="${statusMeta[st].label} ${s[st]}"></span>`).join("")}</div>
         <div class="chart-legend" style="margin-top:8px">${["success","received","failed"].map(st=>`<span><i style="background:${ST_COLORS[st]}"></i>${statusMeta[st].label} ${s[st]} (${Math.round(pct(st))}%)</span>`).join("")}</div></div>`;
@@ -1489,6 +1658,689 @@
   document.getElementById('monthSummaryBtn').addEventListener('click', ()=> openMonthKpi(keyOf(viewYear, viewMonth)));
 
 
+  // =====================================================================
+  //  เจาะลึกข้อมูลการให้บริการ (ใช้ข้อมูลที่เก็บอยู่จริงทุกคอลัมน์)
+  // =====================================================================
+  const WD_ORDER = [1,2,3,4,5,6,0];                    // จ → อา
+  const WD_SHORT = ["อา","จ","อ","พ","พฤ","ศ","ส"];
+  const WD_FULL = ["อาทิตย์","จันทร์","อังคาร","พุธ","พฤหัสบดี","ศุกร์","เสาร์"];
+  const HOURS = [7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+  const CATS = [
+    { k:"สอบ / นำเสนอผลงาน",          re:/สอบ|นำเสนอ|present|pitch/i,                                             c:"#F59E0B" },
+    { k:"ต้อนรับ / ดูงาน / ลงนาม",     re:/ต้อนรับ|ตอนรับ|ดูงาน|รับรอง|mou|ลงนาม|แขก|คณะกรรมการตรวจ/i,              c:"#10B981" },
+    { k:"ประชุม",                       re:/ประชุม|meeting/i,                                                       c:"#6366F1" },
+    { k:"อบรม / สัมมนา / บรรยาย",       re:/อบรม|สัมมนา|บรรยาย|workshop|ติว|สอนน้อง|แลกเปลี่ยนเรียนรู้/i,            c:"#EC4899" },
+    { k:"กิจกรรม / โครงการ",            re:/โครงการ|กิจกรรม|รับน้อง|ปฐมนิเทศ|ปัจฉิม|ประเพณี|ทำบุญ|camp|ค่าย|สโมสร|ซ้อม|งาน/i, c:"#F97316" },
+    { k:"การเรียนการสอน / รายวิชา",     re:/รายวิชา|วิชา|สอน|เรียน|โปรแกรม|program|project|โปรเจ|คอม|ansys|spss|\d{11}/i, c:"#06B6D4" }
+  ];
+  const OTHER_CAT = { k:"อื่น ๆ", c:"#94A3B8" };
+  const EQUIP_RULES = [
+    [/ไมค์|ไมโครโฟน|mic/i, "ไมโครโฟน"], [/คอมพิวเตอร์|คอม\b|notebook|โน้ตบุ๊ก/i, "คอมพิวเตอร์"],
+    [/โปรเจ|projector/i, "โปรเจกเตอร์"], [/ขยายเสียง|ลำโพง|speaker/i, "ระบบเครื่องขยายเสียง"],
+    [/smart\s*tv|สมาร์ท\s*ทีวี|โทรทัศน์/i, "Smart TV"], [/ห้องประชุม/i, "ระบบห้องประชุม"],
+    [/ทางไกล|ออนไลน์|zoom|teams|online/i, "สื่อทางไกล / ออนไลน์"], [/smart\s*class/i, "Smart Classroom"]
+  ];
+  const RAINBOW = ["#6366F1","#EC4899","#F59E0B","#10B981","#06B6D4","#8B5CF6","#F97316","#3B82F6","#14B8A6","#F43F5E"];
+
+  function durationH(e){
+    const m = String(e.time||"").match(/(\d{1,2})[:.](\d{2})\s*(?:-|–|—|~|ถึง)\s*(\d{1,2})[:.](\d{2})/);
+    if(!m) return 0;
+    const d = (+m[3]*60 + +m[4]) - (+m[1]*60 + +m[2]);
+    return d > 0 && d <= 16*60 ? d/60 : 0;
+  }
+  function catOf(e){ const t = String(e.detail||""); return CATS.find(c => c.re.test(t)) || OTHER_CAT; }
+  function equipOf(e){
+    const out = new Set();
+    String(e.equipment||"").split(/[\/,]/).map(s=>s.trim()).filter(Boolean).forEach(tok=>{
+      let hit = false;
+      EQUIP_RULES.forEach(([re,name])=>{ if(re.test(tok)){ out.add(name); hit = true; } });
+      if(!hit) out.add(tok.length > 22 ? tok.slice(0,22)+"…" : tok);
+    });
+    return [...out];
+  }
+  let roomCanon = {};
+  function buildRoomCanon(){
+    roomCanon = {};
+    const known = new Set(events.map(e => String(e.room||"").trim().toUpperCase().replace(/\s+/g,"")));
+    known.forEach(r=>{
+      const m = r.match(/^EN-?(\d{3})$/);
+      roomCanon[r] = (m && known.has("EN1-"+m[1])) ? "EN1-"+m[1] : r;
+    });
+  }
+  function roomOf(e){ const r = String(e.room||"").trim().toUpperCase().replace(/\s+/g,""); return roomCanon[r] || r || "ไม่ระบุ"; }
+  function leadBucket(e){
+    const d = parseFloat(e.leadDays);
+    if(isNaN(d)) return -1;
+    return d <= 0 ? 0 : d <= 2 ? 1 : d <= 6 ? 2 : d <= 13 ? 3 : 4;
+  }
+  const LEAD_BUCKETS = [
+    { l:"วันเดียวกัน", c:"#F43F5E" }, { l:"1–2 วัน", c:"#F97316" }, { l:"3–6 วัน", c:"#EAB308" },
+    { l:"1–2 สัปดาห์", c:"#10B981" }, { l:"มากกว่า 2 สัปดาห์", c:"#06B6D4" }
+  ];
+  function hasIssue(e){ const i = String(e.issue||"").trim(); return i !== "" && i !== "ไม่มีปัญหา"; }
+
+  function openListModal(title, sub, list){
+    kpiMonthKey = null; kpiPrev.hidden = true; kpiNext.hidden = true; setHead(null);
+    kpiTitle.textContent = title;
+    kpiSub.textContent = sub;
+    const sorted = list.slice().sort((a,b)=> b.date.localeCompare(a.date) || timeToMin(a.time) - timeToMin(b.time));
+    kpiBody.innerHTML = `<div class="panel"><h3>📋 รายการกิจกรรม ${sorted.length} รายการ <span style="font-weight:400;color:var(--text-faint);font-size:12px">· คลิกเพื่อเปิดวันนั้นในปฏิทิน</span></h3>${sorted.length ? eventLines(sorted.slice(0,300)) : '<div class="empty-state">ไม่มีรายการ</div>'}</div>`;
+    bindEventLines();
+    openKpi();
+  }
+
+  const deepScope = document.getElementById('deepScope');
+  let deepScopeVal = "fy";
+  deepScope.addEventListener('change', ()=>{ deepScopeVal = deepScope.value; renderDeep(); });
+
+  function renderDeep(){
+    buildRoomCanon();
+    const keys = fyKeys(trendFY);
+    const withData = keys.filter(k => (monthMap[k]||[]).length);
+    if(deepScopeVal !== "fy" && keys.indexOf(deepScopeVal) === -1) deepScopeVal = "fy";
+    deepScope.innerHTML = `<option value="fy">ทั้งปีงบประมาณ ${trendFY}</option>` +
+      withData.map(k => `<option value="${k}" ${k===deepScopeVal?'selected':''}>${monthTitle(k)}</option>`).join("");
+    deepScope.value = deepScopeVal;
+    const scopeKeys = deepScopeVal === "fy" ? keys : [deepScopeVal];
+    const list = scopeKeys.flatMap(k => monthMap[k] || []);
+    const scopeName = deepScopeVal === "fy" ? "ปีงบประมาณ " + trendFY : monthTitle(deepScopeVal);
+    document.getElementById('deepSub').textContent = `${scopeName} · ${list.length} กิจกรรม · ชี้เมาส์ดูตัวเลข คลิกเพื่อดูรายการกิจกรรมที่อยู่เบื้องหลังข้อมูล`;
+    const boxes = ["deepKpis","deepInsight","deepHeat","deepCombo","deepCat","deepEquip","deepRooms","deepLead"].map(id=>document.getElementById(id));
+    renderCombo(keys);
+    if(!list.length){
+      boxes.forEach((b,i)=>{ if(i!==3) b.innerHTML = i===0 ? "" : `<div class="empty-state">ยังไม่มีกิจกรรมใน${scopeName}</div>`; });
+      return;
+    }
+
+    // ---- ตัวเลขสรุป ----
+    const hours = list.reduce((a,e)=> a + durationH(e), 0);
+    const rooms = topCounts(list, roomOf);
+    const eqs = topCounts(list, e => equipOf(e).join("|"), "|");
+    const wd = [0,0,0,0,0,0,0]; list.forEach(e=>{ const [y,m,d] = e.date.split("-").map(Number); wd[new Date(y,m-1,d).getDay()]++; });
+    const peakWd = wd.indexOf(Math.max(...wd));
+    const hourCount = {}; list.forEach(e=>{ const t = timeToMin(e.time); if(t < 9999){ const h = Math.min(20, Math.max(7, Math.floor(t/60))); hourCount[h] = (hourCount[h]||0) + 1; } });
+    const peakHour = Object.entries(hourCount).sort((a,b)=>b[1]-a[1])[0];
+    const leads = list.map(leadBucket).filter(b=>b>=0);
+    const ontime = leads.length ? leads.filter(b=>b>=2).length / leads.length * 100 : null;
+    const sameDay = leads.length ? leads.filter(b=>b===0).length / leads.length * 100 : null;
+    const issues = list.filter(hasIssue).length;
+    const tiles = [
+      { i:"🗓", v:fmtN(list.length), l:"กิจกรรมที่ให้บริการ", c:["#6366F1","#8B5CF6"] },
+      { i:"⏰", v:fmtN(hours) + " ชม.", l:"ชั่วโมงให้บริการรวม · เฉลี่ย " + (hours/list.length).toFixed(1) + " ชม./ครั้ง", c:["#EC4899","#F43F5E"] },
+      { i:"🏫", v:rooms.length + " แห่ง", l:"ห้อง/สถานที่ที่ใช้ · มากสุด " + (rooms[0]?rooms[0][0]:"-"), c:["#F59E0B","#F97316"] },
+      { i:"🎛", v:eqs[0] ? eqs[0][0] : "-", l:"อุปกรณ์ที่ขอมากที่สุด " + (eqs[0]?eqs[0][1]+" ครั้ง":""), c:["#10B981","#06B6D4"] },
+      { i:"🔥", v:"วัน" + WD_FULL[peakWd], l:"วันที่มีกิจกรรมมากที่สุด (" + wd[peakWd] + " ครั้ง)", c:["#3B82F6","#6366F1"] },
+      { i:"🕘", v:peakHour ? String(peakHour[0]).padStart(2,"0") + ":00 น." : "-", l:"ช่วงเวลาเริ่มที่นิยมที่สุด", c:["#8B5CF6","#EC4899"] },
+      { i:"⏱", v:ontime===null ? "–" : Math.round(ontime) + "%", l:"แจ้งล่วงหน้า ≥ 3 วัน (ตามเกณฑ์)", c:["#14B8A6","#10B981"] },
+      { i:"🛠", v:fmtN(issues), l:"กิจกรรมที่พบปัญหาระหว่างใช้งาน", c:issues ? ["#F43F5E","#F97316"] : ["#22C55E","#10B981"] }
+    ];
+    document.getElementById('deepKpis').innerHTML = tiles.map(t=>`<div class="dk" style="--c1:${t.c[0]};--c2:${t.c[1]}"><div class="i">${t.i}</div><div class="v" title="${escapeHtml(t.v)}">${escapeHtml(t.v)}</div><div class="l">${escapeHtml(t.l)}</div></div>`).join("");
+
+    // ---- ข้อค้นพบสำคัญ (สร้างอัตโนมัติจากข้อมูล) ----
+    const cats = {}; list.forEach(e=>{ const c = catOf(e); (cats[c.k] = cats[c.k] || { c, list:[] }).list.push(e); });
+    const catArr = Object.values(cats).sort((a,b)=> b.list.length - a.list.length);
+    const ins = [];
+    if(catArr[0]) ins.push(`กิจกรรมส่วนใหญ่เป็นประเภท <b>${catArr[0].c.k}</b> (${Math.round(catArr[0].list.length/list.length*100)}%)`);
+    if(rooms[0]) ins.push(`ห้อง <b>${escapeHtml(rooms[0][0])}</b> ถูกใช้มากที่สุด ${rooms[0][1]} ครั้ง${rooms[1]?` รองลงมาคือ ${escapeHtml(rooms[1][0])} (${rooms[1][1]} ครั้ง)`:""}`);
+    if(peakHour) ins.push(`ช่วงที่งานหนาแน่นที่สุดคือ <b>วัน${WD_FULL[peakWd]}</b> และกิจกรรมมักเริ่มเวลา <b>${String(peakHour[0]).padStart(2,"0")}:00 น.</b> ควรจัดกำลังคนช่วงนี้ให้พร้อม`);
+    if(sameDay !== null) ins.push(sameDay >= 25
+      ? `⚠️ <b>${Math.round(sameDay)}%</b> ของคำขอแจ้งในวันเดียวกับวันใช้งาน — แนะนำประชาสัมพันธ์ให้แจ้งล่วงหน้าอย่างน้อย 3 วัน เพื่อเตรียมความพร้อมได้เต็มที่`
+      : `✅ แจ้งในวันเดียวกันเพียง <b>${Math.round(sameDay)}%</b> ผู้ขอส่วนใหญ่แจ้งล่วงหน้าได้ดี`);
+    ins.push(`รวมเวลาให้บริการ <b>${fmtN(hours)} ชั่วโมง</b> ลดการใช้กระดาษ <b>${fmtN(statsOf(list).paper)} แผ่น</b>${issues?` · พบปัญหา ${issues} ครั้ง`:" · ไม่พบปัญหาระหว่างใช้งาน 🎉"}`);
+    document.getElementById('deepInsight').innerHTML = `<b class="t">💡 ข้อค้นพบสำคัญ · ${scopeName}</b><ul>${ins.map(s=>`<li>${s}</li>`).join("")}</ul>`;
+
+    // ---- แผนที่ความร้อน วัน × เวลา ----
+    const grid = {}; let gmax = 0;
+    list.forEach(e=>{
+      const t = timeToMin(e.time); if(t >= 9999) return;
+      const h = Math.min(20, Math.max(7, Math.floor(t/60)));
+      const [y,m,d] = e.date.split("-").map(Number); const w = new Date(y,m-1,d).getDay();
+      const k = w + "_" + h; (grid[k] = grid[k] || []).push(e); gmax = Math.max(gmax, grid[k].length);
+    });
+    let heat = `<div style="overflow-x:auto"><div class="heat"><div></div>${HOURS.map(h=>`<div class="hh">${String(h).padStart(2,"0")}</div>`).join("")}`;
+    WD_ORDER.forEach(w=>{
+      heat += `<div class="hd">${WD_SHORT[w]}</div>`;
+      HOURS.forEach(h=>{
+        const arr = grid[w+"_"+h] || [];
+        if(!arr.length){ heat += `<div class="c z"></div>`; return; }
+        const r = arr.length / gmax;
+        heat += `<div class="c" data-k="${w}_${h}" style="background:color-mix(in srgb, color-mix(in srgb, var(--b) ${Math.round(r*100)}%, var(--a)) ${Math.round(35+65*r)}%, #F1F2F8)">${arr.length}</div>`;
+      });
+    });
+    heat += `</div></div><div class="heat-legend">น้อย <i></i> มาก</div>`;
+    const hEl = document.getElementById('deepHeat'); hEl.innerHTML = heat;
+    hEl.querySelectorAll('.c[data-k]').forEach(c=>{
+      const [w,h] = c.dataset.k.split("_").map(Number); const arr = grid[c.dataset.k];
+      const lab = `วัน${WD_FULL[w]} เริ่ม ${String(h).padStart(2,"0")}:00–${String(h).padStart(2,"0")}:59 น.`;
+      bindTip(c, ()=> `<div class="tip-title">${lab}</div><div class="tip-row"><span>กิจกรรม</span><span>${arr.length}</span></div><div class="tip-hint">คลิกเพื่อดูรายการ</div>`);
+      c.addEventListener('click', ()=> openListModal("🗓 " + lab, scopeName, arr));
+    });
+
+    // ---- ประเภทกิจกรรม (โดนัท) ----
+    document.getElementById('deepCat').innerHTML = donutHTML("cat", catArr.map(x=>({ label:x.c.k, value:x.list.length, color:x.c.c, list:x.list })), list.length, "กิจกรรม");
+    bindDonut("cat", catArr.map(x=>({ label:x.c.k, value:x.list.length, list:x.list })), list.length, scopeName, "🎯 ประเภท: ");
+
+    // ---- อุปกรณ์ ----
+    const eqItems = eqs.slice(0,8).map(([n,v],i)=>({ label:n, value:v, color:RAINBOW[i%RAINBOW.length], list:list.filter(e=>equipOf(e).indexOf(n)!==-1) }));
+    document.getElementById('deepEquip').innerHTML = donutHTML("eq", eqItems, list.length, "กิจกรรม", true);
+    bindDonut("eq", eqItems, list.length, scopeName, "🎛 อุปกรณ์: ");
+
+    // ---- ห้อง ----
+    const rEl = document.getElementById('deepRooms');
+    const rmax = rooms.length ? rooms[0][1] : 1;
+    rEl.innerHTML = rooms.slice(0,8).map(([n,v],i)=>{
+      const rl = list.filter(e=>roomOf(e)===n); const h = rl.reduce((a,e)=>a+durationH(e),0);
+      const c1 = RAINBOW[i%RAINBOW.length], c2 = RAINBOW[(i+1)%RAINBOW.length];
+      return `<div class="rbar" data-r="${escapeHtml(n)}"><span class="nm">${i<3?["🥇","🥈","🥉"][i]+" ":""}${escapeHtml(n)} <small>· ${fmtN(h)} ชม.</small></span><span class="n" style="color:${c1}">${v} ครั้ง</span><div class="tr"><span style="width:${v/rmax*100}%;background:linear-gradient(90deg,${c1},${c2})"></span></div></div>`;
+    }).join("") + (rooms.length > 8 ? `<div class="hint" style="font-size:12px;color:var(--text-faint)">และอีก ${rooms.length-8} แห่ง</div>` : "");
+    rEl.querySelectorAll('.rbar').forEach(b=> b.addEventListener('click', ()=> openListModal("🏫 " + b.dataset.r, scopeName, list.filter(e=>roomOf(e)===b.dataset.r))));
+
+    // ---- การแจ้งล่วงหน้า ----
+    const lb = [0,0,0,0,0]; const lbList = [[],[],[],[],[]];
+    list.forEach(e=>{ const b = leadBucket(e); if(b>=0){ lb[b]++; lbList[b].push(e); } });
+    const lbMax = Math.max(1, ...lb), lbSum = lb.reduce((a,b)=>a+b,0) || 1;
+    const lEl = document.getElementById('deepLead');
+    lEl.innerHTML = `<div class="leadcols">${LEAD_BUCKETS.map((b,i)=>`<div class="lc" data-i="${i}"><span class="n" style="color:${b.c}">${lb[i]}</span><span class="p">${Math.round(lb[i]/lbSum*100)}%</span><div class="bar" style="height:${Math.max(3, lb[i]/lbMax*100)}%;background:linear-gradient(180deg,${b.c},color-mix(in srgb,${b.c} 60%,#fff))"></div><span class="lb">${b.l}</span></div>`).join("")}</div>
+      <div class="lead-note${ontime!==null && ontime>=60?' good':''}">${ontime===null?'ไม่มีข้อมูลวันที่แจ้ง':`แจ้งล่วงหน้าตามเกณฑ์ (≥ 3 วัน) <b>${Math.round(ontime)}%</b> · แจ้งวันเดียวกัน ${Math.round(sameDay)}%`}</div>`;
+    lEl.querySelectorAll('.lc').forEach(c=>{
+      const i = +c.dataset.i;
+      bindTip(c, ()=> `<div class="tip-title">แจ้งล่วงหน้า ${LEAD_BUCKETS[i].l}</div><div class="tip-row"><span>กิจกรรม</span><span>${lb[i]} (${Math.round(lb[i]/lbSum*100)}%)</span></div><div class="tip-hint">คลิกเพื่อดูรายการ</div>`);
+      c.addEventListener('click', ()=> openListModal("⏱ แจ้งล่วงหน้า " + LEAD_BUCKETS[i].l, scopeName, lbList[i]));
+    });
+  }
+
+  function donutHTML(id, items, total, unit, multi){
+    const R = 64, C = 2*Math.PI*R, sum = items.reduce((a,b)=>a+b.value,0) || 1;
+    let off = 0;
+    const segs = items.map((it,i)=>{
+      const len = it.value/sum*C;
+      const s = `<circle class="seg" data-i="${i}" cx="85" cy="85" r="${R}" fill="none" stroke="${it.color}" stroke-width="24" stroke-dasharray="${Math.max(0,len-2)} ${C}" stroke-dashoffset="${-off}" transform="rotate(-90 85 85)"/>`;
+      off += len; return s;
+    }).join("");
+    return `<div class="donut-wrap"><svg viewBox="0 0 170 170" role="img" aria-label="แผนภูมิวงกลม"><circle cx="85" cy="85" r="${R}" fill="none" stroke="#F1F2F8" stroke-width="24"/>${segs}
+      <text x="85" y="82" text-anchor="middle" font-family="Prompt,sans-serif" font-size="26" font-weight="700" fill="#161A2E">${fmtN(total)}</text>
+      <text x="85" y="102" text-anchor="middle" font-size="11.5" fill="#8C92AC">${unit}</text></svg>
+      <div class="legend">${items.map((it,i)=>`<button type="button" class="lg" data-i="${i}"><i style="background:${it.color}"></i><span>${escapeHtml(it.label)}</span><b>${it.value}${multi?"":` · ${Math.round(it.value/total*100)}%`}</b></button>`).join("")}</div></div>
+      ${multi?'<div class="hint" style="font-size:11.5px;color:var(--text-faint);margin-top:6px">หนึ่งกิจกรรมขอใช้อุปกรณ์ได้หลายชนิด</div>':""}`;
+  }
+  function bindDonut(id, items, total, scopeName, prefix){
+    const host = document.getElementById(id === "cat" ? "deepCat" : "deepEquip");
+    host.querySelectorAll('[data-i]').forEach(el=>{
+      const it = items[+el.dataset.i]; if(!it) return;
+      bindTip(el, ()=> `<div class="tip-title">${escapeHtml(it.label)}</div><div class="tip-row"><span>กิจกรรม</span><span>${it.value} (${Math.round(it.value/total*100)}%)</span></div><div class="tip-hint">คลิกเพื่อดูรายการ</div>`);
+      el.addEventListener('click', ()=> openListModal(prefix + it.label, scopeName, it.list));
+    });
+  }
+
+  // กราฟผสม: แท่ง = ชั่วโมงให้บริการ, เส้น = จำนวนกิจกรรม (รายเดือนทั้งปีงบ)
+  function renderCombo(keys){
+    const el = document.getElementById('deepCombo');
+    const W = 760, H = 250, L = 46, R = 46, T = 22, B = 42, pw = W-L-R, ph = H-T-B, slot = pw/keys.length, bw = Math.min(36, slot*.55);
+    const data = keys.map(k=>{ const l = monthMap[k] || []; return { k, n:l.length, h:l.reduce((a,e)=>a+durationH(e),0), future:k > todayKey }; });
+    const up4 = v => Math.max(4, Math.ceil(niceMax(v)/4)*4);
+    const hMax = up4(Math.max(1, ...data.map(d=>d.h))), nMax = up4(Math.max(1, ...data.map(d=>d.n)));
+    let svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="ชั่วโมงให้บริการและจำนวนกิจกรรมรายเดือน"><defs><linearGradient id="cbLine" x1="0" x2="1"><stop offset="0" stop-color="#EC4899"/><stop offset="1" stop-color="#F59E0B"/></linearGradient></defs>`;
+    for(let g=0; g<=4; g++){
+      const y = T + ph - ph*g/4;
+      svg += `<line x1="${L}" x2="${W-R}" y1="${y}" y2="${y}" stroke="#E3E6F0" ${g?'stroke-dasharray="3 4"':''}/>`;
+      svg += `<text x="${L-8}" y="${y+4}" text-anchor="end" font-size="11" fill="#8C92AC">${fmtN(hMax*g/4)}</text>`;
+      svg += `<text x="${W-R+8}" y="${y+4}" font-size="11" fill="#DB2777">${fmtN(nMax*g/4)}</text>`;
+    }
+    svg += `<text x="${L-8}" y="${T-8}" text-anchor="end" font-size="10.5" fill="#8C92AC">ชม.</text><text x="${W-R+8}" y="${T-8}" font-size="10.5" fill="#DB2777">กิจกรรม</text>`;
+    const pts = [];
+    data.forEach((d,i)=>{
+      const cx = L + i*slot + slot/2, m = parseKey(d.k).m, [a,b] = MONTH_THEMES[m];
+      svg += `<defs><linearGradient id="cb${i}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs>`;
+      if(d.h > 0){ const h = d.h/hMax*ph; svg += `<rect class="chart-bar" x="${cx-bw/2}" y="${T+ph-h}" width="${bw}" height="${h}" rx="6" fill="url(#cb${i})" opacity="${d.k===deepScopeVal||deepScopeVal==='fy'?1:.35}" style="animation-delay:${i*35}ms"/>`; }
+      svg += `<text x="${cx}" y="${H-B+18}" text-anchor="middle" font-size="12" fill="${d.future?'#B8BDD0':'#565C78'}" font-weight="${d.k===deepScopeVal?700:500}">${monthShortTh[m]}</text>`;
+      if(!d.future) pts.push([cx, T + ph - d.n/nMax*ph, d]);
+    });
+    if(pts.length){
+      svg += `<polyline points="${pts.map(p=>p[0]+","+p[1]).join(" ")}" fill="none" stroke="url(#cbLine)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`;
+      pts.forEach(p=>{ svg += `<circle cx="${p[0]}" cy="${p[1]}" r="5" fill="#fff" stroke="#EC4899" stroke-width="2.5"/><text x="${p[0]}" y="${p[1]-10}" text-anchor="middle" font-size="11" font-weight="700" fill="#BE185D">${p[2].n||""}</text>`; });
+    }
+    data.forEach((d,i)=>{ svg += `<rect class="hit" data-k="${d.k}" x="${L+i*slot}" y="${T-10}" width="${slot}" height="${ph+B}" rx="8"/>`; });
+    svg += `</svg>`;
+    el.innerHTML = `<div class="chart-wrap">${svg}</div><div class="chart-legend"><span><i style="background:linear-gradient(90deg,var(--a),var(--b))"></i>ชั่วโมงให้บริการ (แกนซ้าย)</span><span><i style="background:#EC4899;border-radius:50%"></i>จำนวนกิจกรรม (แกนขวา)</span><span>คลิกเดือนเพื่อดูสรุป KPI</span></div>`;
+    el.querySelectorAll('.hit').forEach(h=>{
+      const d = data.find(x=>x.k===h.dataset.k);
+      bindTip(h, ()=> `<div class="tip-title">${monthTitle(d.k)}</div><div class="tip-row"><span>ชั่วโมงให้บริการ</span><span>${fmtN(d.h)} ชม.</span></div><div class="tip-row"><span>กิจกรรม</span><span>${d.n}</span></div><div class="tip-hint">คลิกเพื่อดูสรุป KPI ของเดือนนี้</div>`);
+      h.addEventListener('click', ()=> openMonthKpi(d.k));
+    });
+  }
+
+  // =====================================================================
+  //  Digital Twin 3 มิติ: เส้นทางการกำกับติดตาม 8 ขั้นตอน
+  // =====================================================================
+  let lastLove = null;
+  const FLOW = [
+    { e:"📝", t:"ส่งคำขอล่วงหน้า", who:"ผู้ขอรับบริการ", c:"#6366F1",
+      d:"ผู้ขอรับบริการกรอกแบบฟอร์มออนไลน์ ระบุวันที่ เวลา ห้อง/สถานที่ รายละเอียดกิจกรรม และอุปกรณ์ที่ต้องใช้ ควรแจ้งล่วงหน้าอย่างน้อย 3 วัน",
+      sys:["บันทึกลง Google Sheet อัตโนมัติทันที ไม่ต้องใช้กระดาษ","คำนวณจำนวนวันที่แจ้งล่วงหน้าให้เอง","กิจกรรมขึ้นบนปฏิทินสาธารณะให้ทุกคนเห็น"],
+      rec:["วันที่ใช้งาน","เวลา","ห้อง/สถานที่","รายละเอียด","อุปกรณ์","วันที่แจ้งขอ"], tipText:"แจ้งล่วงหน้า ≥ 3 วัน ช่วยให้เตรียมความพร้อมได้เต็มที่", action:"form" },
+    { e:"🔖", t:"ออกรหัสติดตาม & แจ้งเตือน", who:"ระบบอัตโนมัติ", c:"#8B5CF6",
+      d:"ทันทีที่ส่งแบบฟอร์ม ระบบออก “รหัสติดตาม” รูปแบบ AV-ปีเดือนวัน-XXX ให้ทุกคำขอ และส่งอีเมลแจ้งเจ้าหน้าที่ให้รับทราบทันที",
+      sys:["ออกรหัสติดตามไม่ซ้ำกันอัตโนมัติ","อีเมลแจ้งเจ้าหน้าที่พร้อมลิงก์จัดการคำขอ","ซิงก์ปฏิทินสาธารณะแบบสด"],
+      rec:["รหัสติดตาม","เวลาที่ส่งคำขอ"], tipText:"เก็บรหัสติดตามไว้ ใช้ตรวจสอบสถานะได้ตลอดเวลา" },
+    { e:"📥", t:"ตรวจสอบ & รับเรื่อง", who:"เจ้าหน้าที่โสตทัศนูปกรณ์", c:"#F59E0B",
+      d:"เจ้าหน้าที่ตรวจสอบความพร้อมของห้องและอุปกรณ์ ตรวจว่ามีการใช้ห้องซ้อนกันหรือไม่ แล้วยืนยัน “รับเรื่องเรียบร้อย” พร้อมส่งอีเมลแจ้งผู้ขอ",
+      sys:["อีเมลแจ้งผู้ขอพร้อม QR Code และปุ่มลิงก์ติดตาม","ค้นหาผู้ขอจากฐานข้อมูลบุคลากรคณะด้วยตัวอักษร 1–3 ตัว","บันทึกผู้ดำเนินการและเวลาทุกครั้ง"],
+      rec:["สถานะ","ผู้ขอรับบริการ","อีเมล","ข้อความจากเจ้าหน้าที่"], tipText:"ตรวจห้องที่ถูกขอใช้ในวันเดียวกันก่อนรับเรื่อง", action:"track" },
+    { e:"🛠", t:"เตรียมความพร้อม", who:"เจ้าหน้าที่โสตทัศนูปกรณ์", c:"#F97316",
+      d:"ติดตั้งและทดสอบอุปกรณ์ตามที่ขอ ระบบส่งอีเมลเตือนเจ้าหน้าที่ล่วงหน้า 1 วัน และอีกครั้งในเช้าวันใช้งาน เพื่อไม่ให้ตกหล่น",
+      sys:["อีเมลเตือนล่วงหน้า 1 วัน","อีเมลเตือนในวันใช้งาน","บันทึกสถานะการส่งเตือนในชีต"],
+      rec:["สถานะส่งล่วงหน้า","สถานะส่งวันจริง","อุปกรณ์ที่ต้องใช้"], tipText:"ทดสอบเสียง ภาพ และสัญญาณก่อนเริ่มกิจกรรมเสมอ" },
+    { e:"🎬", t:"ให้บริการวันจริง", who:"เจ้าหน้าที่ + ผู้ใช้งาน", c:"#F43F5E",
+      d:"สนับสนุนการใช้งานตลอดกิจกรรม แก้ปัญหาหน้างานทันที และบันทึก “ปัญหาระหว่างใช้งาน” เพื่อนำไปปรับปรุงครั้งต่อไป",
+      sys:["คำนวณชั่วโมงให้บริการจากช่วงเวลาที่ขอ","สรุปห้องและอุปกรณ์ที่ใช้บ่อย","แผนที่ความร้อนช่วงเวลาที่งานหนาแน่น"],
+      rec:["ปัญหาระหว่างใช้งาน","ชั่วโมงให้บริการ"], tipText:"บันทึกปัญหาทุกครั้ง แม้แก้ไขได้ทันที", action:"deep" },
+    { e:"✅", t:"บันทึกผล & แจ้งสถานะ", who:"เจ้าหน้าที่โสตทัศนูปกรณ์", c:"#10B981",
+      d:"บันทึกผลการดำเนินงาน “สำเร็จ” หรือ “ไม่สำเร็จ” ระบบส่งอีเมลแจ้งผลให้ผู้ขอพร้อมลิงก์ประเมินความพึงพอใจ และอัปเดตปฏิทินทันที",
+      sys:["อีเมลแจ้งผลพร้อม QR Code","อัปเดตตัวชี้วัด “ดำเนินได้ตามแผน”","บันทึกลง Google Sheet รายงานอัตโนมัติ"],
+      rec:["ผลการดำเนินงาน","กิจกรรมดำเนินได้ตามแผน (%)"], tipText:"แจ้งผลภายในวันเดียวกับที่ให้บริการ" },
+    { e:"💖", t:"ประเมินความพึงพอใจ", who:"ผู้รับบริการ / ทุกคน", c:"#EC4899",
+      d:"ผู้รับบริการประเมินความพึงพอใจ 1–5 ผ่านลิงก์ในอีเมล หรือทุกคนประเมินได้ที่หน้านี้แบบไม่ระบุตัวตน",
+      sys:["ประเมินด้วยหน้าน่ารัก 5 ระดับ ใช้เวลาไม่ถึง 10 วินาที","ไม่ระบุตัวตน ไม่เก็บชื่อหรืออีเมลในแบบทั่วไป","กันสแปมและให้เจ้าหน้าที่ซ่อนข้อความไม่เหมาะสมได้"],
+      rec:["คะแนน 1–5","ความคิดเห็น","วันที่ประเมิน"], tipText:"ทุกความเห็นนำไปพัฒนาบริการจริง", action:"rate" },
+    { e:"📊", t:"สรุป KPI & พัฒนาต่อเนื่อง", who:"หัวหน้างาน / ทีมงาน", c:"#06B6D4",
+      d:"รวบรวมตัวชี้วัดรายเดือน วิเคราะห์แนวโน้ม แล้วนำข้อค้นพบไปปรับปรุงบริการตามวงจร PDCA ก่อนวนกลับสู่ขั้นที่ 1",
+      sys:["แดชบอร์ดตัวชี้วัด แนวโน้มรายเดือน และเจาะลึกข้อมูล","ส่งออก Excel / PDF / TXT","ข้อค้นพบสำคัญสร้างอัตโนมัติจากข้อมูลจริง"],
+      rec:["ดำเนินได้ตามแผน","แจ้งล่วงหน้าเฉลี่ย","ลดการใช้กระดาษ","เวลาที่ลดลง"], tipText:"ทบทวนตัวชี้วัดทุกเดือน", action:"kpi" }
+  ];
+  FLOW.forEach((f,i)=>{ f.c2 = FLOW[(i+1)%FLOW.length].c; });
+
+  function flowStats(){
+    const fy = fyOf(todayISO);
+    const fyList = fyKeys(fy).flatMap(k => monthMap[k] || []);
+    const all = statsOf(events), fs = statsOf(fyList);
+    const in7 = new Date(todayObj.getTime() + 7*864e5);
+    const in7ISO = in7.getFullYear()+"-"+pad2(in7.getMonth()+1)+"-"+pad2(in7.getDate());
+    const upcoming = events.filter(e => e.date >= todayISO);
+    const week = upcoming.filter(e => e.date <= in7ISO);
+    const leads = events.map(leadBucket).filter(b=>b>=0);
+    const ontime = leads.length ? Math.round(leads.filter(b=>b>=2).length/leads.length*100) : 0;
+    const sameRoom = {}; events.forEach(e=>{ const k = e.date+"|"+roomOf(e); sameRoom[k] = (sameRoom[k]||0)+1; });
+    const clashes = Object.values(sameRoom).filter(n=>n>1).length;
+    const eqs = topCounts(events, e => equipOf(e).join("|"), "|");
+    const hours = events.reduce((a,e)=>a+durationH(e),0);
+    const hoursFy = fyList.reduce((a,e)=>a+durationH(e),0);
+    const rooms = topCounts(events, roomOf);
+    const issues = events.filter(hasIssue).length;
+    const thisMonth = (monthMap[todayKey]||[]).length;
+    const L = lastLove;
+    return [
+      { v:all.count, vt:fmtN(all.count), u:"คำขอทั้งหมด", tiles:[["คำขอทั้งหมด",fmtN(all.count)],["ปีงบประมาณ "+fy,fmtN(fs.count)],["แจ้งล่วงหน้าเฉลี่ย",fmtVal('lead',all.lead)+" วัน"],["แจ้ง ≥ 3 วัน",ontime+"%"]] },
+      { v:all.count, vt:fmtN(thisMonth), u:"คำขอเดือนนี้", tiles:[["ออกรหัสติดตามแล้ว",fmtN(all.count)+" รายการ"],["คำขอเดือนนี้",fmtN(thisMonth)],["รูปแบบรหัส","AV-ปีเดือนวัน-XXX"]] },
+      { v:upcoming.length, vt:fmtN(upcoming.length), u:"รอให้บริการ", tiles:[["กำลังจะมาถึง",fmtN(upcoming.length)+" กิจกรรม"],["สถานะรับเรื่องเรียบร้อย",fmtN(all.received)],["วัน-ห้องที่ถูกขอซ้ำ",fmtN(clashes)+" ครั้ง"]] },
+      { v:week.length || upcoming.length, vt:fmtN(week.length), u:"ใน 7 วันนี้", tiles:[["กิจกรรมใน 7 วันข้างหน้า",fmtN(week.length)],["อุปกรณ์ยอดนิยม",eqs[0]?eqs[0][0]:"-"],["อันดับ 2",eqs[1]?eqs[1][0]:"-"],["อันดับ 3",eqs[2]?eqs[2][0]:"-"]] },
+      { v:hours, vt:fmtN(hours), u:"ชั่วโมงให้บริการ", tiles:[["ชั่วโมงให้บริการสะสม",fmtN(hours)+" ชม."],["ปีงบประมาณ "+fy,fmtN(hoursFy)+" ชม."],["ห้องที่ใช้บ่อยที่สุด",rooms[0]?rooms[0][0]:"-"],["พบปัญหาระหว่างใช้งาน",fmtN(issues)+" ครั้ง"]] },
+      { v:all.success, vt:all.onplan===null?"–":Math.round(all.onplan)+"%", u:"สำเร็จ", tiles:[["สำเร็จ",fmtN(all.success)],["ไม่สำเร็จ",fmtN(all.failed)],["ดำเนินได้ตามแผน",fmtVal('onplan',all.onplan)]] },
+      { v:L && L.count ? L.count : 0, vt:L && L.count ? L.avg.toFixed(1) : "–", u:"คะแนนเฉลี่ย / 5", tiles:[["คะแนนเฉลี่ย",L && L.count ? L.avg.toFixed(1)+" / 5" : "–"],["จำนวนผู้ประเมิน",L ? fmtN(L.count) : "–"],["พึงพอใจมาก (4–5)",L && L.count ? L.satisfiedPct+"%" : "–"]] },
+      { v:all.onplan || 0, vt:fmtVal('onplan',all.onplan), u:"ตามแผน", tiles:[["ดำเนินได้ตามแผน",fmtVal('onplan',all.onplan)],["ลดการใช้กระดาษ",fmtN(all.paper)+" แผ่น"],["เวลาที่ลดลง",fmtN(all.time)+" นาที"]] }
+    ];
+  }
+
+  // ----- การ์ดขั้นตอน (ใช้ได้ทุกอุปกรณ์ แม้ไม่รองรับ 3 มิติ) -----
+  const twinSteps = document.getElementById('twinSteps');
+  function renderTwinCards(){
+    const st = flowStats();
+    twinSteps.innerHTML = FLOW.map((f,i)=>`<button type="button" class="ts" data-i="${i}" style="--sc:${f.c}"><span class="no">${i+1}</span><span class="e">${f.e}</span><b>${f.t}</b><small>${f.who}</small><span class="st">${escapeHtml(st[i].vt)} ${escapeHtml(st[i].u)}</span></button>`).join("");
+    twinSteps.querySelectorAll('.ts').forEach(b=>{
+      const i = +b.dataset.i;
+      b.addEventListener('click', ()=> openFlow(i));
+      b.addEventListener('mouseenter', ()=> twinApi && twinApi.highlight(i));
+      b.addEventListener('mouseleave', ()=> twinApi && twinApi.highlight(-1));
+    });
+    const hud = document.getElementById('twinHud');
+    const all = statsOf(events);
+    hud.innerHTML = `<span class="hud-chip hud-live">LIVE · DIGITAL TWIN</span>
+      <span class="hud-chip">คำขอทั้งหมด<b>${fmtN(all.count)}</b></span>
+      <span class="hud-chip">กำลังจะมาถึง<b>${fmtN(events.filter(e=>e.date>=todayISO).length)}</b></span>
+      <span class="hud-chip opt">ตามแผน<b>${fmtVal('onplan',all.onplan)}</b></span>
+      <span class="hud-chip opt">ความพึงพอใจ<b>${lastLove && lastLove.count ? lastLove.avg.toFixed(1)+" / 5" : "–"}</b></span>`;
+  }
+  function refreshTwin(){ renderTwinCards(); if(twinApi) twinApi.update(flowStats()); }
+
+  // ----- pop up รายละเอียดขั้นตอน -----
+  const flowOverlay = document.getElementById('flowOverlay');
+  const flowModal = flowOverlay.querySelector('.modal');
+  function openFlow(i){
+    const f = FLOW[i], st = flowStats()[i];
+    hideTip();
+    flowModal.style.setProperty('--sc', f.c); flowModal.style.setProperty('--sc2', f.c2);
+    document.getElementById('flowTitle').innerHTML = `${f.e} ขั้นที่ ${i+1} · ${escapeHtml(f.t)}`;
+    document.getElementById('flowSub').innerHTML = `<span class="fl-who">👤 ${escapeHtml(f.who)}</span>
+      <div class="flow-dots">${FLOW.map((x,j)=>`<button type="button" data-j="${j}" aria-label="ขั้นที่ ${j+1} ${escapeHtml(x.t)}" aria-current="${j===i}">${j+1}</button>`).join("")}</div>`;
+    const actions = {
+      form:`<a class="go" href="${REQUEST_FORM_URL}" target="_blank" rel="noopener">＋ ส่งคำขอรับบริการ</a>`,
+      track:`<button type="button" class="go" data-go="track">🔎 ติดตามสถานะคำขอ</button>`,
+      rate:`<button type="button" class="go" data-go="rate">💖 ให้คะแนนความพึงพอใจ</button>`,
+      kpi:`<button type="button" class="go" data-go="kpi">📊 ดูแนวโน้มตัวชี้วัด</button>`,
+      deep:`<button type="button" class="go" data-go="deep">🔍 ดูเจาะลึกข้อมูล</button>`
+    };
+    document.getElementById('flowBody').innerHTML = `
+      <div class="fl-tiles">${st.tiles.map(t=>`<div class="fl-tile"><div class="v">${escapeHtml(t[1])}</div><div class="l">${escapeHtml(t[0])}</div></div>`).join("")}</div>
+      <div class="fl-sec"><h4>📌 เกิดอะไรขึ้นในขั้นตอนนี้</h4><div style="font-size:14px;line-height:1.7">${escapeHtml(f.d)}</div></div>
+      <div class="fl-sec"><h4>🤖 ระบบช่วยอะไรบ้าง</h4><ul>${f.sys.map(s=>`<li>${escapeHtml(s)}</li>`).join("")}</ul></div>
+      <div class="fl-sec"><h4>🗂 ข้อมูลที่บันทึก/ติดตาม</h4><div class="fl-chips">${f.rec.map(s=>`<span>${escapeHtml(s)}</span>`).join("")}</div></div>
+      <div class="fl-sec" style="font-size:13.5px;border-radius:12px;padding:9px 12px;background:color-mix(in srgb,var(--sc) 9%,#fff)">💡 ${escapeHtml(f.tipText)}</div>
+      <div class="fl-nav">
+        <button type="button" data-nav="${(i+FLOW.length-1)%FLOW.length}">‹ ขั้นก่อนหน้า</button>
+        ${f.action ? actions[f.action] : ""}
+        <button type="button" data-nav="${(i+1)%FLOW.length}">${i===FLOW.length-1?"↻ กลับสู่ขั้นที่ 1":"ขั้นถัดไป ›"}</button>
+      </div>`;
+    flowOverlay.querySelectorAll('[data-j],[data-nav]').forEach(b=> b.addEventListener('click', ()=> openFlow(+(b.dataset.j ?? b.dataset.nav))));
+    flowOverlay.querySelectorAll('[data-go]').forEach(b=> b.addEventListener('click', ()=>{
+      flowOverlay.classList.remove('open');
+      const go = b.dataset.go;
+      if(go === "track" || go === "rate"){
+        const tab = document.querySelector(`.lf-tab[data-lt="${go==='track'?'track':'rate'}"]`); if(tab) tab.click();
+        document.getElementById('satisfaction').scrollIntoView({ behavior:'smooth', block:'start' });
+      } else document.getElementById(go === "kpi" ? 'trendCard' : 'deepCard').scrollIntoView({ behavior:'smooth', block:'start' });
+    }));
+    flowOverlay.classList.add('open');
+    if(twinApi) twinApi.highlight(i, true);
+  }
+  document.getElementById('flowClose').addEventListener('click', ()=> flowOverlay.classList.remove('open'));
+  flowOverlay.addEventListener('click', e=>{ if(e.target === flowOverlay) flowOverlay.classList.remove('open'); });
+  document.addEventListener('keydown', e=>{ if(e.key === 'Escape') flowOverlay.classList.remove('open'); });
+
+  // ----- ฉาก 3 มิติ (three.js โหลดเมื่อเลื่อนมาใกล้ส่วนนี้) -----
+  let twinApi = null;
+  const THREE_URL = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
+  function twinFallback(msg){
+    document.getElementById('twinLoading').hidden = true;
+    document.getElementById('twinCanvas').hidden = true;
+    const fb = document.getElementById('twinFallback');
+    fb.hidden = false;
+    fb.innerHTML = `<div><div style="font-size:42px">🛰️</div><b>${escapeHtml(msg)}</b><br><span style="opacity:.8;font-size:13px">ดูขั้นตอนทั้ง 8 ได้จากการ์ดด้านล่าง คลิกเพื่อดูรายละเอียดได้เหมือนกัน</span></div>`;
+  }
+  function loadThree(){
+    if(window.THREE) return Promise.resolve(window.THREE);
+    return new Promise((res, rej)=>{
+      const s = document.createElement('script');
+      s.src = THREE_URL; s.async = true;
+      s.onload = ()=> window.THREE ? res(window.THREE) : rej(new Error("no THREE"));
+      s.onerror = ()=> rej(new Error("load failed"));
+      document.head.appendChild(s);
+    });
+  }
+  (function lazyTwin(){
+    const card = document.getElementById('twinCard');
+    let started = false;
+    const start = ()=>{
+      if(started) return; started = true;
+      loadThree().then(T=> document.fonts && document.fonts.ready ? document.fonts.ready.then(()=>T) : T)
+        .then(T=>{ try { twinApi = buildTwin(T); twinApi.update(flowStats()); } catch(e){ console.error(e); twinFallback("อุปกรณ์นี้แสดงภาพ 3 มิติไม่ได้"); } })
+        .catch(()=> twinFallback("โหลดภาพ 3 มิติไม่สำเร็จ"));
+    };
+    if('IntersectionObserver' in window){
+      const io = new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ io.disconnect(); start(); } }, { rootMargin:"600px" });
+      io.observe(card);
+    } else start();
+  })();
+
+  function buildTwin(THREE){
+    const stage = document.getElementById('twinStage');
+    const canvas = document.getElementById('twinCanvas');
+    let renderer;
+    try { renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true }); }
+    catch(e){ throw new Error("webgl"); }
+    renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.Fog(0x070B22, 22, 42);
+    const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+    const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim() || "#6366F1";
+    const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    scene.add(new THREE.HemisphereLight(0xC7D2FE, 0x0A0F2C, 0.75));
+    const sun = new THREE.DirectionalLight(0xffffff, 0.75); sun.position.set(6, 12, 8); scene.add(sun);
+    const pA = new THREE.PointLight(css('--a'), 1.6, 34); pA.position.set(-7, 6, 5); scene.add(pA);
+    const pB = new THREE.PointLight(css('--b'), 1.6, 34); pB.position.set(7, 6, -5); scene.add(pB);
+
+    // พื้น digital twin
+    const floor = new THREE.Mesh(new THREE.CircleGeometry(11.5, 72), new THREE.MeshStandardMaterial({ color:0x0E1638, metalness:.35, roughness:.55, transparent:true, opacity:.92 }));
+    floor.rotation.x = -Math.PI/2; scene.add(floor);
+    let grid = new THREE.PolarGridHelper(11, 16, 8, 72, css('--a'), css('--b'));
+    grid.material.transparent = true; grid.material.opacity = .28; grid.position.y = .01; scene.add(grid);
+    const ringMat = new THREE.MeshBasicMaterial({ color:css('--a'), transparent:true, opacity:.85, side:THREE.DoubleSide });
+    const ring = new THREE.Mesh(new THREE.RingGeometry(11.2, 11.45, 96), ringMat); ring.rotation.x = -Math.PI/2; ring.position.y = .02; scene.add(ring);
+
+    // ศูนย์กลาง: ฮับระบบ DWMS
+    const hub = new THREE.Group(); scene.add(hub);
+    const hubWire = new THREE.Mesh(new THREE.IcosahedronGeometry(1.35, 1), new THREE.MeshBasicMaterial({ color:css('--b'), wireframe:true, transparent:true, opacity:.6 }));
+    const hubCore = new THREE.Mesh(new THREE.SphereGeometry(.7, 32, 16), new THREE.MeshStandardMaterial({ color:css('--a'), emissive:css('--a'), emissiveIntensity:.9, metalness:.2, roughness:.3 }));
+    hub.add(hubWire, hubCore); hub.position.y = 1.9;
+    const hubBase = new THREE.Mesh(new THREE.CylinderGeometry(1.5, 1.8, .25, 48), new THREE.MeshStandardMaterial({ color:0x1E2A5A, emissive:css('--a'), emissiveIntensity:.25, metalness:.5, roughness:.3 }));
+    hubBase.position.y = .13; scene.add(hubBase);
+
+    // ตำแหน่งสถานีบนวงรี (วน PDCA)
+    const N = FLOW.length, A = 7.4, Bz = 4.6;
+    const pos = FLOW.map((f,i)=>{ const t = -Math.PI/2 - Math.PI*0.75 + i*2*Math.PI/N; return new THREE.Vector3(A*Math.cos(t), 0, Bz*Math.sin(t)); });
+    const curve = new THREE.CatmullRomCurve3(pos.map(p=> new THREE.Vector3(p.x, .32, p.z)), true, 'catmullrom', .5);
+    const tube = new THREE.Mesh(new THREE.TubeGeometry(curve, 360, .085, 10, true),
+      new THREE.MeshStandardMaterial({ color:0xE0E7FF, emissive:css('--a'), emissiveIntensity:.9, metalness:.1, roughness:.4 }));
+    scene.add(tube);
+
+    // ป้ายข้อความ/ไอคอนแบบ canvas (รองรับภาษาไทย)
+    function texFrom(draw, w, h){
+      const c = document.createElement('canvas'); c.width = w; c.height = h;
+      draw(c.getContext('2d'), w, h);
+      const t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding; t.anisotropy = 4; return t;
+    }
+    function rr(g, x, y, w, h, r){ g.beginPath(); g.moveTo(x+r,y); g.arcTo(x+w,y,x+w,y+h,r); g.arcTo(x+w,y+h,x,y+h,r); g.arcTo(x,y+h,x,y,r); g.arcTo(x,y,x+w,y,r); g.closePath(); }
+    function iconTex(i, valueText){
+      const f = FLOW[i];
+      return texFrom((g,w,h)=>{
+        const gr = g.createLinearGradient(0,0,w,h); gr.addColorStop(0, f.c); gr.addColorStop(1, f.c2);
+        g.shadowColor = f.c; g.shadowBlur = 28; rr(g, 26, 26, w-52, h-52, 46); g.fillStyle = gr; g.fill(); g.shadowBlur = 0;
+        g.strokeStyle = "rgba(255,255,255,.65)"; g.lineWidth = 5; g.stroke();
+        g.textAlign = "center"; g.textBaseline = "middle";
+        g.font = "92px 'Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji',sans-serif"; g.fillText(f.e, w/2, h*0.4);
+        g.fillStyle = "#fff"; g.font = "700 58px Prompt,'IBM Plex Sans Thai',sans-serif"; g.fillText(valueText, w/2, h*0.74);
+        g.beginPath(); g.arc(w-62, 62, 34, 0, Math.PI*2); g.fillStyle = "#fff"; g.fill();
+        g.fillStyle = f.c; g.font = "700 38px Prompt,sans-serif"; g.fillText(String(i+1), w-62, 64);
+      }, 320, 320);
+    }
+    function labelTex(i){
+      const f = FLOW[i];
+      return texFrom((g,w,h)=>{
+        g.font = "600 46px Prompt,'IBM Plex Sans Thai',sans-serif";
+        const tw = Math.min(w-20, g.measureText(f.t).width + 60);
+        rr(g, (w-tw)/2, 18, tw, h-36, (h-36)/2); g.fillStyle = "rgba(10,15,44,.78)"; g.fill();
+        g.strokeStyle = f.c; g.lineWidth = 4; g.stroke();
+        g.fillStyle = "#fff"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(f.t, w/2, h/2 + 2);
+      }, 640, 128);
+    }
+
+    const stations = [];
+    const pickables = [];
+    FLOW.forEach((f,i)=>{
+      const g = new THREE.Group(); g.position.copy(pos[i]); scene.add(g);
+      const col = new THREE.Color(f.c);
+      const base = new THREE.Mesh(new THREE.CylinderGeometry(1.08, 1.2, .34, 6), new THREE.MeshStandardMaterial({ color:col, emissive:col, emissiveIntensity:.3, metalness:.45, roughness:.32 }));
+      base.position.y = .17; base.rotation.y = Math.PI/6;
+      const glow = new THREE.Mesh(new THREE.RingGeometry(1.32, 1.5, 6), new THREE.MeshBasicMaterial({ color:col, transparent:true, opacity:.55, side:THREE.DoubleSide }));
+      glow.rotation.x = -Math.PI/2; glow.rotation.z = Math.PI/6; glow.position.y = .03;
+      const pillar = new THREE.Mesh(new THREE.CylinderGeometry(.44, .44, 1, 32, 1, true), new THREE.MeshStandardMaterial({ color:col, emissive:col, emissiveIntensity:.55, transparent:true, opacity:.55, side:THREE.DoubleSide }));
+      const cap = new THREE.Mesh(new THREE.CircleGeometry(.44, 32), new THREE.MeshBasicMaterial({ color:0xffffff, transparent:true, opacity:.85 }));
+      cap.rotation.x = -Math.PI/2;
+      const icon = new THREE.Sprite(new THREE.SpriteMaterial({ map:iconTex(i, "–"), transparent:true, depthWrite:false }));
+      icon.scale.set(1.7, 1.7, 1);
+      const label = new THREE.Sprite(new THREE.SpriteMaterial({ map:labelTex(i), transparent:true, depthWrite:false }));
+      label.scale.set(3.4, .68, 1);
+      // ลำแสงเชื่อมไปยังฮับ
+      const beamGeo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,.4,0), new THREE.Vector3(-pos[i].x, 1.9, -pos[i].z)]);
+      const beam = new THREE.Line(beamGeo, new THREE.LineBasicMaterial({ color:col, transparent:true, opacity:.22 }));
+      g.add(base, glow, pillar, cap, icon, label, beam);
+      [base, pillar, icon, label].forEach(o=>{ o.userData.i = i; pickables.push(o); });
+      stations.push({ g, base, glow, pillar, cap, icon, label, beam, h:1, target:1, hover:0, phase:i*0.7 });
+    });
+    function layout(s){
+      s.pillar.scale.y = s.h; s.pillar.position.y = .34 + s.h/2;
+      s.cap.position.y = .34 + s.h + .001;
+      s.icon.position.y = .34 + s.h + 1.05;
+      s.label.position.y = .34 + s.h + 2.15;
+    }
+    stations.forEach(layout);
+
+    // แพ็กเก็ตข้อมูลวิ่งตามเส้นทาง
+    const packets = [];
+    const pGeo = new THREE.SphereGeometry(.13, 16, 10);
+    for(let k=0; k<30; k++){
+      const m = new THREE.Mesh(pGeo, new THREE.MeshBasicMaterial({ color:0xffffff }));
+      m.userData.u = k/30; scene.add(m); packets.push(m);
+    }
+    const colAt = u => { const x = u*N, i = Math.floor(x)%N, t = x - Math.floor(x); return new THREE.Color(FLOW[i].c).lerp(new THREE.Color(FLOW[(i+1)%N].c), t); };
+
+    // กล้อง + การควบคุม
+    const lookHome = new THREE.Vector3(0, .7, 0), lookT = lookHome.clone();
+    let theta = 0.35, height = 9.6, radius = 19, spin = !reduce, targetTheta = null;
+    const spinBtn = document.getElementById('twinSpin');
+    const setSpin = v => { spin = v; spinBtn.textContent = spin ? "⟳ หมุนอัตโนมัติ: เปิด" : "⟳ หมุนอัตโนมัติ: ปิด"; };
+    setSpin(spin);
+    spinBtn.onclick = ()=> { setSpin(!spin); stopTour(); };
+    function resize(){
+      const w = stage.clientWidth, h = stage.clientHeight;
+      renderer.setSize(w, h, false);
+      camera.aspect = w/h; camera.updateProjectionMatrix();
+      radius = w < 560 ? 21 : w < 820 ? 20 : 19;
+    }
+    resize();
+    if('ResizeObserver' in window) new ResizeObserver(resize).observe(stage); else addEventListener('resize', resize);
+
+    const ray = new THREE.Raycaster(), mouse = new THREE.Vector2();
+    let hoverI = -1, forced = -1, drag = null;
+    function pick(ev){
+      const r = canvas.getBoundingClientRect();
+      mouse.x = (ev.clientX - r.left)/r.width*2 - 1; mouse.y = -(ev.clientY - r.top)/r.height*2 + 1;
+      ray.setFromCamera(mouse, camera);
+      const hit = ray.intersectObjects(pickables, false)[0];
+      return hit ? hit.object.userData.i : -1;
+    }
+    canvas.addEventListener('pointerdown', ev=>{ drag = { x:ev.clientX, y:ev.clientY, moved:0, id:ev.pointerId }; });
+    canvas.addEventListener('pointermove', ev=>{
+      if(drag && (ev.buttons || ev.pointerType !== 'mouse')){
+        const dx = ev.clientX - drag.x, dy = ev.clientY - drag.y;
+        drag.moved += Math.abs(dx) + Math.abs(dy);
+        if(drag.moved > 6){
+          if(!canvas.hasPointerCapture(drag.id)) try { canvas.setPointerCapture(drag.id); } catch(e){}
+          canvas.classList.add('drag'); theta -= dx*0.0075; height = Math.max(4.5, Math.min(14, height + dy*0.03));
+          targetTheta = null; stopTour();
+        }
+        drag.x = ev.clientX; drag.y = ev.clientY;
+        return;
+      }
+      if(ev.pointerType !== 'mouse') return;
+      const i = pick(ev);
+      hoverI = i; canvas.classList.toggle('hover', i >= 0);
+      if(i >= 0){
+        const st = lastStats ? lastStats[i] : null;
+        tip.innerHTML = `<div class="tip-title">ขั้นที่ ${i+1} · ${escapeHtml(FLOW[i].t)}</div><div class="tip-row"><span>${escapeHtml(FLOW[i].who)}</span><span></span></div>${st?`<div class="tip-row"><span>${escapeHtml(st.u)}</span><span>${escapeHtml(st.vt)}</span></div>`:""}<div class="tip-hint">คลิกเพื่อดูรายละเอียดขั้นตอน</div>`;
+        tip.classList.add('show'); moveTip(ev);
+      } else hideTip();
+    });
+    const endDrag = ev=>{
+      if(!drag) return;
+      const moved = drag.moved; drag = null; canvas.classList.remove('drag');
+      if(moved <= 6){ const i = pick(ev); if(i >= 0){ stopTour(); openFlow(i); } }
+    };
+    canvas.addEventListener('pointerup', endDrag);
+    canvas.addEventListener('pointercancel', ()=>{ drag = null; canvas.classList.remove('drag'); });
+    canvas.addEventListener('pointerleave', ()=>{ hoverI = -1; canvas.classList.remove('hover'); hideTip(); });
+
+    // ทัวร์ทีละขั้นตอน
+    const caption = document.getElementById('twinCaption');
+    const tourBtn = document.getElementById('twinTour');
+    let tourI = -1, tourTimer = null;
+    function faceTheta(i){ return Math.atan2(pos[i].z, pos[i].x); }
+    function showStep(i){
+      forced = i; targetTheta = faceTheta(i);
+      caption.hidden = false; caption.style.setProperty('--sc', FLOW[i].c);
+      caption.innerHTML = `<b>${FLOW[i].e} ขั้นที่ ${i+1}/${N} · ${escapeHtml(FLOW[i].t)}</b><br>${escapeHtml(FLOW[i].d)}`;
+      twinSteps.querySelectorAll('.ts').forEach((b,j)=> b.classList.toggle('on', j===i));
+    }
+    function stopTour(){
+      if(tourTimer){ clearInterval(tourTimer); tourTimer = null; }
+      if(tourI >= 0){ tourI = -1; forced = -1; caption.hidden = true; tourBtn.textContent = "▶ ทัวร์ทีละขั้นตอน"; twinSteps.querySelectorAll('.ts').forEach(b=>b.classList.remove('on')); }
+    }
+    tourBtn.onclick = ()=>{
+      if(tourI >= 0){ stopTour(); return; }
+      tourI = 0; showStep(0); tourBtn.textContent = "⏸ หยุดทัวร์";
+      tourTimer = setInterval(()=>{ tourI++; if(tourI >= N){ stopTour(); return; } showStep(tourI); }, 4200);
+    };
+
+    // ธีมสีไดนามิกตามเดือน
+    function applyTheme(){
+      const a = css('--a'), b = css('--b');
+      pA.color.set(a); pB.color.set(b); ringMat.color.set(a); tube.material.emissive.set(a);
+      hubWire.material.color.set(b); hubCore.material.color.set(a); hubCore.material.emissive.set(a); hubBase.material.emissive.set(a);
+      scene.remove(grid); grid.geometry.dispose();
+      grid = new THREE.PolarGridHelper(11, 16, 8, 72, a, b); grid.material.transparent = true; grid.material.opacity = .28; grid.position.y = .01; scene.add(grid);
+    }
+    document.addEventListener('dwms-theme', applyTheme);
+
+    // เรนเดอร์เฉพาะตอนมองเห็น
+    let visible = true;
+    if('IntersectionObserver' in window) new IntersectionObserver(es=>{ visible = es[0].isIntersecting; }).observe(stage);
+    let last = performance.now();
+    function frame(now){
+      requestAnimationFrame(frame);
+      if(!visible || document.hidden) { last = now; return; }
+      const dt = Math.min(.05, (now - last)/1000); last = now;
+      if(targetTheta !== null){
+        let d = targetTheta - theta; d = Math.atan2(Math.sin(d), Math.cos(d));
+        theta += d * Math.min(1, dt*3);
+        if(Math.abs(d) < .002) targetTheta = (tourI >= 0) ? targetTheta : null;
+      } else if(spin && !drag) theta += dt * 0.12;
+      camera.position.set(Math.cos(theta)*radius, height, Math.sin(theta)*radius);
+      const focus = tourI >= 0 && forced >= 0 ? pos[forced] : null;
+      lookT.lerp(focus ? new THREE.Vector3(focus.x*.6, 1.9, focus.z*.6) : lookHome, Math.min(1, dt*2.5));
+      camera.lookAt(lookT);
+      const t = now/1000;
+      hub.rotation.y = t*.5; hubWire.rotation.x = t*.3; hub.position.y = 1.9 + Math.sin(t*1.4)*.12;
+      const active = forced >= 0 ? forced : hoverI;
+      stations.forEach((s,i)=>{
+        s.hover += ((i === active ? 1 : 0) - s.hover) * Math.min(1, dt*8);
+        s.h += (s.target - s.h) * Math.min(1, dt*2.5);
+        layout(s);
+        const sc = 1 + s.hover*.16; s.g.scale.set(sc, sc, sc);
+        s.icon.position.y += Math.sin(t*1.6 + s.phase)*.12;
+        s.base.material.emissiveIntensity = .3 + s.hover*.6;
+        s.glow.material.opacity = .45 + .35*Math.sin(t*2 + s.phase) * .5 + s.hover*.3;
+        s.beam.material.opacity = .15 + s.hover*.5;
+        s.glow.rotation.z = Math.PI/6 + t*.25;
+      });
+      packets.forEach(p=>{
+        if(!reduce) p.userData.u = (p.userData.u + dt*0.035) % 1;
+        p.position.copy(curve.getPointAt(p.userData.u)); p.position.y += .02;
+        p.material.color.copy(colAt(p.userData.u));
+      });
+      renderer.render(scene, camera);
+    }
+    requestAnimationFrame(frame);
+    document.getElementById('twinLoading').hidden = true;
+
+    let lastStats = null;
+    return {
+      update(stats){
+        lastStats = stats;
+        const counts = stats.map(s=>s.v);
+        const maxV = Math.max(1, ...counts.filter((v,i)=> i!==7 && i!==5));
+        stations.forEach((s,i)=>{
+          const v = stats[i].v;
+          const ratio = i === 7 ? v/100 : (i === 5 ? v/Math.max(1, stats[0].v) : Math.log(1+v)/Math.log(1+maxV));
+          s.target = .45 + 2.3*Math.max(0, Math.min(1, ratio));
+          const old = s.icon.material.map; s.icon.material.map = iconTex(i, stats[i].vt); s.icon.material.needsUpdate = true; old.dispose();
+        });
+      },
+      highlight(i, fromModal){ forced = fromModal ? forced : i; if(fromModal){ hoverI = i; } },
+      api:true
+    };
+  }
+
+
   function renderAll(){
     regroup();
     buildMonthMap();
@@ -1496,6 +2348,8 @@
     bindCards();
     renderCalendar();
     renderTrend();
+    renderDeep();
+    refreshTwin();
   }
 
   document.getElementById('closeBtn').addEventListener('click', ()=> overlay.classList.remove('open'));
@@ -1812,6 +2666,7 @@
   }
 
   function renderLoveSummary(s){
+    lastLove = s; refreshTwin();
     const has = s && s.count;
     const face = has ? LOVE_FACES[Math.max(1, Math.min(5, Math.round(s.avg)))].e : "🤗";
     const full = has ? Math.round(s.avg) : 0;
