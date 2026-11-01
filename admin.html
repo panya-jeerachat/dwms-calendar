@@ -474,7 +474,8 @@
 <script>
 (function(){
   function fail(msg){
-    var b = document.getElementById('booting'); if(!b || b.hidden) return;   // แสดงผลไปแล้ว ไม่ต้องทำอะไร
+    // แสดงผลไปแล้ว ไม่ต้องทำอะไร
+    var b = document.getElementById('booting'); if(!b || b.hidden) return;
     b.hidden = true;
     var l = document.getElementById('login'); if(l) l.hidden = false;
     var e = document.getElementById('sysErr');
@@ -647,7 +648,8 @@ const BOOT = {"webAppUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82v
     $('#ssoBox').hidden = false;
     if(!BOOT.isAppsScript && st.googleClientId){
       const s = document.createElement('script');
-      s.src = "https://accounts.google.com/gsi/client"; s.async = true;
+      // หมายเหตุ: เขียน \/\/ แทนเครื่องหมายทับคู่ เพราะ Apps Script ตัดข้อความหลังทับคู่ในสคริปต์ทิ้ง
+      s.src = "https:\/\/accounts.google.com/gsi/client"; s.async = true;
       s.onload = ()=>{
         try {
           google.accounts.id.initialize({
@@ -1026,7 +1028,8 @@ const BOOT = {"webAppUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82v
 
   /* ---------------- Google Sheet รายงาน (ชื่อ อีเมล สถานะ คะแนน ความคิดเห็น) ---------------- */
   $$('[data-report]').forEach(b=> b.addEventListener('click', ()=>{
-    const w = window.open("", "_blank");          // เปิดแท็บไว้ก่อน กันเบราว์เซอร์บล็อกป๊อปอัป
+    // เปิดแท็บไว้ก่อน กันเบราว์เซอร์บล็อกป๊อปอัป
+    const w = window.open("", "_blank");
     if(w) w.document.write('<p style="font-family:sans-serif;padding:24px">⏳ กำลังอัปเดตรายงานล่าสุด…</p>');
     busy(b, async ()=>{
       try {
@@ -1098,7 +1101,8 @@ const BOOT = {"webAppUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82v
     $('#userForm').reset(); $('#userErr').hidden = true; newRole = "staff";
     $$('#userForm [data-role]').forEach(b=> b.setAttribute('aria-pressed', String(b.dataset.role==='staff')));
     $('#dirInfo').textContent = S.directory.length ? dirInfoText() + " · กำลังรีเฟรช…" : "กำลังโหลดฐานข้อมูลบุคลากร…";
-    S.dirLoading = null; loadDirectory();      // โหลดใหม่ทุกครั้งที่เปิด → ข้อมูลเป็นปัจจุบันเสมอ
+    // โหลดใหม่ทุกครั้งที่เปิด → ข้อมูลเป็นปัจจุบันเสมอ
+    S.dirLoading = null; loadDirectory();
     openModal('#userModal'); setTimeout(()=> $('#uSearch').focus(), 60);
   });
   $$('#userForm [data-role]').forEach(b=> b.addEventListener('click', ()=>{
