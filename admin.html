@@ -74,6 +74,23 @@
   .login-hero .login-sub{font-family:'Prompt',sans-serif;font-weight:600;font-size:17px;line-height:1.35;margin-bottom:4px}
   .login-body{padding:24px 28px 26px}
   .login-foot{text-align:center;margin-top:14px;font-size:13px}
+  .sso{margin-bottom:6px}
+  .btn-google{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;border:1.5px solid #DADCE0;background:#fff;color:#1F1F1F;border-radius:999px;padding:11px 16px;font-weight:700;font-size:15px;cursor:pointer;text-decoration:none;transition:box-shadow .15s,border-color .15s;font-family:inherit}
+  .btn-google:hover{border-color:#4285F4;box-shadow:0 6px 18px -8px rgba(66,133,244,.6)}
+  .btn-google .em{display:block;font-weight:500;font-size:12.5px;color:#5F6368;line-height:1.2}
+  .btn-google .txt{text-align:left;line-height:1.25}
+  #gisBtn{display:flex;justify-content:center;min-height:44px}
+  .sso-note{font-size:12px;color:var(--faint);text-align:center;margin:8px 0 0}
+  .or{display:flex;align-items:center;gap:10px;color:var(--faint);font-size:12.5px;margin:16px 0 12px}
+  .or::before,.or::after{content:"";flex:1;height:1px;background:var(--border)}
+  .switch{display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-size:14px}
+  .switch input{position:absolute;opacity:0;pointer-events:none}
+  .switch .tg{flex-shrink:0;width:46px;height:26px;border-radius:99px;background:#D5D8E6;position:relative;transition:background .2s;margin-top:1px}
+  .switch .tg::after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25);transition:transform .2s}
+  .switch input:checked + .tg{background:linear-gradient(120deg,#4285F4,#34A853)}
+  .switch input:checked + .tg::after{transform:translateX(20px)}
+  .switch input:focus-visible + .tg{outline:3px solid color-mix(in srgb,var(--a) 55%,#fff);outline-offset:2px}
+  .switch input:disabled + .tg{opacity:.5}
   .login-foot a{color:var(--ink);font-weight:600}
   @keyframes drift{from{background-position:0% 50%}to{background-position:100% 50%}}
   @keyframes bob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-6px) rotate(4deg)}}
@@ -267,6 +284,13 @@
         <div class="msg err" id="sysErr" hidden></div>
         <div class="msg ok" id="firstRun" hidden>👋 <b>เข้าใช้ครั้งแรก</b> ใช้ชื่อผู้ใช้ <b class="mono">admin</b> รหัสผ่าน <b class="mono">123456</b> แล้วตั้งรหัสผ่านใหม่ที่ “บัญชีของฉัน” ทันที</div>
         <div class="msg err" id="loginErr" hidden></div>
+        <div class="sso" id="ssoBox" hidden>
+          <button type="button" class="btn-google" id="ssoBtn" hidden><svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg><span class="txt">เข้าสู่ระบบด้วย Google<span class="em" id="ssoEmail"></span></span></button>
+          <div id="gisBtn" hidden></div>
+          <a class="btn-google" id="ssoLink" hidden><svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg><span class="txt">เข้าสู่ระบบด้วย Google<span class="em">บัญชี @msu.ac.th</span></span></a>
+          <p class="sso-note" id="ssoNote"></p>
+          <div class="or"><span>หรือใช้อีเมลและรหัสผ่าน</span></div>
+        </div>
         <label class="field">ชื่อผู้ใช้ หรืออีเมล @msu.ac.th
           <input class="input" id="lgId" autocomplete="username" required placeholder="admin หรือ name@msu.ac.th">
         </label>
@@ -302,7 +326,7 @@
   <div class="wrap">
     <div class="banner" id="pwBanner" hidden>
       <span style="font-size:24px">🔐</span>
-      <div><b>คุณยังใช้รหัสผ่านเริ่มต้น/ชั่วคราวอยู่</b><br>แนะนำให้ตั้งรหัสผ่านใหม่ของคุณเอง (อย่างน้อย 6 ตัวอักษร)</div>
+      <div id="pwBannerText"><b>คุณยังใช้รหัสผ่านเริ่มต้น/ชั่วคราวอยู่</b><br>แนะนำให้ตั้งรหัสผ่านใหม่ของคุณเอง (อย่างน้อย 6 ตัวอักษร)</div>
       <button class="btn sm" data-goto="account">ตั้งรหัสผ่านใหม่</button>
     </div>
     <nav class="tabs" role="tablist">
@@ -439,7 +463,7 @@
 <div id="toast" aria-live="polite"></div>
 
 <script>
-const BOOT = {"webAppUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82vwnCzEQT5DMgCbUkrK7lV2kkejzMZSpCdLHxBGEnW7Y7MpDMsToERveW/exec", "apiUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82vwnCzEQT5DMgCbUkrK7lV2kkejzMZSpCdLHxBGEnW7Y7MpDMsToERveW/exec", "publicUrl": "./", "org": "งานโสตทัศนูปกรณ์ คณะวิศวกรรมศาสตร์ มหาวิทยาลัยมหาสารคาม", "minPw": 6, "domain": "msu.ac.th", "contact": "panya.j@msu.ac.th"} /* admin.html สำหรับ GitHub: เข้าแบบไม่ผูกบัญชี Google */;
+const BOOT = {"webAppUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82vwnCzEQT5DMgCbUkrK7lV2kkejzMZSpCdLHxBGEnW7Y7MpDMsToERveW/exec", "apiUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82vwnCzEQT5DMgCbUkrK7lV2kkejzMZSpCdLHxBGEnW7Y7MpDMsToERveW/exec", "publicUrl": "./", "org": "งานโสตทัศนูปกรณ์ คณะวิศวกรรมศาสตร์ มหาวิทยาลัยมหาสารคาม", "minPw": 6, "domain": "msu.ac.th", "contact": "panya.j@msu.ac.th", "staffUrl": "https://script.google.com/a/macros/msu.ac.th/s/AKfycbyFbc7rZU82vwnCzEQT5DMgCbUkrK7lV2kkejzMZSpCdLHxBGEnW7Y7MpDMsToERveW/exec", "isAppsScript": false} /* admin.html สำหรับ GitHub: เข้าแบบไม่ผูกบัญชี Google */;
 (function(){
   /* ---------------- ธีมไดนามิกตามเดือน ---------------- */
   const MONTH_THEMES = [["#6D28D9","#DB2777"],["#DB2777","#EA580C"],["#C2410C","#E11D48"],["#0891B2","#16A34A"],
@@ -562,13 +586,67 @@ const BOOT = {"webAppUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82v
     busy($('#loginBtn'), async ()=>{
       try {
         const res = await run('login', $('#lgId').value, $('#lgPw').value);
-        S.token = res.token; S.user = res.user;
-        try { sessionStorage.setItem('dwms_token', S.token); } catch(e){}
-        $('#lgPw').value = "";
-        showApp();
+        afterLogin(res);
       } catch(err){ $('#loginErr').textContent = err.message; $('#loginErr').hidden = false; }
     });
   });
+  function afterLogin(res){
+    S.token = res.token; S.user = res.user; S.via = res.via || "password";
+    try { sessionStorage.setItem('dwms_token', S.token); } catch(e){}
+    $('#lgPw').value = "";
+    showApp();
+    if(S.via === "google") toast("เข้าสู่ระบบด้วย Google สำเร็จ · " + res.user.email + " 🎉", "ok");
+  }
+  function ssoError(err){ $('#loginErr').textContent = err.message; $('#loginErr').hidden = false; }
+
+  /* ---------------- SSO: เข้าสู่ระบบด้วย Google @msu.ac.th ---------------- */
+  // 1) เปิดจากช่องทาง @msu.ac.th: Google ส่งตัวตนมาแล้ว กดปุ่มเดียวเข้าได้เลย
+  if(BOOT.ssoTicket){
+    $('#ssoBox').hidden = false; $('#ssoBtn').hidden = false;
+    $('#ssoEmail').textContent = BOOT.ssoEmail;
+    $('#ssoNote').textContent = "ระบบตรวจพบบัญชี Google ที่ลงชื่อเข้าใช้อยู่บนเครื่องนี้";
+    $('#ssoBtn').addEventListener('click', ()=>{
+      $('#loginErr').hidden = true;
+      busy($('#ssoBtn'), async ()=>{ try { afterLogin(await run('ssoLogin', BOOT.ssoTicket)); } catch(err){ ssoError(err); } });
+    });
+  }
+  // 2) admin.html บน GitHub: ปุ่ม Sign in with Google (ต้องตั้ง GOOGLE_CLIENT_ID) / 3) ไม่มี → ลิงก์ไปช่องทาง @msu.ac.th
+  function setupGoogleButton(st){
+    if(BOOT.ssoTicket) return;
+    $('#ssoBox').hidden = false;
+    if(!BOOT.isAppsScript && st.googleClientId){
+      const s = document.createElement('script');
+      s.src = "https://accounts.google.com/gsi/client"; s.async = true;
+      s.onload = ()=>{
+        try {
+          google.accounts.id.initialize({
+            client_id: st.googleClientId, hd: st.domain, ux_mode: "popup", auto_select: false, context: "signin",
+            callback: resp => busy($('#loginBtn'), async ()=>{
+              $('#loginErr').hidden = true;
+              try { afterLogin(await run('googleLogin', resp.credential)); } catch(err){ ssoError(err); }
+            })
+          });
+          $('#gisBtn').hidden = false;
+          google.accounts.id.renderButton($('#gisBtn'), { theme:"outline", size:"large", shape:"pill", text:"signin_with",
+            logo_alignment:"left", locale:"th", width: Math.min(360, $('#gisBtn').clientWidth || 320) });
+          $('#ssoNote').textContent = "เลือกบัญชี Google @" + st.domain + " ของคุณ (ใช้ได้แม้ Chrome ลงชื่อไว้หลายบัญชี)";
+        } catch(e){ showSsoLink(st); }
+      };
+      s.onerror = ()=> showSsoLink(st);
+      document.head.appendChild(s);
+    } else showSsoLink(st);
+  }
+  function showSsoLink(st){
+    const url = st.staffUrl || BOOT.staffUrl;
+    if(!url){ $('#ssoBox').hidden = true; return; }
+    $('#gisBtn').hidden = true;
+    const a = $('#ssoLink'); a.hidden = false; a.href = url;
+    a.target = BOOT.isAppsScript ? "_top" : "_blank"; a.rel = "noopener";
+    $('#ssoNote').textContent = BOOT.isAppsScript
+      ? "ยังไม่พบบัญชี @" + st.domain + " — กดเพื่อเปิดหน้านี้อีกครั้งด้วยบัญชีมหาวิทยาลัย"
+      : "เปิดระบบผ่านบัญชี Google @" + st.domain + " ในแท็บใหม่ แล้วกดปุ่ม “เข้าสู่ระบบด้วย Google”";
+  }
+
   $('#forgotForm').addEventListener('submit', e=>{
     e.preventDefault();
     busy($('#forgotBtn'), async ()=>{
@@ -602,7 +680,12 @@ const BOOT = {"webAppUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82v
     $('#meAv').outerHTML = avatar(u.name, u.email).replace('class="av"','class="av" id="meAv"');
     $('#meName').textContent = u.name || u.username;
     $('#meRole').textContent = u.role === 'admin' ? "👑 ผู้ดูแลระบบ" : "🧑‍💼 บุคลากร";
-    $('#pwBanner').hidden = !u.mustChange;
+    $('#pwBanner').hidden = !u.mustChange || u.ssoOnly;
+    $('#pwBannerText').innerHTML = u.lastSso
+      ? "<b>บัญชีนี้ยังมีรหัสผ่านเริ่มต้นอยู่</b><br>คุณเข้าด้วย Google ได้แล้ว แนะนำให้เปิด “ใช้ Google เท่านั้น” หรือเปลี่ยนรหัสผ่าน ที่บัญชีของฉัน"
+      : "<b>คุณยังใช้รหัสผ่านเริ่มต้น/ชั่วคราวอยู่</b><br>แนะนำให้ตั้งรหัสผ่านใหม่ของคุณเอง (อย่างน้อย 6 ตัวอักษร) หรือเข้าสู่ระบบด้วย Google ครั้งหน้า";
+    $('#pwForm').querySelectorAll('input,button').forEach(el=> el.disabled = !!u.ssoOnly);
+    $('#pwForm').style.opacity = u.ssoOnly ? .55 : 1;
     $('#profileBox').innerHTML = `
       <div class="u-top">${avatar(u.name,u.email)}<div><b>${esc(u.name||u.username)}</b><small>${esc(u.email)}</small></div></div>
       <dl class="kv" style="margin-top:14px">
@@ -612,7 +695,20 @@ const BOOT = {"webAppUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82v
         ${u.position?`<dt>ตำแหน่ง</dt><dd>${esc(u.position)}</dd>`:""}
         <dt>เข้าใช้ล่าสุด</dt><dd>${esc(stampText(u.lastLogin)||"-")}</dd>
       </dl>
+      <div class="box" style="margin-top:14px;background:#F8FAFF">
+        <h4 style="margin:0 0 8px;font-family:Prompt;font-size:15px"><svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg> เข้าสู่ระบบด้วย Google</h4>
+        <div class="hint" style="margin-bottom:10px">${u.lastSso ? "เข้าด้วย Google ล่าสุด " + esc(stampText(u.lastSso)) : "ยังไม่เคยเข้าด้วย Google — ครั้งหน้ากดปุ่ม “เข้าสู่ระบบด้วย Google” ที่หน้าเข้าสู่ระบบ"}</div>
+        <label class="switch"><input type="checkbox" id="ssoOnlyChk" ${u.ssoOnly?"checked":""} ${(!u.lastSso && !u.ssoOnly)?"disabled":""}><span class="tg"></span>
+          <span><b>ใช้ Google เท่านั้น</b><br><span class="hint">ปิดการเข้าด้วยรหัสผ่าน ปลอดภัยกว่า ไม่ต้องจำรหัส (ผู้ดูแลรีเซ็ตรหัสผ่านให้ = เปิดกลับอัตโนมัติ)</span></span></label>
+      </div>
       <p class="hint" style="margin:14px 0 0">💡 ลืมรหัสผ่านเมื่อไรก็กด “ลืมรหัสผ่าน?” ที่หน้าเข้าสู่ระบบ ระบบจะส่งรหัสใหม่ไปที่ ${esc(u.email)}</p>`;
+    const chk = $('#ssoOnlyChk');
+    if(chk) chk.addEventListener('change', async ()=>{
+      chk.disabled = true;
+      try { const r = await run('setSsoOnly', S.token, chk.checked); S.user = r.user; renderMe();
+            toast(r.user.ssoOnly ? "เปิด “ใช้ Google เท่านั้น” แล้ว 🔒" : "เปิดการเข้าด้วยรหัสผ่านอีกครั้งแล้ว", "ok"); }
+      catch(err){ chk.checked = !chk.checked; chk.disabled = false; toast(err.message, "err"); }
+    });
   }
   function switchTab(name){
     $$('.tab').forEach(t=> t.setAttribute('aria-selected', String(t.dataset.tab===name)));
@@ -929,7 +1025,8 @@ const BOOT = {"webAppUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82v
         <div style="display:flex;gap:6px;flex-wrap:wrap">
           <span class="badge ${u.role}">${u.role==='admin'?"👑 ผู้ดูแลระบบ":"🧑‍💼 บุคลากร"}</span>
           ${u.active?"":`<span class="badge off">⏸ ระงับการใช้งาน</span>`}
-          ${u.mustChange?`<span class="badge warn">🔐 ยังใช้รหัสเริ่มต้น</span>`:""}
+          ${u.ssoOnly?`<span class="badge staff">🔵 Google เท่านั้น</span>`:(u.lastSso?`<span class="badge staff">🔵 เคยเข้าด้วย Google</span>`:"")}
+          ${u.mustChange && !u.ssoOnly?`<span class="badge warn">🔐 ยังใช้รหัสเริ่มต้น</span>`:""}
         </div>
         <div class="u-meta">${[u.position,u.department].filter(Boolean).map(esc).join(" · ")||"&nbsp;"}<br>เข้าใช้ล่าสุด: ${esc(stampText(u.lastLogin)||"ยังไม่เคยเข้าใช้")}</div>
         ${self?"":`<div class="u-actions">
@@ -1026,6 +1123,7 @@ const BOOT = {"webAppUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82v
     run('systemStatus').then(st=>{
       $('#sysErr').hidden = st.ok; if(!st.ok) $('#sysErr').textContent = "⚠️ " + st.problem;
       $('#firstRun').hidden = !st.firstRun;
+      setupGoogleButton(st);
     }).catch(err=>{ $('#sysErr').textContent = "⚠️ เชื่อมต่อระบบไม่สำเร็จ: " + err.message; $('#sysErr').hidden = false; });
   }
   if(S.token){
