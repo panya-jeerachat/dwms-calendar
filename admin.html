@@ -65,6 +65,11 @@
 
   /* ---------- หน้าเข้าสู่ระบบ ---------- */
   #login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px 16px}
+  #booting{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px 16px}
+  .boot-card{background:#fff;border-radius:22px;padding:22px 26px;box-shadow:0 20px 50px -24px rgba(30,27,75,.35);display:flex;flex-direction:column;align-items:center;gap:10px;color:#5B5F82;font-size:15px;text-align:center;max-width:360px}
+  .boot-card .spin{width:34px;height:34px;border-radius:50%;border:4px solid #E4E6F2;border-top-color:#6366F1;animation:bspin .8s linear infinite}
+  @keyframes bspin{to{transform:rotate(360deg)}}
+  .boot-card small{color:#9195B4;font-size:12.5px}
   .login-card{width:100%;max-width:420px;background:var(--surface);border-radius:28px;box-shadow:0 30px 70px -30px color-mix(in srgb,var(--a) 60%,transparent);overflow:hidden}
   .login-hero{background:var(--grad);background-size:200% 200%;animation:drift 12s ease-in-out infinite alternate;color:#fff;padding:30px 28px 26px;position:relative;overflow:hidden}
   .login-hero::after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.13);right:-70px;top:-90px}
@@ -271,6 +276,10 @@
 <body>
 
 <!-- =================== เข้าสู่ระบบ =================== -->
+<section id="booting" aria-live="polite">
+  <div class="boot-card"><div class="spin"></div><b>กำลังเปิดระบบผู้ดูแล…</b><small id="bootMsg">กำลังเชื่อมต่อเซิร์ฟเวอร์</small></div>
+</section>
+
 <section id="login" hidden>
   <div class="login-card">
     <div class="login-hero">
@@ -463,6 +472,21 @@
 <div id="toast" aria-live="polite"></div>
 
 <script>
+(function(){
+  function fail(msg){
+    var b = document.getElementById('booting'); if(!b || b.hidden) return;   // แสดงผลไปแล้ว ไม่ต้องทำอะไร
+    b.hidden = true;
+    var l = document.getElementById('login'); if(l) l.hidden = false;
+    var e = document.getElementById('sysErr');
+    if(e){ e.hidden = false; e.textContent = "⚠️ หน้าเว็บทำงานผิดพลาด: " + msg + " — ลองกด Ctrl+Shift+R หรือเปิดแท็บใหม่ ถ้ายังเป็นอยู่ กรุณาส่งภาพหน้าจอนี้ให้ผู้พัฒนา"; }
+  }
+  window.__bootFail = fail;
+  window.addEventListener('error', function(ev){ if(ev && ev.message) fail(ev.message + (ev.lineno ? " (บรรทัด " + ev.lineno + ")" : "")); });
+  // กันหน้าว่างทุกกรณี: ถ้า 15 วินาทียังไม่แสดงอะไร ให้แสดงหน้าเข้าสู่ระบบ
+  setTimeout(function(){ fail("เชื่อมต่อเซิร์ฟเวอร์ใช้เวลานานเกินไป"); }, 15000);
+})();
+</script>
+<script>
 const BOOT = {"webAppUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82vwnCzEQT5DMgCbUkrK7lV2kkejzMZSpCdLHxBGEnW7Y7MpDMsToERveW/exec", "apiUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82vwnCzEQT5DMgCbUkrK7lV2kkejzMZSpCdLHxBGEnW7Y7MpDMsToERveW/exec", "publicUrl": "./", "org": "งานโสตทัศนูปกรณ์ คณะวิศวกรรมศาสตร์ มหาวิทยาลัยมหาสารคาม", "minPw": 6, "domain": "msu.ac.th", "contact": "panya.j@msu.ac.th", "staffUrl": "https://script.google.com/a/macros/msu.ac.th/s/AKfycbyFbc7rZU82vwnCzEQT5DMgCbUkrK7lV2kkejzMZSpCdLHxBGEnW7Y7MpDMsToERveW/exec", "isAppsScript": false} /* admin.html สำหรับ GitHub: เข้าแบบไม่ผูกบัญชี Google */;
 (function(){
   /* ---------------- ธีมไดนามิกตามเดือน ---------------- */
@@ -509,16 +533,23 @@ const BOOT = {"webAppUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82v
   const HAS_GSR = typeof google !== "undefined" && google.script && google.script.run;
   let useGsr = !API;
   const cleanMsg = m => String(m).replace(/^(Exception|Error):\s*/,"");
+  const CALL_TIMEOUT = 30000;
   function viaGsr(fn, args){
-    return new Promise((res, rej)=> google.script.run.withSuccessHandler(res)
-      .withFailureHandler(e=> rej(new Error(cleanMsg((e && e.message) || e))))[fn](...args));
+    return new Promise((res, rej)=>{
+      const t = setTimeout(()=> rej(new Error("เซิร์ฟเวอร์ไม่ตอบสนอง (หมดเวลา) กรุณาลองใหม่อีกครั้ง")), CALL_TIMEOUT);
+      google.script.run.withSuccessHandler(v=>{ clearTimeout(t); res(v); })
+        .withFailureHandler(e=>{ clearTimeout(t); rej(new Error(cleanMsg((e && e.message) || e))); })[fn](...args);
+    });
   }
   async function viaApi(fn, args){
     let resp, data;
+    const ctl = ('AbortController' in window) ? new AbortController() : null;
+    const timer = setTimeout(()=> ctl && ctl.abort(), CALL_TIMEOUT);
     try {
       resp = await fetch(API, { method:"POST", headers:{ "Content-Type":"text/plain;charset=utf-8" },
-        body: JSON.stringify({ fn, args }), credentials:"omit", redirect:"follow" });
-    } catch(e){ const er = new Error("เชื่อมต่อเซิร์ฟเวอร์ไม่สำเร็จ กรุณาตรวจสอบอินเทอร์เน็ตแล้วลองใหม่"); er.network = true; throw er; }
+        body: JSON.stringify({ fn, args }), credentials:"omit", redirect:"follow", signal: ctl ? ctl.signal : undefined });
+    } catch(e){ clearTimeout(timer); const er = new Error(e && e.name === "AbortError" ? "เซิร์ฟเวอร์ไม่ตอบสนอง (หมดเวลา) กรุณาลองใหม่อีกครั้ง" : "เชื่อมต่อเซิร์ฟเวอร์ไม่สำเร็จ กรุณาตรวจสอบอินเทอร์เน็ตแล้วลองใหม่"); er.network = true; throw er; }
+    clearTimeout(timer);
     try { data = await resp.json(); }
     catch(e){ const er = new Error("เซิร์ฟเวอร์ตอบกลับไม่ถูกต้อง (HTTP " + resp.status + ") — ตรวจว่า Deploy เป็น “ทุกคน” และเป็นเวอร์ชันล่าสุด"); er.network = true; throw er; }
     if(!data.ok) throw new Error(cleanMsg(data.error));
@@ -656,7 +687,7 @@ const BOOT = {"webAppUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82v
       m.hidden = false;
     });
   });
-  function showLogin(){ $('#app').hidden = true; $('#login').hidden = false; setTimeout(()=> $('#lgId').focus(), 50); }
+  function showLogin(){ $('#booting').hidden = true; $('#app').hidden = true; $('#login').hidden = false; setTimeout(()=> $('#lgId').focus(), 50); }
   function expired(){
     S.token = ""; S.user = null; try{ sessionStorage.removeItem('dwms_token'); }catch(e){}
     $$('.overlay.open').forEach(o=>o.classList.remove('open'));
@@ -668,7 +699,7 @@ const BOOT = {"webAppUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82v
 
   /* ---------------- แอปหลัก ---------------- */
   function showApp(){
-    $('#login').hidden = true; $('#app').hidden = false;
+    $('#booting').hidden = true; $('#login').hidden = true; $('#app').hidden = false;
     renderMe();
     $('#tabUsersBtn').hidden = S.user.role !== 'admin';
     switchTab('requests');
@@ -1127,7 +1158,18 @@ const BOOT = {"webAppUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82v
     }).catch(err=>{ $('#sysErr').textContent = "⚠️ เชื่อมต่อระบบไม่สำเร็จ: " + err.message; $('#sysErr').hidden = false; });
   }
   if(S.token){
-    run('whoami', S.token).then(r=>{ S.user = r.user; showApp(); }).catch(()=>{ showLogin(); checkStatus(); });
+    $('#bootMsg').textContent = "กำลังตรวจสอบการเข้าสู่ระบบครั้งก่อน";
+    let settled = false;
+    const soft = setTimeout(()=>{ if(!settled){ showLogin(); checkStatus(); } }, 6000);
+    run('whoami', S.token).then(r=>{
+      settled = true; clearTimeout(soft);
+      if(!S.user || $('#app').hidden){ S.user = r.user; showApp(); }
+    }).catch(()=>{
+      settled = true; clearTimeout(soft);
+      try { sessionStorage.removeItem('dwms_token'); } catch(e){}
+      S.token = "";
+      if($('#login').hidden){ showLogin(); checkStatus(); }
+    });
   } else { showLogin(); checkStatus(); }
 })();
 </script>
