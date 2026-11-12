@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>บันทึกผลคำขอ · งานโสตทัศนูปกรณ์</title>
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Prompt:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --c1:#10B981; --c2:#059669; --text:#1E1B4B; --muted:#5B5F82; --faint:#9195B4; --border:#E4E6F2; }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{font-family:'IBM Plex Sans Thai',system-ui,sans-serif;color:var(--text);line-height:1.6;min-height:100vh;background:#F4F5FC}
+  h1,h2,h3{font-family:'Prompt',sans-serif}
+  button,textarea{font:inherit;color:inherit}
+  [hidden]{display:none!important}
+  .wrap{max-width:520px;margin:0 auto;padding:18px 14px 40px}
+  .card{background:#fff;border-radius:24px;box-shadow:0 20px 50px -28px rgba(30,27,75,.4);overflow:hidden;margin-bottom:12px}
+  .hero{background:linear-gradient(130deg,var(--c1),var(--c2));color:#fff;padding:22px 22px 20px;text-align:center}
+  .hero .big{font-size:58px;line-height:1;display:inline-block}
+  .hero.pop .big{animation:pop .45s cubic-bezier(.2,1.6,.4,1)}
+  @keyframes pop{from{transform:scale(.3);opacity:0}to{transform:none;opacity:1}}
+  .hero h1{margin:8px 0 2px;font-size:24px;line-height:1.3}
+  .hero p{margin:0;font-size:14px;opacity:.92}
+  .body{padding:16px 18px 18px}
+  .kv{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:14px;background:#F6F7FC;border-radius:16px;padding:12px 14px;margin:0}
+  .kv dt{color:var(--muted)} .kv dd{margin:0;font-weight:600}
+  .btn{display:block;width:100%;border:none;border-radius:16px;padding:16px;font-weight:700;font-size:18px;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--c1),var(--c2));margin-top:12px;box-shadow:0 12px 24px -14px var(--c1)}
+  .btn:disabled{opacity:.6}
+  .btn.ghost{background:#fff;color:var(--text);border:2px solid var(--border);box-shadow:none;font-size:15px;padding:12px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+  .chip{border:1.5px solid var(--border);background:#fff;border-radius:99px;padding:7px 14px;font-size:14px;cursor:pointer}
+  .chip[aria-pressed="true"]{border-color:var(--c1);background:color-mix(in srgb,var(--c1) 12%,#fff);font-weight:700}
+  textarea{width:100%;border:1.5px solid var(--border);border-radius:14px;padding:10px 12px;min-height:76px;font-size:15px}
+  .check{display:flex;gap:10px;align-items:flex-start;font-size:14px;margin-top:10px}
+  .check input{width:20px;height:20px;accent-color:var(--c1);margin-top:2px}
+  .msg{border-radius:14px;padding:10px 14px;font-size:14px;margin-top:10px}
+  .msg.err{background:#FFE4EA;color:#BE123C}
+  .msg.warn{background:#FFF4DE;color:#9A4A06}
+  .links{text-align:center;font-size:13.5px;color:var(--muted);margin-top:6px}
+  .links a, .links button{color:#4F46E5;font-weight:600;background:none;border:none;cursor:pointer;text-decoration:underline;padding:4px}
+  .spin{width:40px;height:40px;border-radius:50%;border:5px solid rgba(255,255,255,.35);border-top-color:#fff;animation:sp .8s linear infinite;margin:6px auto}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<main class="wrap" id="root">
+  <section class="card"><div class="hero"><div class="spin"></div><h1>กำลังเปิดคำขอ…</h1></div></section>
+</main>
+<script>
+const BOOT = (function(){ var q = new URLSearchParams(location.search); return Object.assign({"webAppUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82vwnCzEQT5DMgCbUkrK7lV2kkejzMZSpCdLHxBGEnW7Y7MpDMsToERveW/exec", "apiUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82vwnCzEQT5DMgCbUkrK7lV2kkejzMZSpCdLHxBGEnW7Y7MpDMsToERveW/exec", "org": "งานโสตทัศนูปกรณ์ คณะวิศวกรรมศาสตร์ มหาวิทยาลัยมหาสารคาม", "contact": "panya.j@msu.ac.th", "staffUrl": "https://script.google.com/a/macros/msu.ac.th/s/AKfycbyFbc7rZU82vwnCzEQT5DMgCbUkrK7lV2kkejzMZSpCdLHxBGEnW7Y7MpDMsToERveW/exec"}, { adminUrl: "admin.html", code: q.get("c") || "", exp: q.get("e") || "", sig: q.get("s") || "", action: q.get("a") || "" }); })();
+(function(){
+  /* ---------------- เรียกเซิร์ฟเวอร์ ----------------
+     ใช้ API (fetch แบบไม่ส่งคุกกี้ Google) เป็นหลัก → ใช้ได้แม้ Chrome ลงชื่อหลายบัญชี
+     ถ้าเครือข่ายเรียก API ไม่ได้ และหน้านี้เปิดจาก Apps Script จะสลับไปใช้ google.script.run อัตโนมัติ */
+  const API = BOOT.apiUrl || "";
+  const HAS_GSR = typeof google !== "undefined" && google.script && google.script.run;
+  let useGsr = !API;
+  const cleanMsg = m => String(m).replace(/^(Exception|Error):\s*/,"");
+  function viaGsr(fn, args){
+    return new Promise((res, rej)=> google.script.run.withSuccessHandler(res)
+      .withFailureHandler(e=> rej(new Error(cleanMsg((e && e.message) || e))))[fn](...args));
+  }
+  async function viaApi(fn, args){
+    let resp, data;
+    try {
+      resp = await fetch(API, { method:"POST", headers:{ "Content-Type":"text/plain;charset=utf-8" },
+        body: JSON.stringify({ fn, args }), credentials:"omit", redirect:"follow" });
+    } catch(e){ const er = new Error("เชื่อมต่อเซิร์ฟเวอร์ไม่สำเร็จ กรุณาตรวจสอบอินเทอร์เน็ตแล้วลองใหม่"); er.network = true; throw er; }
+    try { data = await resp.json(); }
+    catch(e){ const er = new Error("เซิร์ฟเวอร์ตอบกลับไม่ถูกต้อง (HTTP " + resp.status + ") — ตรวจว่า Deploy เป็น “ทุกคน” และเป็นเวอร์ชันล่าสุด"); er.network = true; throw er; }
+    if(!data.ok) throw new Error(cleanMsg(data.error));
+    return data.result;
+  }
+  async function call(fn, args){
+    if(!useGsr){
+      try { return await viaApi(fn, args); }
+      catch(e){ if(e.network && HAS_GSR){ useGsr = true; return viaGsr(fn, args); } throw e; }
+    }
+    if(!HAS_GSR) throw new Error("ยังไม่ได้ตั้งค่าลิงก์เซิร์ฟเวอร์ (apiUrl)");
+    return viaGsr(fn, args);
+  }
+  function run(fn, ...args){ return call(fn, args); }
+  const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const root = document.getElementById('root');
+  const THEME = { success:["#10B981","#059669"], failed:["#F59E0B","#F97316"], cancel:["#64748B","#F43F5E"], received:["#6366F1","#8B5CF6"], err:["#F43F5E","#A855F7"] };
+  const REASONS = {
+    failed: ["อุปกรณ์ขัดข้อง","ห้องไม่ว่าง / ใช้งานซ้อน","ผู้ขอไม่มาใช้งาน","ไฟฟ้า/เครือข่ายขัดข้อง"],
+    cancel: ["ผู้ขอยกเลิก","ส่งคำขอซ้ำ","ข้อมูลไม่ถูกต้อง","ไม่ใช่งานของหน่วย"]
+  };
+  const A = [BOOT.code, BOOT.exp, BOOT.sig];
+  let info = null;
+  function theme(k){ const t = THEME[k] || THEME.success; document.documentElement.style.setProperty('--c1', t[0]); document.documentElement.style.setProperty('--c2', t[1]); }
+  function reqKv(q){
+    return `<dl class="kv"><dt>📅 วันที่</dt><dd>${esc(q.dateText)}</dd><dt>⏰ เวลา</dt><dd>${esc(q.time||"-")}</dd><dt>🏫 ห้อง</dt><dd>${esc(q.room||"-")}</dd>
+      <dt>📝 รายละเอียด</dt><dd>${esc(q.detail||"-")}</dd><dt>👤 ผู้ขอ</dt><dd>${esc(q.requesterName||q.requesterEmail||"-")}</dd><dt>🔖 รหัส</dt><dd>${esc(q.code)}</dd></dl>`;
+  }
+  function screen(o){
+    theme(o.theme);
+    root.innerHTML = `<section class="card"><div class="hero${o.pop?' pop':''}"><span class="big">${o.emoji}</span><h1>${o.title}</h1>${o.sub?`<p>${o.sub}</p>`:""}</div>
+      <div class="body">${o.body||""}</div></section>
+      <p class="links"><a href="${esc(BOOT.adminUrl || (info && info.staffUrl) || BOOT.staffUrl || BOOT.webAppUrl)}" target="_blank" rel="noopener">⚙️ เปิดในระบบผู้ดูแล</a></p>`;
+    (o.bind || (()=>{}))();
+  }
+  function fail(err){ screen({ theme:"err", emoji:"😵", title:"ทำรายการไม่สำเร็จ", body:`<div class="msg err">${esc(err.message)}</div>` }); }
+
+  async function doAction(action, reason, notify, btn){
+    if(btn){ btn.disabled = true; btn.textContent = "กำลังบันทึก…"; }
+    try {
+      const r = await run('emailAction', ...A, action, reason || "", notify);
+      done(r);
+    } catch(e){ if(btn){ btn.disabled = false; btn.textContent = "ลองอีกครั้ง"; } fail(e); }
+  }
+  function done(r){
+    const q = r.request || (info && info.request) || { code: BOOT.code };
+    const mailTxt = esc(r.mailed ? "📧 แจ้งผลถึงผู้ขอทางอีเมลแล้ว" : (r.warning ? r.warning : ""));
+    if(r.action === "success") screen({ theme:"success", pop:true, emoji:"✅", title: r.already ? "บันทึก “สำเร็จ” ไว้แล้ว" : "บันทึกผล “สำเร็จ” แล้ว",
+        sub: r.already ? "คำขอนี้บันทึกสำเร็จไว้ก่อนหน้านี้ ไม่ได้ส่งอีเมลซ้ำ" : (mailTxt || "เรียบร้อย ขอบคุณครับ"),
+        body: reqKv(q) + `<div class="row"><button class="btn ghost" id="undo">↶ เลิกทำ</button><button class="btn ghost" id="toFail">⚠️ เปลี่ยนเป็นไม่สำเร็จ</button></div>`,
+        bind(){ document.getElementById('undo').onclick = e=> doAction("received", "", false, e.target);
+                document.getElementById('toFail').onclick = ()=> askReason("failed"); } });
+    else if(r.action === "failed") screen({ theme:"failed", pop:true, emoji:"⚠️", title:"บันทึกผล “ไม่สำเร็จ” แล้ว", sub: mailTxt,
+        body: reqKv(q) + `<div class="row"><button class="btn ghost" id="undo">↶ เลิกทำ</button><button class="btn ghost" id="toOk">✅ เปลี่ยนเป็นสำเร็จ</button></div>`,
+        bind(){ document.getElementById('undo').onclick = e=> doAction("received", "", false, e.target);
+                document.getElementById('toOk').onclick = e=> doAction("success", "", undefined, e.target); } });
+    else if(r.action === "cancel") screen({ theme:"cancel", pop:true, emoji:"🗑", title:"ยกเลิกคำขอแล้ว", sub:(mailTxt ? mailTxt + " · " : "") + "ย้ายไปถังขยะ กู้คืนได้",
+        body:`<button class="btn ghost" id="restore">♻️ เลิกทำ (กู้คืนคำขอ)</button>`,
+        bind(){ document.getElementById('restore').onclick = e=> doAction("restore", "", false, e.target); } });
+    else if(r.action === "received" || r.action === "restore") {
+      info = Object.assign({}, info, { request: r.request || q, deleted: false });
+      chooser("เลิกทำเรียบร้อย · สถานะกลับเป็น “" + esc((r.request || q).statusLabel || "รับเรื่องเรียบร้อย") + "”");
+    }
+  }
+  function chooser(note){
+    const q = info.request;
+    screen({ theme:"received", emoji:"🗂", title:"เลือกผลการดำเนินงาน", sub: note || ("สถานะปัจจุบัน: " + esc(q.statusLabel)),
+      body: reqKv(q) + `<button class="btn" id="ok" style="--c1:#10B981;--c2:#059669;background:linear-gradient(135deg,#10B981,#059669)">✅ สำเร็จ</button>
+        <div class="row"><button class="btn ghost" id="bad">⚠️ ไม่สำเร็จ</button><button class="btn ghost" id="cxl">🗑 ยกเลิกคำขอ</button></div>`,
+      bind(){ document.getElementById('ok').onclick = e=> doAction("success", "", undefined, e.target);
+              document.getElementById('bad').onclick = ()=> askReason("failed");
+              document.getElementById('cxl').onclick = ()=> askReason("cancel"); } });
+  }
+  function askReason(action){
+    const q = info.request, isFail = action === "failed";
+    let picked = "";
+    screen({ theme: isFail ? "failed" : "cancel", emoji: isFail ? "⚠️" : "🗑", title: isFail ? "บันทึกผล “ไม่สำเร็จ”" : "ยกเลิกคำขอนี้",
+      sub: isFail ? "เลือกสาเหตุ (ส่งถึงผู้ขอในอีเมลแจ้งผล)" : "คำขอจะย้ายไปถังขยะ กู้คืนได้",
+      body: reqKv(q) + `<div class="chips">${REASONS[action].map(x=>`<button type="button" class="chip" data-r="${esc(x)}" aria-pressed="false">${esc(x)}</button>`).join("")}</div>
+        <textarea id="why" maxlength="500" placeholder="${isFail ? "รายละเอียดเพิ่มเติม (ไม่บังคับ)" : "เหตุผลเพิ่มเติม (ไม่บังคับ)"}"></textarea>
+        <label class="check"><input type="checkbox" id="ntf" ${info.notifyDefault && q.requesterEmail ? "checked" : ""} ${q.requesterEmail ? "" : "disabled"}><span>📧 แจ้งผู้ขอทางอีเมล${q.requesterEmail ? " (" + esc(q.requesterEmail) + ")" : " (ไม่มีอีเมลผู้ขอ)"}</span></label>
+        <button class="btn" id="go">${isFail ? "⚠️ บันทึก “ไม่สำเร็จ”" : "🗑 ยืนยันยกเลิกคำขอ"}</button>
+        <button class="btn ghost" id="back">← กลับ</button>`,
+      bind(){
+        root.querySelectorAll('.chip').forEach(c=> c.onclick = ()=>{ picked = picked === c.dataset.r ? "" : c.dataset.r; root.querySelectorAll('.chip').forEach(x=> x.setAttribute('aria-pressed', String(x.dataset.r === picked))); });
+        document.getElementById('back').onclick = ()=> chooser();
+        document.getElementById('go').onclick = e=>{
+          const extra = document.getElementById('why').value.trim();
+          const reason = [picked, extra].filter(Boolean).join(" · ");
+          doAction(action, reason, document.getElementById('ntf').checked, e.target);
+        };
+      } });
+  }
+
+  run('emailActionInfo', ...A).then(r=>{
+    info = r;
+    if(r.deleted){
+      screen({ theme:"cancel", emoji:"🗑", title:"คำขอนี้ถูกยกเลิกแล้ว", sub:"โดย " + esc(r.deletedBy) + " · " + esc(r.reason),
+        body:`<div class="msg warn">${esc(r.summary)}</div><button class="btn ghost" id="restore">♻️ กู้คืนคำขอ</button>`,
+        bind(){ document.getElementById('restore').onclick = e=> doAction("restore", "", false, e.target); } });
+      return;
+    }
+    if(BOOT.action === "success") doAction("success", "", undefined, null);
+    else if(BOOT.action === "failed" || BOOT.action === "cancel") askReason(BOOT.action);
+    else chooser();
+  }).catch(fail);
+})();
+</script>
+</body>
+</html>

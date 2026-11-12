@@ -888,6 +888,12 @@ const BOOT = {"webAppUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82v
     switchTab('requests');
     loadRequests();
     loadDirectory();
+    // เปิดจาก GitHub (ไม่ใช่ Apps Script) และเป็นผู้ดูแลระบบ → ตั้งลิงก์ action.html สำหรับปุ่มในอีเมลให้อัตโนมัติ
+    if(!BOOT.isAppsScript && S.user.role === 'admin'){
+      run('registerStaticAdmin', S.token, location.href).then(r=>{
+        if(r && r.changed) toast("ตั้งค่าปุ่มบันทึกผลในอีเมลให้แล้ว ✅ อีเมลถัดไปจะเปิดหน้า action.html บน GitHub", "ok");
+      }).catch(()=>{});
+    }
   }
   function renderMe(){
     const u = S.user;
@@ -1158,6 +1164,7 @@ const BOOT = {"webAppUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82v
     { title:"📧 การแจ้งเตือน", items:[
       { k:"ADMIN_NOTIFY_EMAIL", t:"อีเมลผู้รับแจ้งเตือนคำขอใหม่ / เตือนล่วงหน้า", h:"ใส่ได้หลายอีเมล คั่นด้วยเครื่องหมายจุลภาค (,)", type:"text" },
       { k:"AUTO_ACK_ON_SUBMIT", t:"ส่งอีเมล “รับเรื่องเรียบร้อย” ให้ผู้ขออัตโนมัติ", h:"ทันทีที่ส่งแบบฟอร์ม (ต้องมีอีเมลผู้ขอ) — ปิดไว้ถ้าต้องการให้เจ้าหน้าที่ตรวจก่อน" },
+      { k:"ACTION_PAGE_URL", t:"ลิงก์หน้าบันทึกผลจากปุ่มในอีเมล (action.html บน GitHub)", h:"ตั้งให้อัตโนมัติเมื่อผู้ดูแลระบบเข้าสู่ระบบผ่าน admin.html บน GitHub · เว้นว่าง = ใช้หน้า Apps Script (อาจเปิดไม่ได้ถ้า Chrome ลงชื่อหลายบัญชี)", type:"text" },
       { k:"QUICK_ACTION_NOTIFY", t:"กดปุ่ม สำเร็จ/ไม่สำเร็จ/ยกเลิก ในอีเมล → แจ้งผลถึงผู้ขอด้วย", h:"เจ้าหน้าที่กดปุ่มในอีเมลแจ้งเตือนแล้ว ระบบส่งอีเมลแจ้งผล (พร้อมลิงก์ประเมินความพึงพอใจ) ให้ผู้ขอทันที" } ] },
     { title:"🔐 สิทธิ์และความเป็นส่วนตัว", items:[
       { k:"STAFF_CAN_DELETE", t:"บุคลากรลบคำขอ / ระงับผู้ส่งได้", h:"ปิด = เฉพาะผู้ดูแลระบบ" },
