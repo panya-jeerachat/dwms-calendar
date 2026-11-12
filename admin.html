@@ -99,6 +99,8 @@
   .trash-item:last-child{border-bottom:none}
   .trash-item .info{flex:1;min-width:0;font-size:13.5px}
   .trash-item small{display:block;color:var(--faint);font-size:12px;margin-top:2px}
+  .trash-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 2px 10px;border-bottom:1px solid var(--border);font-size:13px;color:var(--soft)}
+  .trash-acts{display:flex;flex-direction:column;gap:6px;flex-shrink:0}
   @media (max-width:600px){ .edit-grid{grid-template-columns:1fr} }
   .btn-google{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;border:1.5px solid #DADCE0;background:#fff;color:#1F1F1F;border-radius:999px;padding:11px 16px;font-weight:700;font-size:15px;cursor:pointer;text-decoration:none;transition:box-shadow .15s,border-color .15s;font-family:inherit}
   .btn-google:hover{border-color:#4285F4;box-shadow:0 6px 18px -8px rgba(66,133,244,.6)}
@@ -1133,11 +1135,35 @@ const BOOT = {"webAppUrl": "https://script.google.com/macros/s/AKfycbyFbc7rZU82v
     $('#trashBody').innerHTML = `<div class="loading"><span class="spinner dark"></span>กำลังโหลด…</div>`;
     try {
       const r = await run('listDeleted', S.token);
-      $('#trashBody').innerHTML = r.items.length ? r.items.map(d=>`<div class="trash-item"><div class="info"><b>${esc(d.code)}</b> · ${esc(d.summary)}
+      $('#trashBody').innerHTML = r.items.length
+        ? `<div class="trash-head"><span>${r.items.length} รายการในถังขยะ</span><button class="btn sm danger" id="emptyTrashBtn">🧹 ล้างถังขยะทั้งหมด</button></div>` +
+          r.items.map(d=>`<div class="trash-item"><div class="info"><b>${esc(d.code)}</b> · ${esc(d.summary)}
           <small>🗑 ลบโดย ${esc(d.deletedBy)} · ${esc(stampText(d.deletedAt))}</small><small>💬 เหตุผล: ${esc(d.reason)}</small></div>
-          <button class="btn sm" data-restore="${esc(d.id)}">♻️ กู้คืน</button></div>`).join("")
+          <div class="trash-acts"><button class="btn sm" data-restore="${esc(d.id)}">♻️ กู้คืน</button>
+          <button class="btn sm danger" data-purge="${esc(d.id)}" data-code="${esc(d.code)}" data-sum="${esc(d.summary)}">🗑 ลบถาวร</button></div></div>`).join("")
         : `<div class="empty"><div class="e">🧹</div>ถังขยะว่างเปล่า</div>`;
       $$('#trashBody [data-restore]').forEach(b=> b.addEventListener('click', ()=> busy(b, ()=> restoreDeleted(b.dataset.restore))));
+      $$('#trashBody [data-purge]').forEach(b=> b.addEventListener('click', async ()=>{
+        const c = await askConfirm({ title:"ลบถาวร", danger:true, ok:"🗑 ลบถาวร",
+          html:`ลบคำขอ <b>${esc(b.dataset.code)}</b> ออกจากระบบถาวร?<br><span class="hint">${esc(b.dataset.sum)}</span><br><br>⚠️ <b>กู้คืนไม่ได้อีก</b> · ข้อมูลผู้ขอของคำขอนี้จะถูกลบด้วย (ระบบเก็บประวัติไว้ว่าใครลบเมื่อไร)` });
+        if(!c) return;
+        busy(b, async ()=>{
+          try { await run('purgeDeleted', S.token, b.dataset.purge); toast(`ลบ ${b.dataset.code} ถาวรแล้ว`, "ok"); loadTrash(); }
+          catch(err){ toast(err.message, "err"); }
+        });
+      }));
+      const eb = $('#emptyTrashBtn');
+      if(eb) eb.addEventListener('click', async ()=>{
+        const c = await askConfirm({ title:"ล้างถังขยะทั้งหมด", danger:true, ok:"🧹 ล้างทั้งหมด",
+          html:`ลบคำขอในถังขยะทั้งหมด <b>${r.items.length} รายการ</b> ออกจากระบบถาวร?<br><br>⚠️ <b>กู้คืนไม่ได้อีก</b>`,
+          input:{ label:`พิมพ์คำว่า ลบ เพื่อยืนยัน`, placeholder:"ลบ", required:true, requiredText:"กรุณาพิมพ์คำว่า ลบ" } });
+        if(!c) return;
+        if(c.value !== "ลบ"){ toast("ยกเลิก: ต้องพิมพ์คำว่า “ลบ” ให้ตรง", "err"); return; }
+        busy(eb, async ()=>{
+          try { const res = await run('emptyTrash', S.token); toast(`ล้างถังขยะแล้ว ${res.count} รายการ 🧹`, "ok"); loadTrash(); }
+          catch(err){ toast(err.message, "err"); }
+        });
+      });
     } catch(err){ $('#trashBody').innerHTML = `<div class="msg err">${esc(err.message)}</div>`; }
   }
   $('#trashBtn').addEventListener('click', ()=>{ openModal('#trashModal'); loadTrash(); });
